@@ -6,27 +6,20 @@
 [Bb]uilds/
 [Ll]ogs/
 UserSettings/
-
-# MemoryCaptures for editor debugging
 MemoryCaptures/
 
-# ========== OS Generated ==========
+# ========== OS ==========
 .DS_Store
 .DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
+ehthumbs.db
 
-# ========== Visual Studio / Rider ==========
+# ========== IDE (VS / Rider / VSCode) ==========
 .vscode/
 .vs/
 *.csproj
-*.unityproj
 *.sln
 *.suo
-*.tmp
 *.user
 *.userprefs
 *.pidb
@@ -39,21 +32,8 @@ Thumbs.db
 
 # ========== Unity Cache ==========
 /Library/ArtifactDB/
-sysinfo.txt
 
-# ========== Unity LFS / Large Assets ==========
-*.psd
-*.fbx
-*.png
-*.jpg
-*.tga
-*.wav
-*.mp3
-*.ogg
-*.anim
-*.controller
-*.prefab
-
-# Optional: Addressables / Cache
-/Assets/AssetBundles/
-[Oo]utput/
+# ========== Optional Generated Content ==========
+# Uncomment if you generate these during builds
+#/Assets/AssetBundles/
+#/Assets/StreamingAssets/aa/
