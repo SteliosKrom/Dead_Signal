@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,13 +14,14 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    #region SINGLETON
-    public static GameManager Instance;
+    #region SERVICES
+    private UIManager uiManager;
     #endregion
 
     #region COROUTINES
     private float openMainMenuDelay = 0.5f;
     private float openCreditsMenuDelay = 0.5f;
+    private float closeCreditsMenuDelay = 0.25f;
     #endregion
 
     #region INPUT
@@ -49,11 +51,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerControls();
-
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
     }
 
     private void OnEnable()
@@ -72,12 +69,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        uiManager = ServiceManager.GetService<UIManager>();
+
         currentGameState = GameState.None;
     }
 
     public void OnAnyKeyPressed(InputAction.CallbackContext cxt)
     {
-        if (UIManager.Instance.CurrentUIState == UIState.TitleMenu)
+        if (uiManager.CurrentUIState == UIState.TitleMenu)
         {
             StartCoroutine(OpenMainMenuCoroutine());
         }
@@ -85,9 +84,9 @@ public class GameManager : MonoBehaviour
 
     public void OnEscapeButtonPressed(InputAction.CallbackContext cxt)
     {
-        if (UIManager.Instance.CurrentUIState == UIState.CreditsMenu)
+        if (uiManager.CurrentUIState == UIState.CreditsMenu)
         {
-            StartCoroutine(OpenCreditsMenuCoroutine());
+            StartCoroutine(CloseCreditsMenuCoroutine());
         }
     }
 
@@ -98,7 +97,10 @@ public class GameManager : MonoBehaviour
 
     // Enter Main Menus
     public void EnterSettings() => uiEvents.RaiseOpenSettingsMenu();
-    public void EnterCredits() => uiEvents.RaiseOpenCreditsMenu();
+    public void EnterCredits()
+    {
+        StartCoroutine(OpenCreditsMenuCoroutine());
+    }
 
     // Enter Settings Tabs
     public void EnterAudio() => uiEvents.RaiseOpenAudioMenu();
@@ -124,8 +126,15 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator OpenCreditsMenuCoroutine()
     {
-        creditsMenuAnimator.SetTrigger("FadeOut");
+        uiEvents.RaiseOpenCreditsMenu();
         yield return new WaitForSeconds(openCreditsMenuDelay);
+        creditsMenuAnimator.SetTrigger("FadeIn");
+    }
+
+    public IEnumerator CloseCreditsMenuCoroutine()
+    {
+        creditsMenuAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(closeCreditsMenuDelay);
         uiEvents.RaiseOpenMainMenu();
     }
 }

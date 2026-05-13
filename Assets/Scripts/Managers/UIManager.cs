@@ -22,9 +22,7 @@ public enum SettingsTab
 
 public class UIManager : MonoBehaviour
 {
-    #region SINGLETON
-    public static UIManager Instance;
-    #endregion
+    private UIManager uiManager;
 
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
@@ -57,10 +55,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+        ServiceManager.RegisterService<UIManager>(this);
     }
 
     private void OnEnable()
@@ -141,7 +136,6 @@ public class UIManager : MonoBehaviour
 
     public void OpenCreditsMenu()
     {
-        currentUIState = UIState.CreditsMenu;
         mainMenu.SetActive(false);
         creditsMenu.SetActive(true);
     }
