@@ -1,4 +1,7 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum UIState
 {
@@ -22,10 +25,13 @@ public enum SettingsTab
 
 public class UIManager : MonoBehaviour
 {
+    #region SERVICES
     private UIManager uiManager;
+    private SettingsManager settingsManager;
+    #endregion
 
-    #region SCRIPT REFERENCES
-    [Header("SCRIPT REFERENCES")]
+    #region EVENTS
+    [Header("EVENTS")]
     [SerializeField] private UIEvents uiEvents;
     #endregion
 
@@ -33,6 +39,14 @@ public class UIManager : MonoBehaviour
     [Header("STATES")]
     [SerializeField] private UIState currentUIState;
     [SerializeField] private SettingsTab currentSettingsTab;
+    #endregion
+
+    #region UI
+    [Header("TEXT")]
+    [SerializeField] private TextMeshProUGUI masterVolumeText;
+    [SerializeField] private TextMeshProUGUI gameVolumeText;
+    [SerializeField] private TextMeshProUGUI menuVolumeText;
+    [SerializeField] private TextMeshProUGUI sfxVolumeText;
     #endregion
 
     #region OBJECTS
@@ -49,6 +63,10 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public TextMeshProUGUI MasterVolumeText => masterVolumeText;
+    public TextMeshProUGUI GameVolumeText => gameVolumeText;
+    public TextMeshProUGUI MenuVolumeText => menuVolumeText;
+    public TextMeshProUGUI SFXVolumeText => sfxVolumeText;
     public UIState CurrentUIState { get => currentUIState; set => currentUIState = value; }
     public SettingsTab CurrentSettingsTab { get => currentSettingsTab; set => currentSettingsTab = value; }
     #endregion
@@ -60,6 +78,9 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        // UI
+        uiEvents.OnUpdateSliderValue += UpdateSliderValueUI;
+
         // Animations
         uiEvents.OnTitleMenuFadeInCompleted += TitleMenuFadeInCompleted;
         uiEvents.OnCreditsMenuFadeInCompleted += CreditsMenuFadeInCompleted;
@@ -83,6 +104,9 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        // UI
+        uiEvents.OnUpdateSliderValue -= UpdateSliderValueUI;
+
         // Animations
         uiEvents.OnTitleMenuFadeInCompleted -= TitleMenuFadeInCompleted;
         uiEvents.OnCreditsMenuFadeInCompleted -= CreditsMenuFadeInCompleted;
@@ -106,6 +130,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        settingsManager = ServiceManager.GetService<SettingsManager>();
+
         currentUIState = UIState.None;
         currentSettingsTab = SettingsTab.None;
     }
@@ -166,6 +192,11 @@ public class UIManager : MonoBehaviour
         currentSettingsTab = SettingsTab.Controls;
         settingsMenu.SetActive(false);
         controlsMenu.SetActive(true);
+    }
+
+    public void UpdateSliderValueUI(Slider slider, TextMeshProUGUI valueText)
+    {
+        valueText.text = slider.value.ToString("0%");
     }
 
     public void ReturnFromSettingsTabs()

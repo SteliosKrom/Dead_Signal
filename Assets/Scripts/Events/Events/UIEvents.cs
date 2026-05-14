@@ -1,5 +1,7 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIEvents : MonoBehaviour
 {
@@ -17,6 +19,11 @@ public class UIEvents : MonoBehaviour
     public event Action OnReturnFromSettingsTabs;
     public event Action OnReturnFromCreditsMenu;
     public event Action OnExitSettings;
+
+    public event Action<Slider, TextMeshProUGUI> OnUpdateSliderValue;
+
+    // UI
+    public void RaiseUpdateSliderValue(Slider slider, TextMeshProUGUI valueText) => OnUpdateSliderValue?.Invoke(slider, valueText);
 
     // Animations 
     public void RaiseTitleMenuFadeInCompleted() => OnTitleMenuFadeInCompleted?.Invoke();

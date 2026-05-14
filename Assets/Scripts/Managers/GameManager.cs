@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public enum GameState
 {
@@ -14,22 +15,24 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
+    private bool hasPressedAnykey;
+
     #region SERVICES
     private UIManager uiManager;
+    private AudioManager audioManager;
     #endregion
 
     #region COROUTINES
     private float openMainMenuDelay = 0.5f;
-    private float openCreditsMenuDelay = 0.5f;
-    private float closeCreditsMenuDelay = 0.25f;
+    private float closeCreditsMenuDelay = 1f;
     #endregion
 
     #region INPUT
     private PlayerControls controls;
     #endregion
 
-    #region SCRIPT REFERENCES
-    [Header("SCRIPT REFERENCES")]
+    #region EVENTS
+    [Header("EVENTS")]
     [SerializeField] private UIEvents uiEvents;
     #endregion
 
@@ -70,6 +73,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         uiManager = ServiceManager.GetService<UIManager>();
+        audioManager = ServiceManager.GetService<AudioManager>();
 
         currentGameState = GameState.None;
     }
@@ -96,20 +100,39 @@ public class GameManager : MonoBehaviour
     }
 
     // Enter Main Menus
-    public void EnterSettings() => uiEvents.RaiseOpenSettingsMenu();
+    public void EnterSettings()
+    {
+        uiEvents.RaiseOpenSettingsMenu();
+    }
     public void EnterCredits()
     {
-        StartCoroutine(OpenCreditsMenuCoroutine());
+        uiEvents.RaiseOpenCreditsMenu();
+        creditsMenuAnimator.SetTrigger("FadeIn");
     }
 
     // Enter Settings Tabs
-    public void EnterAudio() => uiEvents.RaiseOpenAudioMenu();
-    public void EnterDisplay() => uiEvents.RaiseOpenDisplayMenu();
-    public void EnterGraphics() => uiEvents.RaiseOpenGraphicsMenu();
-    public void EnterControls() => uiEvents.RaiseOpenControlsMenu();
+    public void EnterAudio()
+    {
+        uiEvents.RaiseOpenAudioMenu();
+    }
+    public void EnterDisplay()
+    {
+        uiEvents.RaiseOpenDisplayMenu();
+    }
+    public void EnterGraphics()
+    {
+        uiEvents.RaiseOpenGraphicsMenu();
+    }
+    public void EnterControls()
+    {
+        uiEvents.RaiseOpenControlsMenu();
+    }
 
     // Exit / Navigation / Return
-    public void ExitSettingsTabs() => uiEvents.RaiseReturnFromSettingsTabs();
+    public void ExitSettingsTabs()
+    {
+        uiEvents.RaiseReturnFromSettingsTabs();
+    }
     public void ExitSettings() => uiEvents.RaiseOnExitSettings();
     public void ExitGame()
     {
@@ -119,16 +142,13 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator OpenMainMenuCoroutine()
     {
+        if (hasPressedAnykey) yield break;
+
+        hasPressedAnykey = true;
+        audioManager.PlaySFX(SFXType.PressAnyKey);
         titleMenuAnimator.SetTrigger("FadeOut");
         yield return new WaitForSeconds(openMainMenuDelay);
         uiEvents.RaiseOpenMainMenu();
-    }
-
-    public IEnumerator OpenCreditsMenuCoroutine()
-    {
-        uiEvents.RaiseOpenCreditsMenu();
-        yield return new WaitForSeconds(openCreditsMenuDelay);
-        creditsMenuAnimator.SetTrigger("FadeIn");
     }
 
     public IEnumerator CloseCreditsMenuCoroutine()
