@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIButtonAudio : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
+public class UIButtonAudioEvent : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
+    #region SERVICES
     private AudioManager audioManager;
+    #endregion
 
     private void Start()
     {
