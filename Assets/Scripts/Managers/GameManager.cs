@@ -136,7 +136,6 @@ public class GameManager : MonoBehaviour
     public void ExitSettings() => uiEvents.RaiseOnExitSettings();
     public void ExitGame()
     {
-        EditorApplication.ExitPlaymode();
         Application.Quit();
     }
 
