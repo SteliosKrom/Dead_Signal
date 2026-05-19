@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +9,9 @@ public enum UIState
     TitleMenu,
     MainMenu,
     PauseMenu,
+    CreditsMenu,
     MainMenuSettings,
     PauseMenuSettings,
-    CreditsMenu
 }
 
 public enum SettingsTab
@@ -59,9 +60,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject displayMenu;
     [SerializeField] private GameObject graphicsMenu;
     [SerializeField] private GameObject controlsMenu;
+    [SerializeField] private GameObject[] settingsTabMenus;
     #endregion
 
     #region PROPERTIES
+    public GameObject[] SettingsTabMenus => settingsTabMenus;
+    public GameObject PauseMenu => pauseMenu;
+    public GameObject TitleMenu => titleMenu;
+    public GameObject SettingsMenu => settingsMenu;
     public TextMeshProUGUI MasterVolumeText => masterVolumeText;
     public TextMeshProUGUI GameVolumeText => gameVolumeText;
     public TextMeshProUGUI MenuVolumeText => menuVolumeText;
@@ -86,7 +92,8 @@ public class UIManager : MonoBehaviour
 
         // Main Menus
         uiEvents.OnOpenMainMenu += OpenMainMenu;
-        uiEvents.OnOpenSettingsMenu += OpenSettingsMenu;
+        uiEvents.OnOpenMainMenuSettings += OpenMainMenuSettings;
+        uiEvents.OnOpenPauseMenuSettings += OpenPauseMenuSettings;
         uiEvents.OnOpenCreditsMenu += OpenCreditsMenu;
 
         // Settings Tabs
@@ -112,7 +119,8 @@ public class UIManager : MonoBehaviour
 
         // Main Menus
         uiEvents.OnOpenMainMenu -= OpenMainMenu;
-        uiEvents.OnOpenSettingsMenu -= OpenSettingsMenu;
+        uiEvents.OnOpenMainMenuSettings -= OpenMainMenuSettings;
+        uiEvents.OnOpenPauseMenuSettings -= OpenPauseMenuSettings;
         uiEvents.OnOpenCreditsMenu -= OpenCreditsMenu;
 
         // Settings Tabs
@@ -131,7 +139,6 @@ public class UIManager : MonoBehaviour
     {
         settingsManager = ServiceManager.GetService<SettingsManager>();
 
-        currentUIState = UIState.None;
         currentSettingsTab = SettingsTab.None;
     }
 
@@ -145,6 +152,22 @@ public class UIManager : MonoBehaviour
         currentUIState = UIState.CreditsMenu;
     }
 
+    // Generic methods
+    public void OpenSettingsMenu(GameObject targetMenu, UIState state)
+    {
+        currentUIState = state;
+        targetMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
+    public void OpenSettingsTab(GameObject targetMenu, SettingsTab tab)
+    {
+        currentSettingsTab = tab;
+        settingsMenu.SetActive(false);
+        targetMenu.SetActive(true);
+    }
+
+    // Open menus methods 
     public void OpenMainMenu()
     {
         currentUIState = UIState.MainMenu;
@@ -152,11 +175,14 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(true);
     }
 
-    public void OpenSettingsMenu()
+    public void OpenMainMenuSettings()
     {
-        currentUIState = UIState.MainMenuSettings;
-        mainMenu.SetActive(false);
-        settingsMenu.SetActive(true);
+        OpenSettingsMenu(mainMenu, UIState.MainMenuSettings);
+    }
+
+    public void OpenPauseMenuSettings()
+    {
+        OpenSettingsMenu(pauseMenu, UIState.PauseMenuSettings);
     }
 
     public void OpenCreditsMenu()
@@ -167,30 +193,22 @@ public class UIManager : MonoBehaviour
 
     public void OpenAudioMenu()
     {
-        currentSettingsTab = SettingsTab.Audio;
-        settingsMenu.SetActive(false);
-        audioMenu.SetActive(true);
+        OpenSettingsTab(audioMenu, SettingsTab.Audio);
     }
 
     public void OpenDisplayMenu()
     {
-        currentSettingsTab = SettingsTab.Display;
-        settingsMenu.SetActive(false);
-        displayMenu.SetActive(true);
+        OpenSettingsTab(displayMenu, SettingsTab.Display);
     }
 
     public void OpenGraphicsMenu()
     {
-        currentSettingsTab = SettingsTab.Graphics;
-        settingsMenu.SetActive(false);
-        graphicsMenu.SetActive(true);
+        OpenSettingsTab(graphicsMenu, SettingsTab.Graphics);
     }
 
     public void OpenControlsMenu()
     {
-        currentSettingsTab = SettingsTab.Controls;
-        settingsMenu.SetActive(false);
-        controlsMenu.SetActive(true);
+        OpenSettingsTab(controlsMenu, SettingsTab.Controls);
     }
 
     public void UpdateSliderValueUI(Slider slider, TextMeshProUGUI valueText)

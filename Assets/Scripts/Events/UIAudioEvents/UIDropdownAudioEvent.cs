@@ -12,6 +12,6 @@ public class UIDropdownAudioEvent : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        audioManager.PlaySFX(SFXType.Click);
+        audioManager.PlaySFX(SoundType.Click);
     }
 }

@@ -1,8 +1,8 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public enum GameState
@@ -15,6 +15,7 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
+    private bool canPause;
     private bool hasPressedAnykey;
 
     #region SERVICES
@@ -23,12 +24,24 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region COROUTINES
-    private float openMainMenuDelay = 0.5f;
-    private float closeCreditsMenuDelay = 1f;
+    private float openMainMenuCoroutine = 0.5f;
+    private float closeCreditsMenuCoroutine = 1f;
+    private float pauseCoroutine = 0.25f;
     #endregion
 
     #region INPUT
     private PlayerControls controls;
+    #endregion
+
+    #region OBJECTS
+    [Header("OBJECTS")]
+    [SerializeField] private GameObject player;
+    #endregion
+
+    #region CAMERAS
+    [Header("CAMERAS")]
+    [SerializeField] private Camera menuCamera;
+    [SerializeField] private Camera mainCamera;
     #endregion
 
     #region EVENTS
@@ -75,7 +88,12 @@ public class GameManager : MonoBehaviour
         uiManager = ServiceManager.GetService<UIManager>();
         audioManager = ServiceManager.GetService<AudioManager>();
 
-        currentGameState = GameState.None;
+        canPause = true;
+
+        Time.timeScale = 1f;
+        player.SetActive(false);
+
+        SwitchCameras();
     }
 
     public void OnAnyKeyPressed(InputAction.CallbackContext cxt)
@@ -89,28 +107,101 @@ public class GameManager : MonoBehaviour
     public void OnEscapeButtonPressed(InputAction.CallbackContext cxt)
     {
         if (uiManager.CurrentUIState == UIState.CreditsMenu)
-        {
             StartCoroutine(CloseCreditsMenuCoroutine());
+
+        if (OnSettingsTab())
+        {
+            for (int i = 0; i < uiManager.SettingsTabMenus.Length; i++)
+                uiManager.SettingsTabMenus[i].SetActive(false);
+
+            uiManager.SettingsMenu.SetActive(true);
+            uiManager.CurrentSettingsTab = SettingsTab.None;
+
+            return;
         }
+        else if (uiManager.CurrentUIState == UIState.PauseMenuSettings)
+        {
+            uiManager.SettingsMenu.SetActive(false);
+            uiManager.PauseMenu.SetActive(true);
+            uiManager.CurrentUIState = UIState.PauseMenu;
+
+            return;
+        }
+
+        if (canPause)
+        {
+            switch (currentGameState)
+            {
+                case GameState.Playing:
+                    currentGameState = GameState.Paused;
+                    audioManager.PauseSound(SoundType.MainGame);
+                    uiManager.PauseMenu.SetActive(true);
+                    Time.timeScale = 0f;
+                    break;
+                case GameState.Paused:
+                    currentGameState = GameState.Playing;
+                    audioManager.UnPauseSound(SoundType.MainGame);
+                    uiManager.PauseMenu.SetActive(false);
+                    Time.timeScale = 1f;
+                    break;
+            }
+            StartCoroutine(PauseCoroutine());
+        }
+    }
+
+    public void SwitchCameras()
+    {
+        if (!LoadingManager.EnterGameplay)
+            return;
+
+        currentGameState = GameState.Playing;
+
+        menuCamera.enabled = false;
+        mainCamera.enabled = true;
+
+        player.SetActive(true);
+        uiManager.TitleMenu.SetActive(false);
+
+        audioManager.PlaySoundTrack(SoundType.MainGame);
+        audioManager.StopSound(SoundType.MainMenu);
+
+        LoadingManager.EnterGameplay = false;
     }
 
     public void EnterGame()
     {
-        // Start game here...
+        SceneManager.LoadScene("Demo_scene");
     }
 
-    // Enter Main Menus
-    public void EnterSettings()
+    public void ResumeGame()
     {
-        uiEvents.RaiseOpenSettingsMenu();
+        currentGameState = GameState.Playing;
+        audioManager.UnPauseSound(SoundType.MainGame);
+        uiManager.PauseMenu.SetActive(false);
     }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
+    public void EnterMainMenuSettings()
+    {
+        uiEvents.RaiseOpenMainMenuSettings();
+    }
+
+    public void EnterPauseMenuSettings()
+    {
+        uiEvents.RaiseOpenPauseMenuSettings();
+    }
+
     public void EnterCredits()
     {
         uiEvents.RaiseOpenCreditsMenu();
         creditsMenuAnimator.SetTrigger("FadeIn");
     }
 
-    // Enter Settings Tabs
+    // Settings Tabs
     public void EnterAudio()
     {
         uiEvents.RaiseOpenAudioMenu();
@@ -119,10 +210,12 @@ public class GameManager : MonoBehaviour
     {
         uiEvents.RaiseOpenDisplayMenu();
     }
+
     public void EnterGraphics()
     {
         uiEvents.RaiseOpenGraphicsMenu();
     }
+
     public void EnterControls()
     {
         uiEvents.RaiseOpenControlsMenu();
@@ -133,10 +226,28 @@ public class GameManager : MonoBehaviour
     {
         uiEvents.RaiseReturnFromSettingsTabs();
     }
+
     public void ExitSettings() => uiEvents.RaiseOnExitSettings();
+
     public void ExitGame()
     {
+        Debug.Log("Quitting...");
         Application.Quit();
+    }
+
+    public bool OnSettingsTab()
+    {
+        return (uiManager.CurrentSettingsTab == SettingsTab.Audio
+            || uiManager.CurrentSettingsTab == SettingsTab.Display
+            || uiManager.CurrentSettingsTab == SettingsTab.Graphics
+            || uiManager.CurrentSettingsTab == SettingsTab.Controls) && currentGameState == GameState.Paused;
+    }
+
+    public IEnumerator PauseCoroutine()
+    {
+        canPause = false;
+        yield return new WaitForSecondsRealtime(pauseCoroutine);
+        canPause = true;
     }
 
     public IEnumerator OpenMainMenuCoroutine()
@@ -144,16 +255,16 @@ public class GameManager : MonoBehaviour
         if (hasPressedAnykey) yield break;
 
         hasPressedAnykey = true;
-        audioManager.PlaySFX(SFXType.PressAnyKey);
+        audioManager.PlaySFX(SoundType.PressAnyKey);
         titleMenuAnimator.SetTrigger("FadeOut");
-        yield return new WaitForSeconds(openMainMenuDelay);
+        yield return new WaitForSeconds(openMainMenuCoroutine);
         uiEvents.RaiseOpenMainMenu();
     }
 
     public IEnumerator CloseCreditsMenuCoroutine()
     {
         creditsMenuAnimator.SetTrigger("FadeOut");
-        yield return new WaitForSeconds(closeCreditsMenuDelay);
+        yield return new WaitForSeconds(closeCreditsMenuCoroutine);
         uiEvents.RaiseOpenMainMenu();
     }
 }

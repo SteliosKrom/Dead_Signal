@@ -8,17 +8,25 @@ public class UIEvents : MonoBehaviour
     public event Action OnTitleMenuFadeInCompleted;
     public event Action OnCreditsMenuFadeInCompleted;
 
+    #region OPEN MENUS ACTIONS
     public event Action OnOpenMainMenu;
-    public event Action OnOpenSettingsMenu;
+    public event Action OnOpenMainMenuSettings;
+    public event Action OnOpenPauseMenuSettings;
     public event Action OnOpenCreditsMenu;
+    #endregion
+
+    #region OPEN SETTINGS TAB MENUS ACTIONS
     public event Action OnOpenAudioMenu;
     public event Action OnOpenDisplayMenu;
     public event Action OnOpenGraphicsMenu;
     public event Action OnOpenControlsMenu;
+    #endregion
 
+    #region RETURN / EXIT
     public event Action OnReturnFromSettingsTabs;
     public event Action OnReturnFromCreditsMenu;
     public event Action OnExitSettings;
+    #endregion
 
     public event Action<Slider, TextMeshProUGUI> OnUpdateSliderValue;
 
@@ -31,7 +39,8 @@ public class UIEvents : MonoBehaviour
 
     // Main Menus
     public void RaiseOpenMainMenu() => OnOpenMainMenu?.Invoke();
-    public void RaiseOpenSettingsMenu() => OnOpenSettingsMenu?.Invoke();
+    public void RaiseOpenMainMenuSettings() => OnOpenMainMenuSettings?.Invoke();
+    public void RaiseOpenPauseMenuSettings() => OnOpenPauseMenuSettings?.Invoke();
     public void RaiseOpenCreditsMenu() => OnOpenCreditsMenu?.Invoke();
 
     // Settings Tabs
