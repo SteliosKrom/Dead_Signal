@@ -14,11 +14,11 @@ public class UIButtonAudioEvent : MonoBehaviour, IPointerEnterHandler, IPointerC
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        audioManager.PlaySFX(SFXType.Hover);
+        audioManager.PlaySFX(SoundType.Hover);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        audioManager.PlaySFX(SFXType.Click);
+        audioManager.PlaySFX(SoundType.Click);
     }
 }

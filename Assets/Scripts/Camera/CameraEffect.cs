@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraEffect : MonoBehaviour
 {
-    [SerializeField] private Camera mainMenuCamera;
+    [SerializeField] private Camera menuCamera;
 
     private Vector3 initialPos;
 
@@ -16,12 +16,12 @@ public class CameraEffect : MonoBehaviour
 
     private void Update()
     {
-        if (mainMenuCamera.enabled)
+        if (menuCamera.enabled)
         {
             float offsetX = Mathf.Sin(Time.time * movementSpeed) * movementRange;
             float offsetY = Mathf.Sin(Time.time * movementSpeed) * movementRange;
             float offsetZ = Mathf.Sin(Time.time * movementSpeed) * movementRange;
-            mainMenuCamera.transform.position = initialPos + new Vector3(offsetX, offsetY, offsetZ);
+            menuCamera.transform.position = initialPos + new Vector3(offsetX, offsetY, offsetZ);
         }
     }
 }
