@@ -18,7 +18,7 @@ public class LoadingManager : MonoBehaviour
     {
         uiManager = ServiceManager.GetService<UIManager>();
 
-        loadingDelay = Random.Range(5, 10);
+        loadingDelay = Random.Range(1, 5);
 
         StartCoroutine(LoadingTimeCoroutine());
     }
