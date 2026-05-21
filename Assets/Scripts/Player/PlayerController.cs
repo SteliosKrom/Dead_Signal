@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyMovement()
     {
-        Vector2 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
+        Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
         characterController.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
     }
 }
