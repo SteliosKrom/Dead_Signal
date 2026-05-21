@@ -2,12 +2,19 @@ using UnityEngine;
 
 public class CameraEffect : MonoBehaviour
 {
-    [SerializeField] private Camera menuCamera;
-
+    #region STRUCTS
     private Vector3 initialPos;
+    #endregion
 
+    #region CAMERAS
+    [Header("CAMERAS")]
+    [SerializeField] private Camera menuCamera;
+    #endregion
+
+    #region DATA STRUCTURES
     private float movementSpeed = 1;
-    private float movementRange = 0.1f; 
+    private float movementRange = 0.1f;
+    #endregion
 
     private void Start()
     {

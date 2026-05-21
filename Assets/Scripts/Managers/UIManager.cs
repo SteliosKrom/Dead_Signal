@@ -60,6 +60,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject displayMenu;
     [SerializeField] private GameObject graphicsMenu;
     [SerializeField] private GameObject controlsMenu;
+    [SerializeField] private GameObject HUDmenu;
     [SerializeField] private GameObject[] settingsTabMenus;
     #endregion
 
@@ -68,6 +69,7 @@ public class UIManager : MonoBehaviour
     public GameObject PauseMenu => pauseMenu;
     public GameObject TitleMenu => titleMenu;
     public GameObject SettingsMenu => settingsMenu;
+    public GameObject HUDMenu { get => HUDmenu; set => HUDmenu = value; }
     public TextMeshProUGUI MasterVolumeText => masterVolumeText;
     public TextMeshProUGUI GameVolumeText => gameVolumeText;
     public TextMeshProUGUI MenuVolumeText => menuVolumeText;

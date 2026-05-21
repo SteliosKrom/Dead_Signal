@@ -4,7 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class LoadingManager : MonoBehaviour
 {
+    #region DATA
     public static bool EnterGameplay;
+    #endregion
 
     #region COROUTINES
     private float loadingDelay;

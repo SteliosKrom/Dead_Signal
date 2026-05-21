@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public enum GameState
 {
@@ -89,7 +87,6 @@ public class GameManager : MonoBehaviour
         audioManager = ServiceManager.GetService<AudioManager>();
 
         canPause = true;
-
         Time.timeScale = 1f;
         player.SetActive(false);
 
@@ -161,6 +158,7 @@ public class GameManager : MonoBehaviour
 
         player.SetActive(true);
         uiManager.TitleMenu.SetActive(false);
+        uiManager.HUDMenu.SetActive(true);
 
         audioManager.PlaySoundTrack(SoundType.MainGame);
         audioManager.StopSound(SoundType.MainMenu);

@@ -13,11 +13,12 @@ public class AudioManager : MonoBehaviour
         public AudioClip clip;
     }
 
-    #region AUDIO
-    [Header("AUDIO")]
+    #region DATA
+    [Header("DATA")]
     [SerializeField] private AudioItem[] audioItems;
     private Dictionary<SoundType, AudioItem> soundDict;
     #endregion
+
     private void Awake()
     {
         ServiceManager.RegisterService<AudioManager>(this);
