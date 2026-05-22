@@ -6,7 +6,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform cameraHolder;
 
     #region DATA
-    private float mouseSensitivity = 1f;
+    [SerializeField] private float minCameraRotation;
+    [SerializeField] private float maxCameraRotation;
+    private float mouseSensitivity = 5f;
     private float xRotation;
     private float yRotation;
     private float baseYRotation;
@@ -15,6 +17,10 @@ public class CameraController : MonoBehaviour
     #region INPUT
     private PlayerControls playerControls;
     private Vector2 lookInput;
+    #endregion
+
+    #region PROPERTIES
+    public float MouseSensitivity { get => mouseSensitivity; set => mouseSensitivity = value; }
     #endregion
 
     private void Awake()
@@ -43,6 +49,11 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        this.transform.localRotation = Quaternion.Euler(0f, baseYRotation + yRotation, 0f);
+    }
+
+    private void LateUpdate()
+    {
         ApplyRotation();
     }
 
@@ -59,7 +70,7 @@ public class CameraController : MonoBehaviour
         yRotation += mouseX;
         xRotation -= mouseY;
 
-        this.transform.localRotation = Quaternion.Euler(0f, baseYRotation + yRotation, 0f);
+        xRotation = Mathf.Clamp(xRotation, minCameraRotation, maxCameraRotation);
         cameraHolder.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 }

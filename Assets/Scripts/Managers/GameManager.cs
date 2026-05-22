@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         currentGameState = GameState.Playing;
+        Time.timeScale = 1f;
         audioManager.UnPauseSound(SoundType.MainGame);
         uiManager.PauseMenu.SetActive(false);
     }

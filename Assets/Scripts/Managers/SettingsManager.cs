@@ -41,6 +41,11 @@ public class SettingsManager : MonoBehaviour
     private int windowedScreenHeight = 720;
     #endregion
 
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private CameraController cameraController;
+    #endregion
+
     #region EVENTS
     [Header("EVENTS")]
     [SerializeField] private UIEvents uiEvents;
@@ -57,6 +62,10 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Slider gameVolumeSlider;
     [SerializeField] private Slider menuVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
+    [SerializeField] private Slider sensitivitySlider;
+
+    [Header("TEXT")]
+    [SerializeField] private TextMeshProUGUI sensitivitySliderText;
 
     [Header("DROPDOWNS")]
     [SerializeField] private TMP_Dropdown displayModeDropdown;
@@ -67,7 +76,9 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Toggle vSyncToggle;
     #endregion
 
+    #region PROPERTIES
     public AudioMixer AudioMixer => audioMixer;
+    #endregion
 
     private void Awake()
     {
@@ -170,6 +181,12 @@ public class SettingsManager : MonoBehaviour
         audioMixer.SetFloat(SFX_VOL, dB);
         PlayerPrefs.SetFloat(SFX_VOL_KEY, sfxVolume);
         uiEvents.RaiseUpdateSliderValue(sfxVolumeSlider, uiManager.SFXVolumeText);
+    }
+
+    public void AdjustSensitivity()
+    {
+        cameraController.MouseSensitivity = sensitivitySlider.value * 2;
+        sensitivitySliderText.text = sensitivitySlider.value.ToString("0%");
     }
 
     public void ChooseDisplayMode()
