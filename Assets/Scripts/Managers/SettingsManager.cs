@@ -26,6 +26,8 @@ public class SettingsManager : MonoBehaviour
     #region DISPLAY PLAYER PREFS
     private const string DISPLAY_MODE_KEY = "DisplayMode";
     private const string RESOLUTION_MODE_KEY = "ResolutionMode";
+    private const string SENSITIVITY_KEY = "Sensitivity";
+    private const string FPS_KEY = "FPSKey";
     #endregion
 
     #region GRAPHICS PLAYER PREFS
@@ -39,6 +41,8 @@ public class SettingsManager : MonoBehaviour
 
     private int windowedScreenWidth = 1280;
     private int windowedScreenHeight = 720;
+
+    private const float sensMultiplier = 10f;
     #endregion
 
     #region SCRIPT REFERENCES
@@ -74,9 +78,11 @@ public class SettingsManager : MonoBehaviour
 
     [Header("TOGGLE")]
     [SerializeField] private Toggle vSyncToggle;
+    [SerializeField] private Toggle fpsToggle;
     #endregion
 
     #region PROPERTIES
+    public Slider SensitivitySlider => sensitivitySlider;
     public AudioMixer AudioMixer => audioMixer;
     #endregion
 
@@ -101,12 +107,15 @@ public class SettingsManager : MonoBehaviour
         float savedMenuVolume = PlayerPrefs.GetFloat(MENU_VOL_KEY, 0.6f);
         float savedSFXVolume = PlayerPrefs.GetFloat(SFX_VOL_KEY, 0.9f);
 
+        float savedSensitivity = PlayerPrefs.GetFloat(SENSITIVITY_KEY, 1f);
+
         int savedDisplayMode = PlayerPrefs.GetInt(DISPLAY_MODE_KEY, 0);
         int savedResolutionMode = PlayerPrefs.GetInt(RESOLUTION_MODE_KEY, 0);
 
         int savedQualityLevel = PlayerPrefs.GetInt(QUALITY_LEVEL_KEY, 1);
 
         bool savedVSync = GetBool(VSYNC_COUNT, false);
+        bool savedFPS = GetBool(FPS_KEY, false);
 
         // APPLY AUDIO
         masterVolumeSlider.value = savedMasterVolume;
@@ -117,6 +126,8 @@ public class SettingsManager : MonoBehaviour
         // APPLY DISPLAY
         displayModeDropdown.value = savedDisplayMode;
         resolutionModeDropdown.value = savedResolutionMode;
+        SensitivitySlider.value = savedSensitivity;
+        fpsToggle.isOn = savedFPS;
 
         // APPLY GRAPHICS
         qualityLevelDropdown.value = savedQualityLevel;
@@ -185,8 +196,9 @@ public class SettingsManager : MonoBehaviour
 
     public void AdjustSensitivity()
     {
-        cameraController.MouseSensitivity = sensitivitySlider.value * 2;
-        sensitivitySliderText.text = sensitivitySlider.value.ToString("0%");
+        cameraController.MouseSensitivity = SensitivitySlider.value * sensMultiplier;
+        sensitivitySliderText.text = SensitivitySlider.value.ToString("0%");
+        PlayerPrefs.SetFloat(SENSITIVITY_KEY, SensitivitySlider.value);
     }
 
     public void ChooseDisplayMode()
@@ -238,6 +250,15 @@ public class SettingsManager : MonoBehaviour
                 break;
         }
         PlayerPrefs.SetInt(QUALITY_LEVEL_KEY, qualityLevelDropdown.value);
+    }
+
+    public void SetFPSToggle()
+    {
+        if (fpsToggle.isOn)
+            uiManager.OpenFPSMenu();
+        else
+            uiManager.CloseFPSMenu();
+        SetBool(FPS_KEY, fpsToggle.isOn);
     }
 
     public void SetVSync()

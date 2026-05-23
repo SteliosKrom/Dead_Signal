@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     private bool canPause;
     private bool hasPressedAnykey;
 
+    private float fps;
+
     #region SERVICES
     private UIManager uiManager;
     private AudioManager audioManager;
@@ -59,11 +61,13 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public float FPS => fps;
     public GameState CurrentGameState { get => currentGameState; set => CurrentGameState = value; }
     #endregion
 
     private void Awake()
     {
+        ServiceManager.RegisterService<GameManager>(this);
         controls = new PlayerControls();
     }
 
@@ -91,6 +95,11 @@ public class GameManager : MonoBehaviour
         player.SetActive(false);
 
         SwitchCameras();
+    }
+
+    private void Update()
+    {
+        CalculateFPS();
     }
 
     public void OnAnyKeyPressed(InputAction.CallbackContext cxt)
@@ -132,13 +141,25 @@ public class GameManager : MonoBehaviour
                 case GameState.Playing:
                     currentGameState = GameState.Paused;
                     audioManager.PauseSound(SoundType.MainGame);
+
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+
                     uiManager.PauseMenu.SetActive(true);
+                    uiManager.HUDMenu.SetActive(false);
+
                     Time.timeScale = 0f;
                     break;
                 case GameState.Paused:
                     currentGameState = GameState.Playing;
                     audioManager.UnPauseSound(SoundType.MainGame);
+
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+
                     uiManager.PauseMenu.SetActive(false);
+                    uiManager.HUDMenu.SetActive(true);
+
                     Time.timeScale = 1f;
                     break;
             }
@@ -153,6 +174,9 @@ public class GameManager : MonoBehaviour
 
         currentGameState = GameState.Playing;
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         menuCamera.enabled = false;
         mainCamera.enabled = true;
 
@@ -166,6 +190,12 @@ public class GameManager : MonoBehaviour
         LoadingManager.EnterGameplay = false;
     }
 
+    public float CalculateFPS()
+    {
+        fps = 1 / Time.unscaledDeltaTime;
+        return fps;
+    }
+
     public void EnterGame()
     {
         SceneManager.LoadScene("Demo_scene");
@@ -174,9 +204,15 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         currentGameState = GameState.Playing;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         Time.timeScale = 1f;
         audioManager.UnPauseSound(SoundType.MainGame);
+
         uiManager.PauseMenu.SetActive(false);
+        uiManager.HUDMenu.SetActive(true);
     }
 
     public void ReturnToMainMenu()
@@ -184,55 +220,25 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
-    public void EnterMainMenuSettings()
-    {
-        uiEvents.RaiseOpenMainMenuSettings();
-    }
-
-    public void EnterPauseMenuSettings()
-    {
-        uiEvents.RaiseOpenPauseMenuSettings();
-    }
+    public void EnterMainMenuSettings() => uiManager.OpenMainMenuSettings();
+    public void EnterPauseMenuSettings() => uiManager.OpenPauseMenuSettings();
 
     public void EnterCredits()
     {
-        uiEvents.RaiseOpenCreditsMenu();
+        uiManager.OpenCreditsMenu();
         creditsMenuAnimator.SetTrigger("FadeIn");
     }
 
     // Settings Tabs
-    public void EnterAudio()
-    {
-        uiEvents.RaiseOpenAudioMenu();
-    }
-    public void EnterDisplay()
-    {
-        uiEvents.RaiseOpenDisplayMenu();
-    }
-
-    public void EnterGraphics()
-    {
-        uiEvents.RaiseOpenGraphicsMenu();
-    }
-
-    public void EnterControls()
-    {
-        uiEvents.RaiseOpenControlsMenu();
-    }
+    public void EnterAudio() => uiManager.OpenAudioMenu();
+    public void EnterDisplay() => uiManager.OpenDisplayMenu();
+    public void EnterGraphics() => uiManager.OpenGraphicsMenu();
+    public void EnterControls() => uiManager.OpenControlsMenu();
 
     // Exit / Navigation / Return
-    public void ExitSettingsTabs()
-    {
-        uiEvents.RaiseReturnFromSettingsTabs();
-    }
-
-    public void ExitSettings() => uiEvents.RaiseOnExitSettings();
-
-    public void ExitGame()
-    {
-        Debug.Log("Quitting...");
-        Application.Quit();
-    }
+    public void ExitSettingsTabs() => uiManager.ReturnFromSettingsTabs();
+    public void ExitSettings() => uiManager.ExitSettings();
+    public void ExitGame() => Application.Quit();
 
     public bool OnSettingsTab()
     {
@@ -257,13 +263,13 @@ public class GameManager : MonoBehaviour
         audioManager.PlaySFX(SoundType.PressAnyKey);
         titleMenuAnimator.SetTrigger("FadeOut");
         yield return new WaitForSeconds(openMainMenuCoroutine);
-        uiEvents.RaiseOpenMainMenu();
+        uiManager.OpenMainMenu();
     }
 
     public IEnumerator CloseCreditsMenuCoroutine()
     {
         creditsMenuAnimator.SetTrigger("FadeOut");
         yield return new WaitForSeconds(closeCreditsMenuCoroutine);
-        uiEvents.RaiseOpenMainMenu();
+        uiManager.OpenMainMenu();
     }
 }

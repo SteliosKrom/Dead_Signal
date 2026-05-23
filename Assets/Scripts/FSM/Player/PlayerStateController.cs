@@ -4,6 +4,10 @@ public class PlayerStateController : MonoBehaviour
 {
     private PlayerState currentState;
 
+    #region SERVICES
+    private GameManager gameManager;
+    #endregion
+
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
     [SerializeField] private PlayerController playerController;
@@ -20,11 +24,15 @@ public class PlayerStateController : MonoBehaviour
     #endregion
     private void Start()
     {
+        gameManager = ServiceManager.GetService<GameManager>();
         ChangeState(new IdleState(this));
     }
 
     private void Update()
     {
+        if (gameManager.CurrentGameState != GameState.Playing) 
+            return;
+
         currentState?.Update();
     }
 

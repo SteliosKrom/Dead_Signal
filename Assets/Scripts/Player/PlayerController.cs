@@ -36,6 +36,11 @@ public class PlayerController : MonoBehaviour
         playerControls.Disable();
     }
 
+    private void Start()
+    {
+        //
+    }
+
     private void Update()
     {
         ApplyMovement();

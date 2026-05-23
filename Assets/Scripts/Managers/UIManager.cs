@@ -25,9 +25,13 @@ public enum SettingsTab
 
 public class UIManager : MonoBehaviour
 {
+   private float elapsedTime;
+   private float duration = 1;
+
     #region SERVICES
     private UIManager uiManager;
     private SettingsManager settingsManager;
+    private GameManager gameManager;
     #endregion
 
     #region EVENTS
@@ -47,6 +51,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameVolumeText;
     [SerializeField] private TextMeshProUGUI menuVolumeText;
     [SerializeField] private TextMeshProUGUI sfxVolumeText;
+    [SerializeField] private TextMeshProUGUI fpsText;
     #endregion
 
     #region OBJECTS
@@ -61,11 +66,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject graphicsMenu;
     [SerializeField] private GameObject controlsMenu;
     [SerializeField] private GameObject HUDmenu;
+    [SerializeField] private GameObject fpsMenu;
     [SerializeField] private GameObject[] settingsTabMenus;
     #endregion
 
     #region PROPERTIES
     public GameObject[] SettingsTabMenus => settingsTabMenus;
+    public GameObject FPSMenu => fpsMenu;
     public GameObject PauseMenu => pauseMenu;
     public GameObject TitleMenu => titleMenu;
     public GameObject SettingsMenu => settingsMenu;
@@ -91,23 +98,6 @@ public class UIManager : MonoBehaviour
         // Animations
         uiEvents.OnTitleMenuFadeInCompleted += TitleMenuFadeInCompleted;
         uiEvents.OnCreditsMenuFadeInCompleted += CreditsMenuFadeInCompleted;
-
-        // Main Menus
-        uiEvents.OnOpenMainMenu += OpenMainMenu;
-        uiEvents.OnOpenMainMenuSettings += OpenMainMenuSettings;
-        uiEvents.OnOpenPauseMenuSettings += OpenPauseMenuSettings;
-        uiEvents.OnOpenCreditsMenu += OpenCreditsMenu;
-
-        // Settings Tabs
-        uiEvents.OnOpenAudioMenu += OpenAudioMenu;
-        uiEvents.OnOpenDisplayMenu += OpenDisplayMenu;
-        uiEvents.OnOpenGraphicsMenu += OpenGraphicsMenu;
-        uiEvents.OnOpenControlsMenu += OpenControlsMenu;
-
-        // Exit / Navigation / Return
-        uiEvents.OnReturnFromSettingsTabs += ReturnFromSettingsTabs;
-        uiEvents.OnReturnFromCreditsMenu += ReturnFromCreditsMenu;
-        uiEvents.OnExitSettings += ExitSettings;
     }
 
     private void OnDisable()
@@ -118,41 +108,31 @@ public class UIManager : MonoBehaviour
         // Animations
         uiEvents.OnTitleMenuFadeInCompleted -= TitleMenuFadeInCompleted;
         uiEvents.OnCreditsMenuFadeInCompleted -= CreditsMenuFadeInCompleted;
-
-        // Main Menus
-        uiEvents.OnOpenMainMenu -= OpenMainMenu;
-        uiEvents.OnOpenMainMenuSettings -= OpenMainMenuSettings;
-        uiEvents.OnOpenPauseMenuSettings -= OpenPauseMenuSettings;
-        uiEvents.OnOpenCreditsMenu -= OpenCreditsMenu;
-
-        // Settings Tabs
-        uiEvents.OnOpenAudioMenu -= OpenAudioMenu;
-        uiEvents.OnOpenDisplayMenu -= OpenDisplayMenu;
-        uiEvents.OnOpenGraphicsMenu -= OpenGraphicsMenu;
-        uiEvents.OnOpenControlsMenu -= OpenControlsMenu;
-
-        // Exit / Navigation / Return
-        uiEvents.OnReturnFromSettingsTabs -= ReturnFromSettingsTabs;
-        uiEvents.OnReturnFromCreditsMenu -= ReturnFromCreditsMenu;
-        uiEvents.OnExitSettings -= ExitSettings;
     }
 
     private void Start()
     {
         settingsManager = ServiceManager.GetService<SettingsManager>();
+        gameManager = ServiceManager.GetService<GameManager>();
 
         currentSettingsTab = SettingsTab.None;
     }
 
-    public void TitleMenuFadeInCompleted()
+    private void Update()
     {
-        currentUIState = UIState.TitleMenu;
+        elapsedTime += Time.deltaTime;
+
+        if (elapsedTime >= duration)
+        {
+            elapsedTime = 0f;
+            UpdateFPSUI();
+            return;
+        }
     }
 
-    public void CreditsMenuFadeInCompleted()
-    {
-        currentUIState = UIState.CreditsMenu;
-    }
+    public void TitleMenuFadeInCompleted() => currentUIState = UIState.TitleMenu;
+
+    public void CreditsMenuFadeInCompleted() => currentUIState = UIState.CreditsMenu;
 
     // Generic methods
     public void OpenSettingsMenu(GameObject targetMenu, UIState state)
@@ -169,6 +149,14 @@ public class UIManager : MonoBehaviour
         targetMenu.SetActive(true);
     }
 
+    public void OpenFPSMenu() => fpsMenu.SetActive(true);
+    public void CloseFPSMenu() => fpsMenu.SetActive(false);
+    public void UpdateFPSUI()
+    {
+        float fps = gameManager.CalculateFPS();
+        fpsText.text = fps.ToString("0");
+    }
+
     // Open menus methods 
     public void OpenMainMenu()
     {
@@ -177,40 +165,19 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(true);
     }
 
-    public void OpenMainMenuSettings()
-    {
-        OpenSettingsMenu(mainMenu, UIState.MainMenuSettings);
-    }
+    public void OpenMainMenuSettings() => OpenSettingsMenu(mainMenu, UIState.MainMenuSettings);
+    public void OpenPauseMenuSettings() => OpenSettingsMenu(pauseMenu, UIState.PauseMenuSettings);
 
-    public void OpenPauseMenuSettings()
-    {
-        OpenSettingsMenu(pauseMenu, UIState.PauseMenuSettings);
-    }
+    // Open settings tab menus
+    public void OpenAudioMenu() => OpenSettingsTab(audioMenu, SettingsTab.Audio);
+    public void OpenDisplayMenu() => OpenSettingsTab(displayMenu, SettingsTab.Display);
+    public void OpenGraphicsMenu() => OpenSettingsTab(graphicsMenu, SettingsTab.Graphics);
+    public void OpenControlsMenu() => OpenSettingsTab(controlsMenu, SettingsTab.Controls);
 
     public void OpenCreditsMenu()
     {
         mainMenu.SetActive(false);
         creditsMenu.SetActive(true);
-    }
-
-    public void OpenAudioMenu()
-    {
-        OpenSettingsTab(audioMenu, SettingsTab.Audio);
-    }
-
-    public void OpenDisplayMenu()
-    {
-        OpenSettingsTab(displayMenu, SettingsTab.Display);
-    }
-
-    public void OpenGraphicsMenu()
-    {
-        OpenSettingsTab(graphicsMenu, SettingsTab.Graphics);
-    }
-
-    public void OpenControlsMenu()
-    {
-        OpenSettingsTab(controlsMenu, SettingsTab.Controls);
     }
 
     public void UpdateSliderValueUI(Slider slider, TextMeshProUGUI valueText)
