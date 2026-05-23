@@ -61,17 +61,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject creditsMenu;
+
     [SerializeField] private GameObject audioMenu;
     [SerializeField] private GameObject displayMenu;
     [SerializeField] private GameObject graphicsMenu;
     [SerializeField] private GameObject controlsMenu;
+
     [SerializeField] private GameObject HUDmenu;
+    [SerializeField] private GameObject interactIcon;
     [SerializeField] private GameObject fpsMenu;
     [SerializeField] private GameObject[] settingsTabMenus;
     #endregion
 
     #region PROPERTIES
     public GameObject[] SettingsTabMenus => settingsTabMenus;
+    public GameObject InteractIcon => interactIcon;
     public GameObject FPSMenu => fpsMenu;
     public GameObject PauseMenu => pauseMenu;
     public GameObject TitleMenu => titleMenu;
@@ -149,8 +153,12 @@ public class UIManager : MonoBehaviour
         targetMenu.SetActive(true);
     }
 
+    public void ShowInteractIcon() => interactIcon.SetActive(true);
+    public void HideInteractIcon() => interactIcon.SetActive(false);
+
     public void OpenFPSMenu() => fpsMenu.SetActive(true);
     public void CloseFPSMenu() => fpsMenu.SetActive(false);
+
     public void UpdateFPSUI()
     {
         float fps = gameManager.CalculateFPS();
