@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public Transform CameraHolder => cameraHolder;
     public float MouseSensitivity { get => mouseSensitivity; set => mouseSensitivity = value; }
     #endregion
 

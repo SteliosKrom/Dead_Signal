@@ -1,0 +1,85 @@
+using System.Runtime.CompilerServices;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class Interactor : MonoBehaviour
+{
+    private IInteractable currentInteractable;
+    public RaycastHit hit;
+
+    #region SERVICES
+    private UIManager uiManager;
+    #endregion
+
+    #region INPUT
+    private PlayerControls playerControls;
+    #endregion
+
+    #region DATA
+    private float rayDistance = 2f;
+    #endregion
+
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private CameraController cameraController;
+    #endregion
+
+    #region INTERACTION SOURCE
+    [SerializeField] private Transform raySource;
+    #endregion
+
+    #region PROPERTIES
+    public RaycastHit Hit => hit;
+    #endregion
+    private void Awake()
+    {
+        playerControls = new PlayerControls();
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Enable();
+        playerControls.Player.Interact.performed += OnInteract;
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Player.Interact.performed -= OnInteract;
+        playerControls.Disable();
+    }
+
+    private void Start()
+    {
+        uiManager = ServiceManager.GetService<UIManager>();
+    }
+
+    private void Update()
+    {
+        DetectInteractable();
+    }
+
+    public void OnInteract(InputAction.CallbackContext cxt)
+    {
+        if (hit.collider == null)
+            return;
+
+        if (hit.collider.TryGetComponent(out currentInteractable))
+        {
+            currentInteractable.Interact();
+        }
+    }
+
+    public void DetectInteractable()
+    {
+        Ray ray = new Ray(cameraController.CameraHolder.position, cameraController.CameraHolder.forward);
+
+        if (Physics.Raycast(ray, out hit, rayDistance))
+        {
+            if (hit.collider.TryGetComponent(out currentInteractable))
+                uiManager.ShowInteractIcon();
+            else
+                uiManager.HideInteractIcon();
+        }
+        Debug.DrawRay(raySource.transform.position, cameraController.CameraHolder.forward * rayDistance, Color.red);
+    }
+}
