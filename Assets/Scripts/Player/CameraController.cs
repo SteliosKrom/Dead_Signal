@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform cameraHolder;
-    [SerializeField] private Transform spineBone;
 
     #region DATA
     [SerializeField] private float minCameraRotation;
@@ -13,7 +12,6 @@ public class CameraController : MonoBehaviour
     private float xRotation;
     private float yRotation;
     private float baseYRotation;
-    private Quaternion spineInitialRotation;
     #endregion
 
     #region INPUT
@@ -47,16 +45,10 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        spineInitialRotation = spineBone.localRotation;
         baseYRotation = transform.eulerAngles.y;
     }
 
     private void Update()
-    {
-        this.transform.localRotation = Quaternion.Euler(0f, baseYRotation + yRotation, 0f);
-    }
-
-    private void LateUpdate()
     {
         ApplyRotation();
     }
@@ -75,7 +67,8 @@ public class CameraController : MonoBehaviour
         xRotation -= mouseY;
 
         xRotation = Mathf.Clamp(xRotation, minCameraRotation, maxCameraRotation);
+
+        this.transform.localRotation = Quaternion.Euler(0f, baseYRotation + yRotation, 0f);
         cameraHolder.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        spineBone.localRotation = Quaternion.Euler(0f, 0f, -xRotation);
     }
 }
