@@ -70,12 +70,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject HUDmenu;
     [SerializeField] private GameObject interactIcon;
     [SerializeField] private GameObject fpsMenu;
+    [SerializeField] private GameObject crossHair;
     [SerializeField] private GameObject[] settingsTabMenus;
     #endregion
 
     #region PROPERTIES
     public GameObject[] SettingsTabMenus => settingsTabMenus;
     public GameObject InteractIcon => interactIcon;
+    public GameObject CrossHair => crossHair;
     public GameObject FPSMenu => fpsMenu;
     public GameObject PauseMenu => pauseMenu;
     public GameObject TitleMenu => titleMenu;
@@ -153,11 +155,8 @@ public class UIManager : MonoBehaviour
         targetMenu.SetActive(true);
     }
 
-    public void ShowInteractIcon() => interactIcon.SetActive(true);
-    public void HideInteractIcon() => interactIcon.SetActive(false);
-
-    public void OpenFPSMenu() => fpsMenu.SetActive(true);
-    public void CloseFPSMenu() => fpsMenu.SetActive(false);
+    public void ShowObject(GameObject obj) => obj.SetActive(true);
+    public void HideObject(GameObject obj) => obj.SetActive(false);
 
     public void UpdateFPSUI()
     {
