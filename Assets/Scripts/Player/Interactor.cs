@@ -16,7 +16,7 @@ public class Interactor : MonoBehaviour
     #endregion
 
     #region DATA
-    private float rayDistance = 2f;
+    private float rayDistance = 1.5f;
     #endregion
 
     #region SCRIPT REFERENCES
@@ -76,9 +76,19 @@ public class Interactor : MonoBehaviour
         if (Physics.Raycast(ray, out hit, rayDistance))
         {
             if (hit.collider.TryGetComponent(out currentInteractable))
-                uiManager.ShowInteractIcon();
+            {
+                uiManager.ShowObject(uiManager.InteractIcon);
+                uiManager.HideObject(uiManager.CrossHair);
+            }
             else
-                uiManager.HideInteractIcon();
+            {
+                uiManager.ShowObject(uiManager.CrossHair);
+                uiManager.HideObject(uiManager.InteractIcon);
+            }
+        }
+        else
+        {
+            uiManager.HideObject(uiManager.InteractIcon);
         }
         Debug.DrawRay(raySource.transform.position, cameraController.CameraHolder.forward * rayDistance, Color.red);
     }

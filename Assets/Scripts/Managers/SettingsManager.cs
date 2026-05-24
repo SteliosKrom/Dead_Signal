@@ -255,9 +255,10 @@ public class SettingsManager : MonoBehaviour
     public void SetFPSToggle()
     {
         if (fpsToggle.isOn)
-            uiManager.OpenFPSMenu();
+            uiManager.ShowObject(uiManager.FPSMenu);
         else
-            uiManager.CloseFPSMenu();
+            uiManager.HideObject(uiManager.FPSMenu);
+
         SetBool(FPS_KEY, fpsToggle.isOn);
     }
 
