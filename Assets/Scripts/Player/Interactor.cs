@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class Interactor : MonoBehaviour
 {
     private IInteractable currentInteractable;
-    public RaycastHit hit;
+    private RaycastHit hit;
 
     #region SERVICES
     private UIManager uiManager;
@@ -28,9 +28,6 @@ public class Interactor : MonoBehaviour
     [SerializeField] private Transform raySource;
     #endregion
 
-    #region PROPERTIES
-    public RaycastHit Hit => hit;
-    #endregion
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -65,7 +62,8 @@ public class Interactor : MonoBehaviour
 
         if (hit.collider.TryGetComponent(out currentInteractable))
         {
-            currentInteractable.Interact();
+            if (Keyboard.current.eKey.wasPressedThisFrame)
+                currentInteractable.Interact();
         }
     }
 
@@ -88,6 +86,7 @@ public class Interactor : MonoBehaviour
         }
         else
         {
+            uiManager.ShowObject(uiManager.CrossHair);
             uiManager.HideObject(uiManager.InteractIcon);
         }
         Debug.DrawRay(raySource.transform.position, cameraController.CameraHolder.forward * rayDistance, Color.red);
