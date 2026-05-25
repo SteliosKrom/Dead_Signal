@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         gameManager = ServiceManager.GetService<GameManager>();
+        canInteract = true;
     }
 
     private void Update()
@@ -76,10 +77,13 @@ public class PlayerController : MonoBehaviour
 
         if (canInteract)
         {
-            if (gunLight.enabled)
-                gunLight.enabled = false;
-            else
-                gunLight.enabled = true;
+            if (Keyboard.current.fKey.wasPressedThisFrame)
+            {
+                if (gunLight.enabled)
+                    gunLight.enabled = false;
+                else
+                    gunLight.enabled = true;
+            }
             StartCoroutine(CanInteractDelay());
         }
     }
