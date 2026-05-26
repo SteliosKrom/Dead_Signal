@@ -4,7 +4,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private Vector3 moveDirection;
-    private float bulletSpeed = 30f;
+    private float bulletSpeed = 25f;
 
     private void Update()
     {
@@ -13,13 +13,10 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        IDamageable damageable = other.collider.GetComponent<IDamageable>();
-
-        if (damageable != null)
+        if (other.collider.TryGetComponent(out IDamageable damageable))
         {
             Debug.Log("Hit damageable!");
         }
-
         ObjectPoolManager.Instance.ReturnObject("Bullet", this.gameObject);
         Debug.Log("Return bullet!");
     }

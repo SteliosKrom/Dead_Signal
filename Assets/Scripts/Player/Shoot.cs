@@ -16,7 +16,7 @@ public class Shoot : MonoBehaviour
             GameObject obj = ObjectPoolManager.Instance.GetObject("Bullet");
             obj.transform.position = shootPoint.position;
             Bullet bullet = obj.GetComponent<Bullet>();
-            bullet.SetDirection(Camera.main.transform.forward);
+            bullet.SetDirection(shootPoint.forward);
         }
     }
 }

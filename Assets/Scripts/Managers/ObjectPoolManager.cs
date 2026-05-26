@@ -61,5 +61,6 @@ public class ObjectPoolManager : MonoBehaviour
     public void ReturnObject(string type, GameObject obj)
     {
         obj.SetActive(false);
+        poolDict[type].Enqueue(obj);
     }
 }
