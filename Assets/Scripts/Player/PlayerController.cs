@@ -8,6 +8,12 @@ public class PlayerController : MonoBehaviour
 
     #region SERVICES
     private GameManager gameManager;
+    private UIManager uiManager;
+    #endregion
+
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private Shoot shoot;
     #endregion
 
     #region INPUT
@@ -44,6 +50,7 @@ public class PlayerController : MonoBehaviour
         playerControls.Player.Move.performed += OnMove;
         playerControls.Player.Move.canceled += OnMove;
         playerControls.Player.Interact.performed += OnInteract;
+        playerControls.Player.Interact.performed += OnReload;
     }
 
     private void OnDisable()
@@ -51,12 +58,14 @@ public class PlayerController : MonoBehaviour
         playerControls.Player.Move.performed -= OnMove;
         playerControls.Player.Move.canceled -= OnMove;
         playerControls.Player.Interact.performed -= OnInteract;
+        playerControls.Player.Interact.performed -= OnReload;
         playerControls.Disable();
     }
 
     private void Start()
     {
         gameManager = ServiceManager.GetService<GameManager>();
+        uiManager = ServiceManager.GetService<UIManager>();
         canInteract = true;
     }
 
@@ -85,6 +94,32 @@ public class PlayerController : MonoBehaviour
                     gunLight.enabled = true;
             }
             StartCoroutine(CanInteractDelay());
+        }
+    }
+
+    private void OnReload(InputAction.CallbackContext cxt)
+    {
+        if (gameManager.CurrentGameState != GameState.Playing)
+            return;
+
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            if (shoot.CurrentReserveAmmo <= 0)
+                return;
+
+            float missingAmmo = 24 - shoot.CurrentAmmo;
+
+            if (shoot.CurrentReserveAmmo >= missingAmmo)
+            {
+                shoot.CurrentReserveAmmo -= missingAmmo;
+                shoot.ResetCurrentAmmo();
+            }
+            else
+            {
+                shoot.CurrentAmmo += shoot.CurrentReserveAmmo;
+                shoot.CurrentReserveAmmo = 0f;
+            }
+                uiManager.UpdateFullAmmoCapacityUI();
         }
     }
 

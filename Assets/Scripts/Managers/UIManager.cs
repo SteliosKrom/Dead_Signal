@@ -34,6 +34,11 @@ public class UIManager : MonoBehaviour
     private GameManager gameManager;
     #endregion
 
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private Shoot shoot;
+    #endregion
+
     #region EVENTS
     [Header("EVENTS")]
     [SerializeField] private UIEvents uiEvents;
@@ -52,6 +57,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI menuVolumeText;
     [SerializeField] private TextMeshProUGUI sfxVolumeText;
     [SerializeField] private TextMeshProUGUI fpsText;
+    [SerializeField] private TextMeshProUGUI currentAmmoText;
+    [SerializeField] private TextMeshProUGUI currentReserveAmmoText;
     #endregion
 
     #region OBJECTS
@@ -162,6 +169,17 @@ public class UIManager : MonoBehaviour
     {
         float fps = gameManager.CalculateFPS();
         fpsText.text = fps.ToString("0");
+    }
+
+    public void UpdateCurrentAmmoUI()
+    {
+        currentAmmoText.text = shoot.CurrentAmmo.ToString("0");
+    }
+
+    public void UpdateFullAmmoCapacityUI()
+    {
+        currentAmmoText.text = shoot.CurrentAmmo.ToString("0");
+        currentReserveAmmoText.text = shoot.CurrentReserveAmmo.ToString("0");
     }
 
     // Open menus methods 
