@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
@@ -10,6 +11,15 @@ public class Shoot : MonoBehaviour
     #region SERVICES
     private UIManager uiManager;
     private GameManager gameManager;
+    #endregion
+
+    #region INPUT
+    private PlayerControls playerControls;
+    #endregion
+
+    #region PARTICLES
+    [Header("PARTICLES")]
+    [SerializeField] private ParticleSystem gunFX;
     #endregion
 
     public float CurrentAmmo 
@@ -26,7 +36,22 @@ public class Shoot : MonoBehaviour
     public float CurrentReserveAmmo { get => currentReserveAmmo; set => currentReserveAmmo = value; }
     private void Awake()
     {
+        playerControls = new PlayerControls();
         shootPoint = GameObject.Find("ShootPoint").GetComponent<Transform>();
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Enable();
+        playerControls.Player.Shoot.performed += OnShoot;
+        playerControls.Player.Shoot.canceled += OnShoot;
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Player.Shoot.performed -= OnShoot;
+        playerControls.Player.Shoot.canceled -= OnShoot;
+        playerControls.Disable();
     }
 
     private void Start()
@@ -38,24 +63,20 @@ public class Shoot : MonoBehaviour
         currentReserveAmmo = 120;
     }
 
-    private void Update()
+    public void OnShoot(InputAction.CallbackContext cxt)
     {
-        if (gameManager.CurrentGameState != GameState.Playing)
-            return;
+        if (gameManager.CurrentGameState != GameState.Playing) return;
+        if (CurrentAmmo <= 0) return;
 
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (CurrentAmmo <= 0)
-                return;
-
             CurrentAmmo--;
             uiManager.UpdateCurrentAmmoUI();
             GameObject obj = ObjectPoolManager.Instance.GetObject("Bullet");
             obj.transform.position = shootPoint.position;
             Bullet bullet = obj.GetComponent<Bullet>();
             bullet.SetDirection(shootPoint.forward);
+            gunFX.Play();
         }
     }
 
