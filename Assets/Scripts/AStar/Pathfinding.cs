@@ -1,7 +1,5 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 
 public class Pathfinding : MonoBehaviour
 {
@@ -21,6 +19,7 @@ public class Pathfinding : MonoBehaviour
         HashSet<AStarNode> closedList = new HashSet<AStarNode>();
 
         openList.Add(startNode);
+        startNode.GCost = 0;
 
         while (openList.Count > 0)
         {
@@ -59,7 +58,9 @@ public class Pathfinding : MonoBehaviour
                     neighbor.ParentNode = currentNode;
 
                     if (!openList.Contains(neighbor))
+                    {
                         openList.Add(neighbor);
+                    }
                 }
             }
         }

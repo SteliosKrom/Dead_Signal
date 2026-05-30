@@ -1,12 +1,10 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour
 {
     [SerializeField] private int gridWidth;
     [SerializeField] private int gridHeight;
-
     [SerializeField] private float nodeSize;
 
     private AStarNode[,] grid;
@@ -56,10 +54,10 @@ public class GridManager : MonoBehaviour
         return neighbors;
     }
 
-    public AStarNode NodeFromWorldPoint(Vector3 worldPosition)
+    public AStarNode NodeFromWorldPoint(Vector3 worldPoint)
     {
-        float percentX = worldPosition.x / (gridWidth * nodeSize);
-        float percentY = worldPosition.z / (gridHeight * nodeSize);
+        float percentX = worldPoint.x / (gridWidth * nodeSize);
+        float percentY = worldPoint.z / (gridHeight * nodeSize);
 
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
