@@ -62799,6 +62799,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7175344fdeed0ce4e92bdbb0f1c7a458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
+  gridWidth: 35
+  gridHeight: 35
+  nodeSize: 1
 --- !u!33 &1519725959
 MeshFilter:
   m_ObjectHideFlags: 0
