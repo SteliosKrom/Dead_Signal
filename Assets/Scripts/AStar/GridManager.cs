@@ -56,8 +56,11 @@ public class GridManager : MonoBehaviour
 
     public AStarNode NodeFromWorldPoint(Vector3 worldPoint)
     {
-        float percentX = worldPoint.x / (gridWidth * nodeSize);
-        float percentY = worldPoint.z / (gridHeight * nodeSize);
+        float offsetX = (gridWidth * nodeSize) / 2f;
+        float offsetY = (gridHeight * nodeSize) / 2f;
+
+        float percentX = (worldPoint.x + offsetX) / (gridWidth * nodeSize);
+        float percentY = (worldPoint.z + offsetY) / (gridHeight * nodeSize);
 
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
