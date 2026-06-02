@@ -7,10 +7,10 @@ public class Pathfinding : MonoBehaviour
 
     private void Awake()
     {
-        gridManager = GetComponent<GridManager>();
+        gridManager = GameObject.Find("GridManager").GetComponent<GridManager>();
     }
 
-    public void FindPath(Vector3 startPos, Vector3 targetPos)
+    public List<AStarNode> FindPath(Vector3 startPos, Vector3 targetPos)
     {
         AStarNode startNode = gridManager.NodeFromWorldPoint(startPos);
         AStarNode targetNode = gridManager.NodeFromWorldPoint(targetPos);
@@ -40,8 +40,8 @@ public class Pathfinding : MonoBehaviour
 
             if (currentNode == targetNode)
             {
-                RetracePath(startNode, targetNode);
-                return;
+                List<AStarNode> path = RetracePath(startNode, targetNode);
+                return path;
             }
 
             foreach (AStarNode neighbor in gridManager.GetNeighbors(currentNode))
@@ -64,6 +64,7 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
+        return null;
     }
 
     public int GetDistance(AStarNode neighborNode, AStarNode targetNode)
@@ -74,7 +75,7 @@ public class Pathfinding : MonoBehaviour
         return distanceX + distanceY;
     }
 
-    public void RetracePath(AStarNode startNode, AStarNode targetNode)
+    public List<AStarNode> RetracePath(AStarNode startNode, AStarNode targetNode)
     {
         List<AStarNode> path = new List<AStarNode>();
         AStarNode currentNode = targetNode;
@@ -85,5 +86,6 @@ public class Pathfinding : MonoBehaviour
             currentNode = currentNode.ParentNode;
         }
         path.Reverse();
+        return path;
     }
 }
