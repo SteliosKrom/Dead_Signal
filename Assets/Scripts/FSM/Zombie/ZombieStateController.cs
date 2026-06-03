@@ -1,19 +1,26 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor.Build;
 
 public class ZombieStateController : MonoBehaviour
 {
     [SerializeField] private Transform player;
 
+    [SerializeField] private int randomWaitTime;
     [SerializeField] private int XSec;
     [SerializeField] private int YSec;
     [SerializeField] private int NSec;
-    private int currentNodeIndex;
+    [SerializeField] private int currentNodeIndex;
 
     private float moveSpeed = 1f;
     private float rotationSpeed = 100f;
     private float stopThreshold = 0.2f;
-    private float viewDistance = 5f;
+    [SerializeField] private float viewDistance = 5f;
+    [SerializeField] private float timer = 0f;
+
+    [SerializeField] private bool canSeePlayer;
+    [SerializeField] private bool canSensePlayer;
 
     #region SERVICES
     private GameManager gameManager;
@@ -39,7 +46,7 @@ public class ZombieStateController : MonoBehaviour
     public Animator ZombieAnimator => zombieAnimator;
     public ZombieState CurrentState { get; set; }
 
-    public float Timer { get; set; }
+    public float Timer { get => timer; set => timer = value; }
     public float MoveSpeed => moveSpeed;
     public float RotationSpeed => rotationSpeed;
     public float StopThreshold => stopThreshold;
@@ -49,10 +56,10 @@ public class ZombieStateController : MonoBehaviour
     public int YSEC => YSec;
     public int NSEC => NSec;
     public int CurrentNodeIndex { get => currentNodeIndex; set => currentNodeIndex = value; }
-    public int RandomWaitTime { get; set; }
+    public int RandomWaitTime { get => randomWaitTime; set => randomWaitTime = value; }
 
-    public bool CanSeePlayer { get; set; }
-    public bool CanSensePlayer { get; set; }
+    public bool CanSeePlayer { get => canSeePlayer; set => canSeePlayer = value; }
+    public bool CanSensePlayer { get => canSensePlayer; set => canSensePlayer = value; }
     #endregion
 
     private void Start()
