@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.Build;
 
 public class ZombieStateController : MonoBehaviour
 {
@@ -13,11 +11,13 @@ public class ZombieStateController : MonoBehaviour
     [SerializeField] private int NSec;
     [SerializeField] private int currentNodeIndex;
 
-    private float moveSpeed = 1f;
-    private float rotationSpeed = 100f;
-    private float stopThreshold = 0.2f;
-    [SerializeField] private float viewDistance = 5f;
-    [SerializeField] private float timer = 0f;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float speedMultiplier;
+    [SerializeField] private float patrolNodeThreshold;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float dotThreshold;
+    [SerializeField] private float viewDistance;
+    [SerializeField] private float timer;
 
     [SerializeField] private bool canSeePlayer;
     [SerializeField] private bool canSensePlayer;
@@ -47,10 +47,12 @@ public class ZombieStateController : MonoBehaviour
     public ZombieState CurrentState { get; set; }
 
     public float Timer { get => timer; set => timer = value; }
+    public float SpeedMultiplier => speedMultiplier;
     public float MoveSpeed => moveSpeed;
-    public float RotationSpeed => rotationSpeed;
-    public float StopThreshold => stopThreshold;
+    public float PatrolNodeThreshold => patrolNodeThreshold;
+    public float DotThreshold => dotThreshold;
     public float ViewDistance => viewDistance;
+    public float AttackRange => attackRange;
 
     public int XSEC => XSec;
     public int YSEC => YSec;
@@ -66,6 +68,9 @@ public class ZombieStateController : MonoBehaviour
     {
         gameManager = ServiceManager.GetService<GameManager>();
 
+        if (gameManager.CurrentGameState != GameState.Playing)
+            return;
+
         ChangeState(new ZombieIdleState(this));
     }
 
@@ -79,19 +84,5 @@ public class ZombieStateController : MonoBehaviour
         CurrentState?.Exit();
         CurrentState = newState;
         CurrentState.Enter();
-    }
-
-    public void InitializePathfinding()
-    {
-        RandomWaitTime = Random.Range(XSec, YSec);
-        int randomIndex;
-
-        do
-        {
-            randomIndex = Random.Range(0, patrolPoints.Length);
-        } 
-        while (CurrentPatrolPoint == PatrolPoints[randomIndex]);
-
-        CurrentPatrolPoint = patrolPoints[randomIndex];
     }
 }

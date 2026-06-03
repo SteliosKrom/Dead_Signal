@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -88,6 +89,7 @@ public class Interactor : MonoBehaviour
         {
             uiManager.ShowObject(uiManager.CrossHair);
             uiManager.HideObject(uiManager.InteractIcon);
+            currentInteractable = null;
         }
         Debug.DrawRay(raySource.transform.position, cameraController.CameraHolder.forward * rayDistance, Color.red);
     }
