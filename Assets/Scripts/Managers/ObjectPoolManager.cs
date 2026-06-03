@@ -4,8 +4,6 @@ using System;
 
 public class ObjectPoolManager : MonoBehaviour
 {
-    public static ObjectPoolManager Instance;
-
     [Serializable]
     public class PoolItems
     {
@@ -20,11 +18,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else Destroy(gameObject);
+        ServiceManager.RegisterService<ObjectPoolManager>(this);
 
         poolDict = new Dictionary<string, Queue<GameObject>>();
     }
