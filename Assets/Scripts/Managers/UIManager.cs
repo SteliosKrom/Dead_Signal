@@ -144,7 +144,6 @@ public class UIManager : MonoBehaviour
     }
 
     public void TitleMenuFadeInCompleted() => currentUIState = UIState.TitleMenu;
-
     public void CreditsMenuFadeInCompleted() => currentUIState = UIState.CreditsMenu;
 
     // Generic methods

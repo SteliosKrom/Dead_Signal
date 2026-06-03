@@ -75258,9 +75258,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieStateController
   player: {fileID: 502208255}
+  randomWaitTime: 0
   XSec: 3
   YSec: 6
-  NSec: 3
+  NSec: 10
+  currentNodeIndex: 0
+  moveSpeed: 1
+  speedMultiplier: 1
+  patrolNodeThreshold: 0.2
+  attackRange: 0.2
+  dotThreshold: 0.5
+  viewDistance: 6
+  timer: 0
+  canSeePlayer: 0
+  canSensePlayer: 0
   pathfinding: {fileID: 677132901}
   patrolPoints:
   - {fileID: 84661690}

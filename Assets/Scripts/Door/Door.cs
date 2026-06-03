@@ -54,9 +54,9 @@ public class Door : MonoBehaviour, IInteractable
     {
         doorHandleCollider.enabled = false;
         doorCollider.enabled = false;
-        uiManager.InteractIcon.SetActive(false);
+
         yield return new WaitForSeconds(canInteractDelay);
-        uiManager.InteractIcon.SetActive(true);
+
         doorHandleCollider.enabled = true;
         doorCollider.enabled = true;
     }
