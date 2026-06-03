@@ -38,20 +38,20 @@ public sealed class ZombieChaseState : ZombieState
             {
                 stateController.transform.position += directionToPlayer * stateController.MoveSpeed * 1 * Time.deltaTime;
                 stateController.transform.rotation = targetRotation;
+            }
 
-                if (distance <= stateController.StopThreshold)
-                {
-                    stateController.ChangeState(new ZombieAttackState(stateController));
-                    stateController.Timer = 0f;
-                    return;
-                }
+            if (distance <= stateController.StopThreshold)
+            {
+                stateController.Timer = 0f;
+                stateController.ChangeState(new ZombieAttackState(stateController));
+                return;
+            }
 
-                if (!stateController.CanSeePlayer)
-                {
-                    stateController.ChangeState(new ZombieIdleState(stateController));
-                    stateController.Timer = 0f;
-                    return;
-                }
+            if (!stateController.CanSeePlayer)
+            {
+                stateController.Timer = 0f;
+                stateController.ChangeState(new ZombieIdleState(stateController));
+                return;
             }
         }
     }

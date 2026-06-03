@@ -9,6 +9,7 @@ public sealed class ZombieIdleState : ZombieState
     {
         stateController.InitializePathfinding();
         stateController.ZombieAnimator.SetBool("IsWalking", false);
+        stateController.ZombieAnimator.SetBool("IsRunning", false);
     }
 
     public override void Update()

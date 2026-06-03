@@ -34,7 +34,7 @@ public sealed class ZombiePatrolState : ZombieState
             return;
         }
 
-        if (distance < stateController.StopThreshold)
+        if (distance <= stateController.StopThreshold)
         {
             if (stateController.CurrentNodeIndex >= stateController.Path.Count - 1)
             {
