@@ -3,8 +3,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    #region SERVICES
+    private ObjectPoolManager poolManager;
+    #endregion
+
     private Vector3 moveDirection;
     private float bulletSpeed = 25f;
+
+    private void Start()
+    {
+        poolManager = ServiceManager.GetService<ObjectPoolManager>();
+    }
 
     private void Update()
     {
@@ -17,7 +26,7 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("Hit damageable!");
         }
-        ObjectPoolManager.Instance.ReturnObject("Bullet", this.gameObject);
+        poolManager.ReturnObject("Bullet", this.gameObject);
         Debug.Log("Return bullet!");
     }
 

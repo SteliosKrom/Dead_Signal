@@ -11,6 +11,7 @@ public class Shoot : MonoBehaviour
     #region SERVICES
     private UIManager uiManager;
     private GameManager gameManager;
+    private ObjectPoolManager poolManager;
     #endregion
 
     #region INPUT
@@ -58,6 +59,7 @@ public class Shoot : MonoBehaviour
     {
         uiManager = ServiceManager.GetService<UIManager>();
         gameManager = ServiceManager.GetService<GameManager>();
+        poolManager = ServiceManager.GetService<ObjectPoolManager>();
 
         CurrentAmmo = 24;
         currentReserveAmmo = 120;
@@ -72,7 +74,7 @@ public class Shoot : MonoBehaviour
         {
             CurrentAmmo--;
             uiManager.UpdateCurrentAmmoUI();
-            GameObject obj = ObjectPoolManager.Instance.GetObject("Bullet");
+            GameObject obj = poolManager.GetObject("Bullet");
             obj.transform.position = shootPoint.position;
             Bullet bullet = obj.GetComponent<Bullet>();
             bullet.SetDirection(shootPoint.forward);
