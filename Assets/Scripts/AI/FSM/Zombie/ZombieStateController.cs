@@ -18,6 +18,7 @@ public class ZombieStateController : MonoBehaviour
     [SerializeField] private float dotThreshold;
     [SerializeField] private float viewDistance;
     [SerializeField] private float timer;
+    [SerializeField] private float predictionTime;
 
     [SerializeField] private bool canSeePlayer;
     [SerializeField] private bool canSensePlayer;
@@ -47,12 +48,16 @@ public class ZombieStateController : MonoBehaviour
     public ZombieState CurrentState { get; set; }
 
     public float Timer { get => timer; set => timer = value; }
+    public float PredictionTime => predictionTime;
     public float SpeedMultiplier => speedMultiplier;
     public float MoveSpeed => moveSpeed;
     public float PatrolNodeThreshold => patrolNodeThreshold;
     public float DotThreshold => dotThreshold;
     public float ViewDistance => viewDistance;
     public float AttackRange => attackRange;
+
+    public Vector3 PreviousPlayerPosition { get; set; }
+    public Vector3 PlayerVelocity { get; set; }
 
     public int XSEC => XSec;
     public int YSEC => YSec;
@@ -71,11 +76,13 @@ public class ZombieStateController : MonoBehaviour
         if (gameManager.CurrentGameState != GameState.Playing)
             return;
 
+        PreviousPlayerPosition = player.position;
         ChangeState(new ZombieIdleState(this));
     }
 
     private void Update()
     {
+        PreviousPlayerPosition = player.position;
         CurrentState?.Update();
     }
 

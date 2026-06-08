@@ -12,7 +12,9 @@ public sealed class ZombieChaseState : ZombieState
 
     public override void Update()
     {
-        Vector3 directionToPlayer = (stateController.Player.position - stateController.transform.position).normalized;
+        Vector3 futurePlayerPosition = stateController.Player.position + stateController.PlayerVelocity * stateController.PredictionTime;
+
+        Vector3 directionToPlayer = (futurePlayerPosition - stateController.transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
         float distance = Vector3.Distance(stateController.transform.position, stateController.Player.transform.position);
 
