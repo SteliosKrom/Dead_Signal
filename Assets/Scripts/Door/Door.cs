@@ -9,6 +9,11 @@ public class Door : MonoBehaviour, IInteractable
     private UIManager uiManager;
     #endregion
 
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+
+    #endregion
+
     #region COLLIDERS
     private Collider doorHandleCollider;
     [SerializeField] private Collider doorCollider;

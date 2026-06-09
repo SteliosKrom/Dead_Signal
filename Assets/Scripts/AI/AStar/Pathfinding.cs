@@ -40,6 +40,7 @@ public class Pathfinding : MonoBehaviour
 
             if (currentNode == targetNode)
             {
+                Debug.Log("START == TARGET");
                 List<AStarNode> path = RetracePath(startNode, targetNode);
                 return path;
             }
