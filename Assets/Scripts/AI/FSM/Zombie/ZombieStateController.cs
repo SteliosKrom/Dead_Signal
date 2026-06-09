@@ -13,15 +13,17 @@ public class ZombieStateController : MonoBehaviour
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float speedMultiplier;
-    [SerializeField] private float patrolNodeThreshold;
+    [SerializeField] private float nodeReachThreshold;
     [SerializeField] private float attackRange;
     [SerializeField] private float dotThreshold;
     [SerializeField] private float viewDistance;
     [SerializeField] private float timer;
-    [SerializeField] private float predictionTime;
 
     [SerializeField] private bool canSeePlayer;
     [SerializeField] private bool canSensePlayer;
+
+    private float repathTimer;
+    private float repathInterval = 1f;
 
     #region SERVICES
     private GameManager gameManager;
@@ -48,16 +50,14 @@ public class ZombieStateController : MonoBehaviour
     public ZombieState CurrentState { get; set; }
 
     public float Timer { get => timer; set => timer = value; }
-    public float PredictionTime => predictionTime;
+    public float RepathTimer { get => repathTimer; set => repathTimer = value; }
+    public float RepathInterval => repathInterval;
     public float SpeedMultiplier => speedMultiplier;
     public float MoveSpeed => moveSpeed;
-    public float PatrolNodeThreshold => patrolNodeThreshold;
+    public float NodeReachThreshold => nodeReachThreshold;
     public float DotThreshold => dotThreshold;
     public float ViewDistance => viewDistance;
     public float AttackRange => attackRange;
-
-    public Vector3 PreviousPlayerPosition { get; set; }
-    public Vector3 PlayerVelocity { get; set; }
 
     public int XSEC => XSec;
     public int YSEC => YSec;
@@ -76,13 +76,11 @@ public class ZombieStateController : MonoBehaviour
         if (gameManager.CurrentGameState != GameState.Playing)
             return;
 
-        PreviousPlayerPosition = player.position;
         ChangeState(new ZombieIdleState(this));
     }
 
     private void Update()
     {
-        PreviousPlayerPosition = player.position;
         CurrentState?.Update();
     }
 

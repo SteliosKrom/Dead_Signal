@@ -46,7 +46,7 @@ public sealed class ZombiePatrolState : ZombieState
 
     public void MoveToIdleState(float distance)
     {
-        if (distance <= stateController.PatrolNodeThreshold)
+        if (distance <= stateController.NodeReachThreshold)
         {
             if (stateController.CurrentNodeIndex >= stateController.Path.Count - 1)
             {

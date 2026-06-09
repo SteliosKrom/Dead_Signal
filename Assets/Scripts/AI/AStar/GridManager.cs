@@ -7,6 +7,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int gridHeight;
     [SerializeField] private float nodeSize;
 
+    [SerializeField] private LayerMask obstacleLayer;
+
     private AStarNode[,] grid;
 
     private void Start()
@@ -26,7 +28,8 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < gridHeight; y++)
             {
                 Vector3 worldPosition = new Vector3(x * nodeSize - offsetX, 0f, y * nodeSize - offsetY);
-                grid[x, y] = new AStarNode(true, worldPosition, x, y);
+                bool isWalkable = !Physics.CheckSphere(worldPosition, nodeSize * 0.5f, obstacleLayer);
+                grid[x, y] = new AStarNode(isWalkable, worldPosition, x, y);
             }
         }
     }
@@ -78,7 +81,10 @@ public class GridManager : MonoBehaviour
 
         foreach (AStarNode node in grid)
         {
-            Gizmos.color = Color.white;
+            if (node.IsWalkable)
+                Gizmos.color = Color.white;
+            else
+                Gizmos.color = Color.red;
             Gizmos.DrawWireCube(node.WorldPosition, Vector3.one * nodeSize);
         }
     }

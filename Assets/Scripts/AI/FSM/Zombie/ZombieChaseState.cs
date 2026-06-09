@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public sealed class ZombieChaseState : ZombieState
@@ -7,16 +6,50 @@ public sealed class ZombieChaseState : ZombieState
 
     public override void Enter()
     {
+        stateController.CurrentNodeIndex = 0;
+
+        stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position, stateController.Player.position);
+
+        stateController.RepathTimer = 0f;
+
         stateController.ZombieAnimator.SetInteger("MovementState", 2);
     }
 
     public override void Update()
     {
-        Vector3 futurePlayerPosition = stateController.Player.position + stateController.PlayerVelocity * stateController.PredictionTime;
+        stateController.RepathTimer += Time.deltaTime;
 
-        Vector3 directionToPlayer = (futurePlayerPosition - stateController.transform.position).normalized;
+        if (stateController.RepathTimer >= stateController.RepathInterval)
+        {
+            stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position, stateController.Player.position);
+            stateController.CurrentNodeIndex = 0;
+            stateController.RepathTimer = 0f;
+        }
+
+        //if (stateController.Path == null || stateController.Path.Count == 0)
+        //{
+        //    return;
+        //}
+
+        if (stateController.CurrentNodeIndex >= stateController.Path.Count)
+        {
+            stateController.CurrentNodeIndex = 0;
+        }
+
+        AStarNode currentNode = stateController.Path[stateController.CurrentNodeIndex];
+
+        Vector3 directionToPlayer = (currentNode.WorldPosition - stateController.transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
         float distance = Vector3.Distance(stateController.transform.position, stateController.Player.transform.position);
+        float nodeDistance = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
+
+        if (nodeDistance <= stateController.NodeReachThreshold)
+        {
+            if (stateController.CurrentNodeIndex < stateController.Path.Count - 1)
+            {
+                stateController.CurrentNodeIndex++;
+            }
+        }
 
         if (distance >= stateController.ViewDistance)
             stateController.CanSeePlayer = false;

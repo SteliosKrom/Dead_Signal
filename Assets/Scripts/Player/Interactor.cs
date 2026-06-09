@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -74,7 +72,7 @@ public class Interactor : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, rayDistance))
         {
-            if (hit.collider.TryGetComponent(out currentInteractable))
+            if (hit.collider.TryGetComponent<IInteractable>(out currentInteractable))
             {
                 uiManager.ShowObject(uiManager.InteractIcon);
                 uiManager.HideObject(uiManager.CrossHair);
@@ -92,5 +90,5 @@ public class Interactor : MonoBehaviour
             currentInteractable = null;
         }
         Debug.DrawRay(raySource.transform.position, cameraController.CameraHolder.forward * rayDistance, Color.red);
-    }
+    } 
 }
