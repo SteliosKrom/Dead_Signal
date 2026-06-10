@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 public sealed class ZombieChaseState : ZombieState
@@ -10,30 +11,15 @@ public sealed class ZombieChaseState : ZombieState
 
         stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position, stateController.Player.position);
 
-        stateController.RepathTimer = 0f;
-
         stateController.ZombieAnimator.SetInteger("MovementState", 2);
     }
 
     public override void Update()
     {
-        stateController.RepathTimer += Time.deltaTime;
-
-        if (stateController.RepathTimer >= stateController.RepathInterval)
-        {
-            stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position, stateController.Player.position);
-            stateController.CurrentNodeIndex = 0;
-            stateController.RepathTimer = 0f;
-        }
-
-        //if (stateController.Path == null || stateController.Path.Count == 0)
-        //{
-        //    return;
-        //}
-
         if (stateController.CurrentNodeIndex >= stateController.Path.Count)
         {
-            stateController.CurrentNodeIndex = 0;
+            Debug.LogError($"INVALID INDEX: {stateController.CurrentNodeIndex} / {stateController.Path.Count}");
+            return;
         }
 
         AStarNode currentNode = stateController.Path[stateController.CurrentNodeIndex];
@@ -45,10 +31,13 @@ public sealed class ZombieChaseState : ZombieState
 
         if (nodeDistance <= stateController.NodeReachThreshold)
         {
-            if (stateController.CurrentNodeIndex < stateController.Path.Count - 1)
+            if (stateController.CurrentNodeIndex >= stateController.Path.Count - 1)
             {
-                stateController.CurrentNodeIndex++;
+                stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position, stateController.Player.position);
+                stateController.CurrentNodeIndex = 0;
+                return;
             }
+            stateController.CurrentNodeIndex++;
         }
 
         if (distance >= stateController.ViewDistance)

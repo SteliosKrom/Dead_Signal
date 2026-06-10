@@ -7,8 +7,6 @@ public sealed class ZombiePatrolState : ZombieState
 
     public override void Enter()
     {
-        stateController.CurrentNodeIndex = 0;
-
         stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position,
             stateController.CurrentPatrolPoint.transform.position);
 
@@ -24,13 +22,13 @@ public sealed class ZombiePatrolState : ZombieState
         Vector3 directionToTarget = (currentNode.WorldPosition - stateController.transform.position).normalized;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-        float distance = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
+        float nodeDistance = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
         float viewDistance = Vector3.Distance(stateController.transform.position, stateController.Player.position);
         float dot = Vector3.Dot(forward, directionToPlayer);
 
         ApplyWalkMovement(directionToTarget, targetRotation);
         MoveToChaseState(dot, viewDistance);
-        MoveToIdleState(distance);
+        MoveToIdleState(nodeDistance);
     }
 
     public override void Exit()
@@ -44,9 +42,9 @@ public sealed class ZombiePatrolState : ZombieState
         stateController.transform.rotation = targetRotation;
     }
 
-    public void MoveToIdleState(float distance)
+    public void MoveToIdleState(float nodeDistance)
     {
-        if (distance <= stateController.NodeReachThreshold)
+        if (nodeDistance <= stateController.NodeReachThreshold)
         {
             if (stateController.CurrentNodeIndex >= stateController.Path.Count - 1)
             {

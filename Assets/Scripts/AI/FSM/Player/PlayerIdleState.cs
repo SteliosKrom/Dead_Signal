@@ -6,7 +6,7 @@ public class IdleState : PlayerState
 
     public override void Enter()
     {
-        Debug.Log("Enter Idle");
+        //
     }
 
     public override void Update()
@@ -24,6 +24,6 @@ public class IdleState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Exit Idle");
+        //
     }
 }
