@@ -22,9 +22,6 @@ public class ZombieStateController : MonoBehaviour
     [SerializeField] private bool canSeePlayer;
     [SerializeField] private bool canSensePlayer;
 
-    private float repathTimer;
-    private float repathInterval = 1f;
-
     #region SERVICES
     private GameManager gameManager;
     #endregion
@@ -50,8 +47,6 @@ public class ZombieStateController : MonoBehaviour
     public ZombieState CurrentState { get; set; }
 
     public float Timer { get => timer; set => timer = value; }
-    public float RepathTimer { get => repathTimer; set => repathTimer = value; }
-    public float RepathInterval => repathInterval;
     public float SpeedMultiplier => speedMultiplier;
     public float MoveSpeed => moveSpeed;
     public float NodeReachThreshold => nodeReachThreshold;

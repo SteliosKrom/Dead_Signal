@@ -8,7 +8,7 @@ public sealed class ZombieIdleState : ZombieState
     public override void Enter()
     {
         ChangePatrolPoint();
-        stateController.RepathTimer = 0f;
+        stateController.CurrentNodeIndex = 0;
         stateController.ZombieAnimator.SetInteger("MovementState", 0);
     }
 
