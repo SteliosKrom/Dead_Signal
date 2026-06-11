@@ -48966,8 +48966,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9495493, y: 4.000002, z: 0.32954714}
-  m_Center: {x: -1.5252235, y: 2, z: 0.0000025480983}
+  m_Size: {x: 0.97468793, y: 4.000002, z: 0.32954714}
+  m_Center: {x: -1.5126541, y: 2, z: 0.0000025480986}
 --- !u!65 &899953314
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48987,8 +48987,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.83500504, y: 4.000002, z: 0.32954714}
-  m_Center: {x: 1.5825003, y: 2, z: 0.0000025480986}
+  m_Size: {x: 0.8406019, y: 4.000002, z: 0.32954714}
+  m_Center: {x: 1.5797019, y: 2, z: 0.0000025480986}
 --- !u!64 &900008148
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -56831,7 +56831,7 @@ GameObject:
   - component: {fileID: 1187907960}
   - component: {fileID: 1189888909}
   - component: {fileID: 1183439046}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SecondDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56899,8 +56899,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.94912434, y: 4.000002, z: 0.32954714}
-  m_Center: {x: -1.5254378, y: 2, z: 0.0000025480986}
+  m_Size: {x: 1.1226355, y: 4.000002, z: 0.32954714}
+  m_Center: {x: -1.4386823, y: 2, z: 0.0000025480986}
 --- !u!65 &1190107140
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56920,8 +56920,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.87623703, y: 4.000002, z: 0.32954714}
-  m_Center: {x: 1.5618825, y: 2, z: 0.0000025480986}
+  m_Size: {x: 0.91591406, y: 4.000002, z: 0.32954714}
+  m_Center: {x: 1.5420439, y: 2, z: 0.0000025480986}
 --- !u!23 &1190624316
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63384,9 +63384,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7175344fdeed0ce4e92bdbb0f1c7a458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  gridWidth: 35
-  gridHeight: 35
-  nodeSize: 1
+  gridWidth: 100
+  gridHeight: 100
+  nodeSize: 0.5
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -75694,7 +75694,7 @@ MonoBehaviour:
   moveSpeed: 1
   speedMultiplier: 2
   nodeReachThreshold: 0.2
-  attackRange: 2
+  attackRange: 1
   dotThreshold: 0.5
   viewDistance: 6
   timer: 0
