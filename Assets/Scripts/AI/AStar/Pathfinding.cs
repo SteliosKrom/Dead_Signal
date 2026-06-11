@@ -12,6 +12,13 @@ public class Pathfinding : MonoBehaviour
 
     public List<AStarNode> FindPath(Vector3 startPos, Vector3 targetPos)
     {
+        foreach (AStarNode node in gridManager.Grid)
+        {
+            node.GCost = int.MaxValue;
+            node.HCost = 0;
+            node.ParentNode = null;
+        }
+
         AStarNode startNode = gridManager.NodeFromWorldPoint(startPos);
         AStarNode targetNode = gridManager.NodeFromWorldPoint(targetPos);
 
@@ -64,6 +71,7 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
+        Debug.LogError("A* FAILED TO FIND PATH");
         return null;
     }
 

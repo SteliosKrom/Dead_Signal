@@ -11,6 +11,10 @@ public class GridManager : MonoBehaviour
 
     private AStarNode[,] grid;
 
+    #region PROPERTIES
+    public AStarNode[,] Grid => grid;
+    #endregion
+
     private void Start()
     {
         CreateGrid();

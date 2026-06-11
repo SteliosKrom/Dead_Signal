@@ -16,9 +16,17 @@ public sealed class ZombieChaseState : ZombieState
 
     public override void Update()
     {
-        if (stateController.CurrentNodeIndex >= stateController.Path.Count)
+        if (stateController.Path == null)
         {
-            Debug.LogError($"INVALID INDEX: {stateController.CurrentNodeIndex} / {stateController.Path.Count}");
+            Debug.LogError("PATH IS NULL");
+            stateController.ChangeState(new ZombieIdleState(stateController));
+            return;
+        }
+
+        if (stateController.Path.Count == 0)
+        {
+            Debug.LogError("PATH IS EMPTY");
+            stateController.ChangeState(new ZombieIdleState(stateController));
             return;
         }
 
@@ -34,6 +42,7 @@ public sealed class ZombieChaseState : ZombieState
             if (stateController.CurrentNodeIndex >= stateController.Path.Count - 1)
             {
                 stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position, stateController.Player.position);
+                Debug.Log($"NEW PATH COUNT = {stateController.Path?.Count}");
                 stateController.CurrentNodeIndex = 0;
                 return;
             }
