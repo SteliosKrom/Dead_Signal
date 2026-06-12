@@ -18,7 +18,7 @@ public sealed class ZombieChaseState : ZombieState
     {
         AStarNode currentNode = stateController.Path[stateController.CurrentNodeIndex];
 
-        Vector3 directionToPlayer = (currentNode.WorldPosition - stateController.transform.position).normalized;
+        Vector3 directionToPlayer = (currentNode.WorldPosition - stateController.transform.position).normalized; 
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
         float distance = Vector3.Distance(stateController.transform.position, stateController.Player.transform.position);
         float nodeDistance = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
@@ -42,13 +42,12 @@ public sealed class ZombieChaseState : ZombieState
         if (stateController.CanSeePlayer)
         {
             stateController.Timer = 0f;
-
             ApplyChaseMovement(directionToPlayer, targetRotation);
             MoveToAttackState(distance);
         }
         else
         {
-            ExtendChase(directionToPlayer, targetRotation);
+            ExtendChase(currentNode, directionToPlayer, targetRotation);
             MoveToAttackState(distance);
         }
     }
@@ -66,7 +65,7 @@ public sealed class ZombieChaseState : ZombieState
         stateController.transform.rotation = targetRotation;
     }
 
-    public void ExtendChase(Vector3 directionToPlayer, Quaternion targetRotation)
+    public void ExtendChase(AStarNode currentNode, Vector3 directionToPlayer, Quaternion targetRotation)
     {
         stateController.Timer += Time.deltaTime;
 

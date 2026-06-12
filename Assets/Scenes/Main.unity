@@ -2119,8 +2119,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 4.0000005, z: 4.000001}
-  m_Center: {x: 2, y: 2.0000002, z: 0.00000059604633}
+  m_Size: {x: 3.9803553, y: 4.0000005, z: 3.9729676}
+  m_Center: {x: 2.0098224, y: 2.0000002, z: 0.013517258}
 --- !u!23 &3350952
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11737,8 +11737,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.000001, y: 4.0000005, z: 4.000002}
-  m_Center: {x: 1.9999981, y: 2.0000002, z: -0.00000035762787}
+  m_Size: {x: 3.957385, y: 4.0000005, z: 3.9685667}
+  m_Center: {x: 2.021306, y: 2.0000002, z: 0.015717149}
 --- !u!23 &16414702
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12717,8 +12717,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 4, z: 1.5584333}
-  m_Center: {x: 0, y: 2, z: -0.7792232}
+  m_Size: {x: 4, y: 4, z: 1.5247055}
+  m_Center: {x: 5.6485117e-14, y: 2, z: -0.7960871}
 --- !u!23 &16606620
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15484,7 +15484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 67202328}
   - component: {fileID: 67202329}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: MainDoorPivotPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38614,8 +38614,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &539784459
-MeshCollider:
+--- !u!65 &539784459
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -38632,10 +38632,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: a29d1750fe55dd145b45145a22e287a0, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 4.7758055, y: 2.3455482, z: 4.7758055}
+  m_Center: {x: 0, y: 1.0837198, z: 0.0000014717197}
 --- !u!114 &539855959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48966,8 +48965,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.97468793, y: 4.000002, z: 0.32954714}
-  m_Center: {x: -1.5126541, y: 2, z: 0.0000025480986}
+  m_Size: {x: 1.3329384, y: 4.000002, z: 0.32954714}
+  m_Center: {x: -1.3335289, y: 2, z: 0.0000025480986}
 --- !u!65 &899953314
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48987,8 +48986,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8406019, y: 4.000002, z: 0.32954714}
-  m_Center: {x: 1.5797019, y: 2, z: 0.0000025480986}
+  m_Size: {x: 1.2366414, y: 4.000002, z: 0.32954714}
+  m_Center: {x: 1.3816822, y: 2, z: 0.0000025480986}
 --- !u!64 &900008148
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -56831,7 +56830,7 @@ GameObject:
   - component: {fileID: 1187907960}
   - component: {fileID: 1189888909}
   - component: {fileID: 1183439046}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: SecondDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56899,8 +56898,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1226355, y: 4.000002, z: 0.32954714}
-  m_Center: {x: -1.4386823, y: 2, z: 0.0000025480986}
+  m_Size: {x: 1.3284173, y: 4.000002, z: 0.32954714}
+  m_Center: {x: -1.3357913, y: 2, z: 0.0000025480986}
 --- !u!65 &1190107140
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56920,8 +56919,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.91591406, y: 4.000002, z: 0.32954714}
-  m_Center: {x: 1.5420439, y: 2, z: 0.0000025480986}
+  m_Size: {x: 1.234179, y: 4.000002, z: 0.32954714}
+  m_Center: {x: 1.3829114, y: 2, z: 0.0000025480986}
 --- !u!23 &1190624316
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63384,9 +63383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7175344fdeed0ce4e92bdbb0f1c7a458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  gridWidth: 100
-  gridHeight: 100
-  nodeSize: 0.5
+  gridWidth: 150
+  gridHeight: 150
+  nodeSize: 0.25
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -68568,8 +68567,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9585948, y: 4.000002, z: 0.32954714}
-  m_Center: {x: -1.5207047, y: 2, z: 0.0000030249357}
+  m_Size: {x: 1.3270034, y: 4.000002, z: 0.32954714}
+  m_Center: {x: -1.3365004, y: 2, z: 0.0000030249357}
 --- !u!65 &1748341319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -68589,8 +68588,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.85357773, y: 4.000002, z: 0.32954714}
-  m_Center: {x: 1.57321, y: 2, z: 0.0000030249357}
+  m_Size: {x: 1.2293878, y: 4.000002, z: 0.32954714}
+  m_Center: {x: 1.3853049, y: 2, z: 0.0000030249357}
 --- !u!1 &1748480118
 GameObject:
   m_ObjectHideFlags: 0
@@ -74277,8 +74276,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8370342, y: 4.000002, z: 0.32954714}
-  m_Center: {x: 1.5814838, y: 2, z: 0.0000025480986}
+  m_Size: {x: 1.236207, y: 4.000002, z: 0.32954714}
+  m_Center: {x: 1.3818974, y: 2, z: 0.0000025480986}
 --- !u!65 &1974825530
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74298,8 +74297,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.97393036, y: 4.000002, z: 0.32954714}
-  m_Center: {x: -1.5130348, y: 2, z: 0.0000025480986}
+  m_Size: {x: 1.3235779, y: 4.000002, z: 0.32954714}
+  m_Center: {x: -1.338211, y: 2, z: 0.0000025480986}
 --- !u!1 &1974905270
 GameObject:
   m_ObjectHideFlags: 0
