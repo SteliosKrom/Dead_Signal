@@ -8,8 +8,10 @@ public sealed class ZombieChaseState : ZombieState
     public override void Enter()
     {
         stateController.CurrentNodeIndex = 0;
+        stateController.Timer = 0f;
 
-        stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position, stateController.Player.position);
+        stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position,
+            stateController.Player.position);
 
         stateController.ZombieAnimator.SetInteger("MovementState", 2);
     }
@@ -18,37 +20,47 @@ public sealed class ZombieChaseState : ZombieState
     {
         AStarNode currentNode = stateController.Path[stateController.CurrentNodeIndex];
 
-        Vector3 directionToPlayer = (currentNode.WorldPosition - stateController.transform.position).normalized; 
-        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-        float distance = Vector3.Distance(stateController.transform.position, stateController.Player.transform.position);
-        float nodeDistance = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
+        Vector3 directionToPlayer = (currentNode.WorldPosition - stateController.transform.position).normalized;
+        Quaternion playerTargetRotation = Quaternion.LookRotation(directionToPlayer);
 
-        if (nodeDistance <= stateController.NodeReachThreshold)
+        float distanceToPlayer = Vector3.Distance(stateController.transform.position, stateController.Player.transform.position);
+        float distanceToNode = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
+
+        if (distanceToNode <= stateController.NodeReachThreshold)
         {
             if (stateController.CurrentNodeIndex >= stateController.Path.Count - 1)
             {
-                stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position, stateController.Player.position);
+                stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position,
+                    stateController.Player.position);
+
                 stateController.CurrentNodeIndex = 0;
                 return;
             }
             stateController.CurrentNodeIndex++;
         }
 
-        if (distance >= stateController.ViewDistance)
+        if (distanceToPlayer >= stateController.ViewDistance)
             stateController.CanSeePlayer = false;
-        else
+        else 
             stateController.CanSeePlayer = true;
+
+        if (stateController.ZombieInteractor.DoorDetectable != null)
+        {
+            MoveToAttackDoorState();
+            return;
+        }
 
         if (stateController.CanSeePlayer)
         {
-            stateController.Timer = 0f;
-            ApplyChaseMovement(directionToPlayer, targetRotation);
-            MoveToAttackState(distance);
+            ApplyChaseMovement(directionToPlayer, playerTargetRotation);
+            MoveToAttackState(distanceToPlayer);
+            return;
         }
         else
         {
-            ExtendChase(currentNode, directionToPlayer, targetRotation);
-            MoveToAttackState(distance);
+            ExtendChase(directionToPlayer, playerTargetRotation);
+            MoveToAttackState(distanceToPlayer);
+            return;
         }
     }
 
@@ -65,7 +77,7 @@ public sealed class ZombieChaseState : ZombieState
         stateController.transform.rotation = targetRotation;
     }
 
-    public void ExtendChase(AStarNode currentNode, Vector3 directionToPlayer, Quaternion targetRotation)
+    public void ExtendChase(Vector3 directionToPlayer, Quaternion targetRotation)
     {
         stateController.Timer += Time.deltaTime;
 
@@ -81,9 +93,21 @@ public sealed class ZombieChaseState : ZombieState
     {
         if (distance <= stateController.AttackRange)
         {
+            stateController.IsAttackingDoor = false;
+
             stateController.ChangeState(new ZombieAttackState(stateController));
             return;
         }
+    }
+
+    public void MoveToAttackDoorState()
+    {
+        stateController.CurrentDoor = stateController.ZombieInteractor.DoorDetectable;
+
+        stateController.IsAttackingDoor = true;
+
+        stateController.ChangeState(new ZombieAttackState(stateController));
+        return;
     }
 
     public void MoveToIdleState()

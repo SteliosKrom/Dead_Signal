@@ -21,6 +21,11 @@ public class ZombieStateController : MonoBehaviour
 
     [SerializeField] private bool canSeePlayer;
     [SerializeField] private bool canSensePlayer;
+    [SerializeField] private bool isAttackingDoor;
+
+    #region SCRIPT REFERENCES
+    [SerializeField] private ZombieInteractor zombieInteractor;
+    #endregion
 
     #region SERVICES
     private GameManager gameManager;
@@ -45,6 +50,8 @@ public class ZombieStateController : MonoBehaviour
     public Transform CurrentPatrolPoint { get; set; }
     public Animator ZombieAnimator => zombieAnimator;
     public ZombieState CurrentState { get; set; }
+    public ZombieInteractor ZombieInteractor => zombieInteractor;
+    public DoorDetectable CurrentDoor { get; set; }
 
     public float Timer { get => timer; set => timer = value; }
     public float SpeedMultiplier => speedMultiplier;
@@ -62,6 +69,7 @@ public class ZombieStateController : MonoBehaviour
 
     public bool CanSeePlayer { get => canSeePlayer; set => canSeePlayer = value; }
     public bool CanSensePlayer { get => canSensePlayer; set => canSensePlayer = value; }
+    public bool IsAttackingDoor { get => isAttackingDoor; set => isAttackingDoor = value; }
     #endregion
 
     private void Start()

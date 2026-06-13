@@ -22,13 +22,13 @@ public sealed class ZombiePatrolState : ZombieState
         Vector3 directionToTarget = (currentNode.WorldPosition - stateController.transform.position).normalized;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-        float nodeDistance = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
+        float distanceToNode = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
         float viewDistance = Vector3.Distance(stateController.transform.position, stateController.Player.position);
         float dot = Vector3.Dot(forward, directionToPlayer);
 
         ApplyWalkMovement(directionToTarget, targetRotation);
         MoveToChaseState(dot, viewDistance);
-        MoveToIdleState(nodeDistance);
+        MoveToIdleState(distanceToNode);
     }
 
     public override void Exit()
