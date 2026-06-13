@@ -16960,6 +16960,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97584b5b38b48fc489e58b9dc9de3950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonAudio
+--- !u!1 &128702209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 128702210}
+  - component: {fileID: 128702212}
+  m_Layer: 0
+  m_Name: RaySource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &128702210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128702209}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.49492243, y: -0.50502634, z: 0.49492258, w: 0.50502646}
+  m_LocalPosition: {x: -0.028109632, y: 0.0072004204, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1920685718}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &128702212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128702209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d8306b4f2ca4b44a81ba4a445cfe0d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieAttack
 --- !u!1 &137069550
 GameObject:
   m_ObjectHideFlags: 0
@@ -28271,6 +28315,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &274516751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2336602912933260987, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+  m_PrefabInstance: {fileID: 2015516111}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &274516754
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274516751}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.16397874, y: 0.18523884, z: 0.20631993}
+  m_Center: {x: -0.5814401, y: 0.98457164, z: 0.102544054}
 --- !u!1 &275058685
 GameObject:
   m_ObjectHideFlags: 0
@@ -49023,6 +49093,7 @@ GameObject:
   - component: {fileID: 897950682}
   - component: {fileID: 901935717}
   - component: {fileID: 901935716}
+  - component: {fileID: 901935718}
   m_Layer: 0
   m_Name: ThirdDoor
   m_TagString: Untagged
@@ -49449,6 +49520,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &901935718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900196654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b32142f215c5f438c365672c9aafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorDetectable
 --- !u!1 &902268308
 GameObject:
   m_ObjectHideFlags: 0
@@ -53253,6 +53336,32 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041407070}
   m_Mesh: {fileID: 4300000, guid: d33b92b4d2f9ca8409480ae83478fd61, type: 3}
+--- !u!1 &1043248136 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -892318989683515651, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+  m_PrefabInstance: {fileID: 2015516111}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1043248138
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043248136}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.17559206, y: 0.10867349, z: 0.14869583}
+  m_Center: {x: -0.008808949, y: 0.023374174, z: 0.024348091}
 --- !u!23 &1043373212
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -56830,6 +56939,7 @@ GameObject:
   - component: {fileID: 1187907960}
   - component: {fileID: 1189888909}
   - component: {fileID: 1183439046}
+  - component: {fileID: 1189888910}
   m_Layer: 0
   m_Name: SecondDoor
   m_TagString: Untagged
@@ -56859,6 +56969,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1189888910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189888908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b32142f215c5f438c365672c9aafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorDetectable
 --- !u!1 &1190107138
 GameObject:
   m_ObjectHideFlags: 0
@@ -68510,6 +68632,7 @@ GameObject:
   - component: {fileID: 1744835213}
   - component: {fileID: 1745908807}
   - component: {fileID: 1750574585}
+  - component: {fileID: 1750574586}
   m_Layer: 0
   m_Name: MainDoor
   m_TagString: Untagged
@@ -68748,6 +68871,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.3235092, y: 2.9869292, z: 0.13877574}
   m_Center: {x: -0.6881752, y: 1.4934646, z: -0.014756661}
+--- !u!114 &1750574586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748123315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b32142f215c5f438c365672c9aafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorDetectable
 --- !u!1 &1752965066
 GameObject:
   m_ObjectHideFlags: 0
@@ -72876,6 +73011,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915935037}
   m_CullTransparentMesh: 1
+--- !u!4 &1920685718 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2304244481032835489, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+  m_PrefabInstance: {fileID: 2015516111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &1931101372
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74312,6 +74452,7 @@ GameObject:
   - component: {fileID: 1972691778}
   - component: {fileID: 1976775421}
   - component: {fileID: 1976775420}
+  - component: {fileID: 1976775422}
   m_Layer: 0
   m_Name: FourthDoor
   m_TagString: Untagged
@@ -74362,6 +74503,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1976775422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974905270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b32142f215c5f438c365672c9aafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorDetectable
 --- !u!1 &1979523860
 GameObject:
   m_ObjectHideFlags: 0
@@ -75648,7 +75801,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2304244481032835489, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 128702210}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       insertIndex: -1
@@ -75656,6 +75812,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2015516117}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2015516119}
+    - targetCorrespondingSourceObject: {fileID: 2336602912933260987, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 274516754}
+    - targetCorrespondingSourceObject: {fileID: -892318989683515651, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1043248138}
   m_SourcePrefab: {fileID: 100100000, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
 --- !u!1 &2015516112 stripped
 GameObject:
@@ -75699,6 +75864,8 @@ MonoBehaviour:
   timer: 0
   canSeePlayer: 0
   canSensePlayer: 0
+  isAttackingDoor: 0
+  zombieInteractor: {fileID: 2015516119}
   pathfinding: {fileID: 677132901}
   patrolPoints:
   - {fileID: 84661690}
@@ -75729,6 +75896,21 @@ CapsuleCollider:
   m_Height: 1.8078177
   m_Direction: 1
   m_Center: {x: 0, y: 0.90210176, z: 0}
+--- !u!114 &2015516119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015516112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a205e6d680aa9b143be59a840a6038ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieInteractor
+  doorDetected: 0
+  detectionRadius: 0.5
+  raySource: {fileID: 128702210}
 --- !u!4 &2015795189
 Transform:
   m_ObjectHideFlags: 0

@@ -7,20 +7,37 @@ public sealed class ZombieAttackState : ZombieState
     public override void Enter()
     {
         stateController.CurrentNodeIndex = 0;
+        stateController.Timer = 0f;
         stateController.ZombieAnimator.SetInteger("MovementState", 3);
     }
 
     public override void Update()
     {
-        Vector3 directionToPlayer = (stateController.Player.position - stateController.transform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-        float distance = Vector3.Distance(stateController.transform.position, stateController.Player.position);
-        stateController.transform.rotation = targetRotation;
+        float distanceToPlayer = Vector3.Distance(stateController.transform.position, stateController.Player.position);
 
-        if (distance >= stateController.AttackRange)
+        if (stateController.IsAttackingDoor)
         {
-            stateController.ChangeState(new ZombieChaseState(stateController));
-            return;
+            if (stateController.CurrentDoor == null)
+            {
+                stateController.ChangeState(new ZombieChaseState(stateController));
+                return;
+            }
+
+            //Vector3 directionToDoor = stateController.CurrentDoor.transform.position - stateController.transform.position;
+            //Quaternion doorTargetRotation = Quaternion.LookRotation(directionToDoor);
+            //stateController.transform.rotation = doorTargetRotation;
+        }
+        else
+        {
+            Vector3 directionToPlayer = (stateController.Player.position - stateController.transform.position).normalized;
+            Quaternion playerTargetRotation = Quaternion.LookRotation(directionToPlayer);
+            stateController.transform.rotation = playerTargetRotation;
+
+            if (distanceToPlayer >= stateController.AttackRange)
+            {
+                stateController.ChangeState(new ZombieChaseState(stateController));
+                return;
+            }
         }
     }
 
