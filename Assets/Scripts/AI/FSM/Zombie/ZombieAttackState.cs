@@ -22,10 +22,6 @@ public sealed class ZombieAttackState : ZombieState
                 stateController.ChangeState(new ZombieChaseState(stateController));
                 return;
             }
-
-            //Vector3 directionToDoor = stateController.CurrentDoor.transform.position - stateController.transform.position;
-            //Quaternion doorTargetRotation = Quaternion.LookRotation(directionToDoor);
-            //stateController.transform.rotation = doorTargetRotation;
         }
         else
         {
