@@ -53,6 +53,12 @@ public sealed class ZombiePatrolState : ZombieState
             }
             stateController.CurrentNodeIndex++;
         }
+
+        if (stateController.ZombieInteractor.DoorDetectable != null)
+        {
+            stateController.ChangeState(new ZombieIdleState(stateController));
+            return;
+        }
     }
 
     public void MoveToChaseState(float dot, float viewDistance)

@@ -15837,7 +15837,7 @@ Transform:
   m_GameObject: {fileID: 84661689}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 6.93}
+  m_LocalPosition: {x: -2.66, y: 0, z: 1.902}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15868,7 +15868,7 @@ Transform:
   m_GameObject: {fileID: 87388706}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 9.166, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15899,7 +15899,7 @@ Transform:
   m_GameObject: {fileID: 91531398}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.06, y: 0, z: 2}
+  m_LocalPosition: {x: 9.292, y: 0, z: 13.993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28950,7 +28950,7 @@ Transform:
   m_GameObject: {fileID: 319621239}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.079, y: 0, z: 5.36}
+  m_LocalPosition: {x: -2.651, y: 0, z: 13.934}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75943,7 +75943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieInteractor
   stateController: {fileID: 2015516117}
-  detectionRadius: 0.75
+  detectionRadius: 1
   raySource: {fileID: 128702210}
 --- !u!114 &2015516120
 MonoBehaviour:
