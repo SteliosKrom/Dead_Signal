@@ -17,8 +17,11 @@ public sealed class ZombieAttackState : ZombieState
 
         if (stateController.IsAttackingDoor)
         {
-            if (stateController.CurrentDoor == null)
+            if (stateController.CurrentDoor != stateController.ZombieInteractor.DoorDetectable)
             {
+                stateController.CurrentDoor = null;
+                stateController.IsAttackingDoor = false;
+
                 stateController.ChangeState(new ZombieChaseState(stateController));
                 return;
             }

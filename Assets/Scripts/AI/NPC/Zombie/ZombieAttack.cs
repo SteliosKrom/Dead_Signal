@@ -2,11 +2,24 @@ using UnityEngine;
 
 public class ZombieAttack : MonoBehaviour
 {
+    [SerializeField] private bool hasHit;
+
     private void OnCollisionEnter(Collision other)
     {
-        if (other.collider.GetComponent<BoxCollider>())
+        if (hasHit)
+            return;
+
+        DoorDetectable door = other.collider.GetComponent<DoorDetectable>();
+
+        if (door != null)
         {
-            Debug.Log("Zombie has hit the door!");
+            door.TakeHit();
+            hasHit = true;
         }
+    }
+
+    public void ResetHit()
+    {
+        hasHit = false;
     }
 }
