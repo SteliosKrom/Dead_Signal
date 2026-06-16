@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class ZombieInteractor : MonoBehaviour
 {
-    [SerializeField] private bool doorDetected;
-
-    #region INTERFACES
+    #region SCRIPT REFERENCES
     private DoorDetectable doorDetectable;
+    [SerializeField] private ZombieStateController stateController;
     #endregion
 
     #region DETECTION
@@ -15,7 +14,6 @@ public class ZombieInteractor : MonoBehaviour
 
     #region PROPERTIES
     public DoorDetectable DoorDetectable { get => doorDetectable; set => doorDetectable = value; }
-    public bool DoorDetected { get => doorDetected; set => doorDetected = value; }
     #endregion
     private void Update()
     {
@@ -25,7 +23,6 @@ public class ZombieInteractor : MonoBehaviour
     public void DetectInteractable()
     {
         doorDetectable = null;
-        doorDetected = false;
 
         Vector3 forward = transform.forward;
         Ray ray = new Ray(raySource.position, forward);
@@ -33,11 +30,6 @@ public class ZombieInteractor : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, detectionRadius))
         {
             doorDetectable = hit.collider.GetComponent<DoorDetectable>();
-
-            if (doorDetectable != null)
-            {
-                doorDetected = true;
-            }
         }
         Debug.DrawRay(raySource.position, forward * detectionRadius, Color.red);
     }

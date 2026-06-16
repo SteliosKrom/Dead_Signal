@@ -15505,7 +15505,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1748331237}
-  - {fileID: 1775502646}
   m_Father: {fileID: 1748341317}
   m_LocalEulerAnglesHint: {x: 0, y: 120, z: 0}
 --- !u!95 &67202329
@@ -16985,12 +16984,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128702209}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.49492243, y: -0.50502634, z: 0.49492258, w: 0.50502646}
-  m_LocalPosition: {x: -0.028109632, y: 0.0072004204, z: 0}
+  m_LocalRotation: {x: -0.000000059604645, y: 0.00000013039181, z: 0.000000046098116, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6540008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1920685718}
+  m_Father: {fileID: 221124771}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &128702212
 MonoBehaviour:
@@ -17004,6 +17003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d8306b4f2ca4b44a81ba4a445cfe0d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieAttack
+  hasHit: 0
 --- !u!1 &137069550
 GameObject:
   m_ObjectHideFlags: 0
@@ -26987,6 +26987,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &221124771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3122754422968361145, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+  m_PrefabInstance: {fileID: 2015516111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!108 &221503158
 Light:
   m_ObjectHideFlags: 0
@@ -28315,32 +28320,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &274516751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2336602912933260987, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
-  m_PrefabInstance: {fileID: 2015516111}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &274516754
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274516751}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.16397874, y: 0.18523884, z: 0.20631993}
-  m_Center: {x: -0.5814401, y: 0.98457164, z: 0.102544054}
 --- !u!1 &275058685
 GameObject:
   m_ObjectHideFlags: 0
@@ -38348,11 +38327,11 @@ Transform:
   m_GameObject: {fileID: 509149052}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0359998, y: 1.4580002, z: 0}
+  m_LocalPosition: {x: -1.073, y: 1.4580002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1264540878}
+  m_Father: {fileID: 1189812186}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &509149054
 BoxCollider:
@@ -38373,8 +38352,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5086827, y: 0.4794891, z: 0.42317772}
-  m_Center: {x: 0.009095848, y: 0.0018136501, z: -0.03914261}
+  m_Size: {x: 0.5086827, y: 0.4794891, z: 0.39229727}
+  m_Center: {x: 0.009095848, y: 0.0018136501, z: -0.023702383}
 --- !u!114 &509149055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40655,11 +40634,11 @@ Transform:
   m_GameObject: {fileID: 629133312}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0110006, y: 1.4549999, z: 0.005996704}
+  m_LocalPosition: {x: -1.052, y: 1.4549999, z: 0.005996704}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1981926931}
+  m_Father: {fileID: 1974599136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &629133314
 BoxCollider:
@@ -48993,7 +48972,8 @@ Transform:
   m_LocalPosition: {x: 0.038403273, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1837213090}
   m_Father: {fileID: 2081278520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &899953312
@@ -49096,7 +49076,7 @@ GameObject:
   - component: {fileID: 901935718}
   m_Layer: 0
   m_Name: ThirdDoor
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49532,6 +49512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b32142f215c5f438c365672c9aafc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorDetectable
+  zMaxHits: 3
+  currentHit: 0
 --- !u!1 &902268308
 GameObject:
   m_ObjectHideFlags: 0
@@ -53362,6 +53344,46 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.17559206, y: 0.10867349, z: 0.14869583}
   m_Center: {x: -0.008808949, y: 0.023374174, z: 0.024348091}
+--- !u!114 &1043248140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043248136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d8306b4f2ca4b44a81ba4a445cfe0d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieAttack
+  hasHit: 0
+--- !u!54 &1043248141
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043248136}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!23 &1043373212
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -56907,7 +56929,8 @@ Transform:
   m_LocalPosition: {x: 0.03700018, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 509149053}
   m_Father: {fileID: 1264540878}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1189867386
@@ -56981,6 +57004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b32142f215c5f438c365672c9aafc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorDetectable
+  zMaxHits: 3
+  currentHit: 0
 --- !u!1 &1190107138
 GameObject:
   m_ObjectHideFlags: 0
@@ -57943,7 +57968,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1189812186}
-  - {fileID: 509149053}
   m_Father: {fileID: 1189867386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1264540879
@@ -68652,7 +68676,8 @@ Transform:
   m_LocalPosition: {x: 0.06000328, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1775502646}
   m_Father: {fileID: 67202328}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1748341317
@@ -68883,6 +68908,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b32142f215c5f438c365672c9aafc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorDetectable
+  zMaxHits: 3
+  currentHit: 0
 --- !u!1 &1752965066
 GameObject:
   m_ObjectHideFlags: 0
@@ -69218,12 +69245,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775502645}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6729984, y: 1.4500008, z: -0.010000205}
+  m_LocalRotation: {x: -0, y: -0.000000029802319, z: -0, w: 1}
+  m_LocalPosition: {x: -0.73300195, y: 1.4500008, z: -0.009999633}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 67202328}
+  m_Father: {fileID: 1748331237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1775502647
 BoxCollider:
@@ -71157,11 +71184,11 @@ Transform:
   m_GameObject: {fileID: 1837213089}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.70559996, y: 1.4589996, z: -0.022999763}
+  m_LocalPosition: {x: -0.74400324, y: 1.4589996, z: -0.022999763}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2081278520}
+  m_Father: {fileID: 899726712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1837213091
 BoxCollider:
@@ -73011,11 +73038,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915935037}
   m_CullTransparentMesh: 1
---- !u!4 &1920685718 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2304244481032835489, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
-  m_PrefabInstance: {fileID: 2015516111}
-  m_PrefabAsset: {fileID: 0}
 --- !u!65 &1931101372
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74374,7 +74396,8 @@ Transform:
   m_LocalPosition: {x: 0.040999472, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 629133313}
   m_Father: {fileID: 1981926931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1974825528
@@ -74455,7 +74478,7 @@ GameObject:
   - component: {fileID: 1976775422}
   m_Layer: 0
   m_Name: FourthDoor
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74515,6 +74538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b32142f215c5f438c365672c9aafc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorDetectable
+  zMaxHits: 3
+  currentHit: 0
 --- !u!1 &1979523860
 GameObject:
   m_ObjectHideFlags: 0
@@ -74625,7 +74650,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1974599136}
-  - {fileID: 629133313}
   m_Father: {fileID: 1974535488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1981926932
@@ -75779,6 +75803,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -892318989683515651, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       propertyPath: m_Name
       value: Zombie_NPC
@@ -75802,8 +75830,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2304244481032835489, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
-      insertIndex: 0
+    - targetCorrespondingSourceObject: {fileID: 3122754422968361145, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 128702210}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
@@ -75815,12 +75843,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2015516119}
-    - targetCorrespondingSourceObject: {fileID: 2336602912933260987, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 274516754}
+      addedObject: {fileID: 2015516120}
     - targetCorrespondingSourceObject: {fileID: -892318989683515651, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1043248138}
+    - targetCorrespondingSourceObject: {fileID: -892318989683515651, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1043248141}
+    - targetCorrespondingSourceObject: {fileID: -892318989683515651, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1043248140}
   m_SourcePrefab: {fileID: 100100000, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
 --- !u!1 &2015516112 stripped
 GameObject:
@@ -75908,9 +75942,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a205e6d680aa9b143be59a840a6038ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieInteractor
-  doorDetected: 0
-  detectionRadius: 0.5
+  stateController: {fileID: 2015516117}
+  detectionRadius: 0.75
   raySource: {fileID: 128702210}
+--- !u!114 &2015516120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015516112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a1ca004c2ab724e89efef29768a783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieAttackEvents
+  zombieAttack: {fileID: 1043248140}
 --- !u!4 &2015795189
 Transform:
   m_ObjectHideFlags: 0
@@ -76544,7 +76591,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 899726712}
-  - {fileID: 1837213090}
   m_Father: {fileID: 899696088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2081278521
