@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour
         baseYRotation = transform.eulerAngles.y;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         ApplyRotation();
     }

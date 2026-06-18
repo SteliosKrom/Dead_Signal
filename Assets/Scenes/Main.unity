@@ -75894,7 +75894,8 @@ MonoBehaviour:
   nodeReachThreshold: 0.2
   attackRange: 1
   dotThreshold: 0.5
-  viewDistance: 6
+  viewDistance: 10
+  senseDistance: 6
   timer: 0
   canSeePlayer: 0
   canSensePlayer: 0

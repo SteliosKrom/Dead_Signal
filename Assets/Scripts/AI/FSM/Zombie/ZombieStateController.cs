@@ -17,6 +17,7 @@ public class ZombieStateController : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private float dotThreshold;
     [SerializeField] private float viewDistance;
+    [SerializeField] private float senseDistance;
     [SerializeField] private float timer;
 
     [SerializeField] private bool canSeePlayer;
@@ -59,6 +60,7 @@ public class ZombieStateController : MonoBehaviour
     public float NodeReachThreshold => nodeReachThreshold;
     public float DotThreshold => dotThreshold;
     public float ViewDistance => viewDistance;
+    public float SenseDistance => senseDistance;
     public float AttackRange => attackRange;
 
     public int XSEC => XSec;
