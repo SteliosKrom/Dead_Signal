@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-public class Planner
+public class GoapPlanner
 {
-    public List<GoapAction> CreatePlan(Goal goal, List<GoapAction> actions)
+    public List<GoapAction> CreatePlan(GoapGoal goal, List<GoapAction> actions)
     {
         List<GoapAction> plan = new List<GoapAction>();
 
