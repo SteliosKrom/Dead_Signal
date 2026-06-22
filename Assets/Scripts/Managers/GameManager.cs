@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     #region EVENTS
     [Header("EVENTS")]
+    [SerializeField] private GameEvents gameEvents;
     [SerializeField] private UIEvents uiEvents;
     #endregion
 
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        // Input Events
         controls.Enable();
         controls.UI.AnyKey.performed += OnAnyKeyPressed;
         controls.UI.Back.performed += OnEscapeButtonPressed;
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
+        // Input Events
         controls.UI.AnyKey.performed -= OnAnyKeyPressed;
         controls.UI.Back.performed -= OnEscapeButtonPressed;
         controls.Disable();
@@ -173,6 +176,7 @@ public class GameManager : MonoBehaviour
             return;
 
         currentGameState = GameState.Playing;
+        gameEvents.RaiseGameplayStarted();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

@@ -1,10 +1,10 @@
 
-public class Goal
+public class GoapGoal
 {
     public string StateKey { get; set; }
     public bool DesiredValue { get; set; }
 
-    public Goal(string stateKey, bool desiredValue)
+    public GoapGoal(string stateKey, bool desiredValue)
     {
         this.StateKey = stateKey;
         this.DesiredValue = desiredValue;
