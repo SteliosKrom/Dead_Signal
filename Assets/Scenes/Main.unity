@@ -15438,7 +15438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 67202328}
   - component: {fileID: 67202329}
-  m_Layer: 3
+  m_Layer: 12
   m_Name: MainDoorPivotPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41422,7 +41422,7 @@ GameObject:
   - component: {fileID: 649416708}
   - component: {fileID: 648262070}
   - component: {fileID: 649416709}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: decorative_wall_3_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43183,7 +43183,7 @@ GameObject:
   - component: {fileID: 688666064}
   - component: {fileID: 689624162}
   - component: {fileID: 691835385}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: decorative_wall_3_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64865,28 +64865,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!64 &1585647629
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591759957}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: aba422dda12c21b4497dd186a005e8b2, type: 3}
 --- !u!23 &1589774013
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -65010,7 +64988,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1592169937}
-  - component: {fileID: 1585647629}
   - component: {fileID: 1608007257}
   m_Layer: 0
   m_Name: decorative_chair (1)
@@ -65049,7 +65026,7 @@ GameObject:
   - component: {fileID: 1592217635}
   - component: {fileID: 1590921337}
   - component: {fileID: 1589781993}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: decorative_chair_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68680,7 +68657,7 @@ GameObject:
   - component: {fileID: 1745902217}
   - component: {fileID: 1748341318}
   - component: {fileID: 1748341319}
-  m_Layer: 3
+  m_Layer: 12
   m_Name: MainRoomDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68700,7 +68677,7 @@ GameObject:
   - component: {fileID: 1745908807}
   - component: {fileID: 1750574585}
   - component: {fileID: 1750574586}
-  m_Layer: 3
+  m_Layer: 12
   m_Name: MainDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73977,6 +73954,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1464609582487577111, guid: 599519992bda7c14399432c05b55666c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2086675556445053424, guid: 599519992bda7c14399432c05b55666c, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -74004,6 +73985,10 @@ PrefabInstance:
     - target: {fileID: 3831964537345122062, guid: 599519992bda7c14399432c05b55666c, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017852259411464867, guid: 599519992bda7c14399432c05b55666c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4196089986716354876, guid: 599519992bda7c14399432c05b55666c, type: 3}
       propertyPath: m_Layer
@@ -74093,6 +74078,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6180285084413637326, guid: 599519992bda7c14399432c05b55666c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1950528812}
+    - targetCorrespondingSourceObject: {fileID: 6180285084413637326, guid: 599519992bda7c14399432c05b55666c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1950528815}
   m_SourcePrefab: {fileID: 100100000, guid: 599519992bda7c14399432c05b55666c, type: 3}
 --- !u!4 &1950528808 stripped
 Transform:
@@ -74143,6 +74131,20 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!114 &1950528815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575630105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5174031f38399c4e852257acf51bee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostHearing
+  hearingRange: 15
+  hearingThreshold: 3
 --- !u!1 &1956431470
 GameObject:
   m_ObjectHideFlags: 0

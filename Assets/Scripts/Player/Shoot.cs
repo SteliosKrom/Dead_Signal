@@ -7,11 +7,13 @@ public class Shoot : MonoBehaviour
     private Transform shootPoint;
     private float currentAmmo;
     private float currentReserveAmmo;
+    private float shootNoiseStrength = 20f;
 
     #region SERVICES
     private UIManager uiManager;
     private GameManager gameManager;
     private ObjectPoolManager poolManager;
+    private GhostHearing ghostHearing;
     #endregion
 
     #region INPUT
@@ -60,6 +62,7 @@ public class Shoot : MonoBehaviour
         uiManager = ServiceManager.GetService<UIManager>();
         gameManager = ServiceManager.GetService<GameManager>();
         poolManager = ServiceManager.GetService<ObjectPoolManager>();
+        ghostHearing = ServiceManager.GetService<GhostHearing>();
 
         CurrentAmmo = 24;
         currentReserveAmmo = 120;
@@ -80,6 +83,7 @@ public class Shoot : MonoBehaviour
             bullet.SetDirection(shootPoint.forward);
             gunFX.Play();
         }
+        ghostHearing.HearNoise(this.transform.position, shootNoiseStrength);
     }
 
     public void ResetCurrentAmmo()

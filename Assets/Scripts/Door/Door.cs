@@ -5,8 +5,10 @@ public class Door : MonoBehaviour, IInteractable
 {
     [SerializeField] private bool isOpen;
 
+    private float doorNoiseStrength = 10f;
+
     #region SERVICES
-    private UIManager uiManager;
+    private GhostHearing ghostHearing;
     #endregion
 
     #region COLLIDERS
@@ -30,7 +32,7 @@ public class Door : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        uiManager = ServiceManager.GetService<UIManager>();
+        ghostHearing = ServiceManager.GetService<GhostHearing>();
 
         isOpen = false;
     }
@@ -47,6 +49,7 @@ public class Door : MonoBehaviour, IInteractable
             doorAnimator.SetTrigger("Close");
             isOpen = false;
         }
+        ghostHearing.HearNoise(this.transform.position, doorNoiseStrength);
         StartCoroutine(CanInteractCoroutine());
     }
 
