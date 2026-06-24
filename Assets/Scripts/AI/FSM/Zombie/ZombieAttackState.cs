@@ -28,7 +28,9 @@ public sealed class ZombieAttackState : ZombieState
         }
         else
         {
-            Vector3 directionToPlayer = (stateController.Player.position - stateController.transform.position).normalized;
+            Vector3 directionToPlayer = (stateController.Player.position - stateController.transform.position);
+            directionToPlayer.y = 0;
+            directionToPlayer.Normalize();
             Quaternion playerTargetRotation = Quaternion.LookRotation(directionToPlayer);
             stateController.transform.rotation = playerTargetRotation;
 

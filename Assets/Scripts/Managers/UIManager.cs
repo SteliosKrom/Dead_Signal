@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +31,7 @@ public class UIManager : MonoBehaviour
     private UIManager uiManager;
     private SettingsManager settingsManager;
     private GameManager gameManager;
+    private PlayerSanity playerSanity;
     #endregion
 
     #region SCRIPT REFERENCES
@@ -59,6 +59,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI fpsText;
     [SerializeField] private TextMeshProUGUI currentAmmoText;
     [SerializeField] private TextMeshProUGUI currentReserveAmmoText;
+    [SerializeField] private TextMeshProUGUI currentSanityCounterText;
     #endregion
 
     #region OBJECTS
@@ -75,6 +76,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject controlsMenu;
 
     [SerializeField] private GameObject HUDmenu;
+    [SerializeField] private GameObject ammoContent;
+    [SerializeField] private GameObject sanityContent;
     [SerializeField] private GameObject interactIcon;
     [SerializeField] private GameObject fpsMenu;
     [SerializeField] private GameObject crossHair;
@@ -84,6 +87,8 @@ public class UIManager : MonoBehaviour
     #region PROPERTIES
     public GameObject[] SettingsTabMenus => settingsTabMenus;
     public GameObject InteractIcon => interactIcon;
+    public GameObject AmmoContent => ammoContent;
+    public GameObject SanityContent => sanityContent;
     public GameObject CrossHair => crossHair;
     public GameObject FPSMenu => fpsMenu;
     public GameObject PauseMenu => pauseMenu;
@@ -127,6 +132,7 @@ public class UIManager : MonoBehaviour
     {
         settingsManager = ServiceManager.GetService<SettingsManager>();
         gameManager = ServiceManager.GetService<GameManager>();
+        playerSanity = ServiceManager.GetService<PlayerSanity>();
 
         currentSettingsTab = SettingsTab.None;
     }
@@ -170,10 +176,8 @@ public class UIManager : MonoBehaviour
         fpsText.text = fps.ToString("0");
     }
 
-    public void UpdateCurrentAmmoUI()
-    {
-        currentAmmoText.text = shoot.CurrentAmmo.ToString("0");
-    }
+    public void UpdateCurrentAmmoUI() => currentAmmoText.text = shoot.CurrentAmmo.ToString("0");
+    public void UpdateSanityCounterUI() => currentSanityCounterText.text = playerSanity.Sanity.ToString("0");
 
     public void UpdateFullAmmoCapacityUI()
     {
