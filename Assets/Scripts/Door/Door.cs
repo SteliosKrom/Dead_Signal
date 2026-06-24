@@ -8,7 +8,7 @@ public class Door : MonoBehaviour, IInteractable
     private float doorNoiseStrength = 10f;
 
     #region SERVICES
-    private GhostHearing ghostHearing;
+    private GhostPerception ghostPerception;
     #endregion
 
     #region COLLIDERS
@@ -32,7 +32,7 @@ public class Door : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        ghostHearing = ServiceManager.GetService<GhostHearing>();
+        ghostPerception = ServiceManager.GetService<GhostPerception>();
 
         isOpen = false;
     }
@@ -49,7 +49,7 @@ public class Door : MonoBehaviour, IInteractable
             doorAnimator.SetTrigger("Close");
             isOpen = false;
         }
-        ghostHearing.HearNoise(this.transform.position, doorNoiseStrength);
+        ghostPerception.HearNoise(this.transform.position, doorNoiseStrength);
         StartCoroutine(CanInteractCoroutine());
     }
 

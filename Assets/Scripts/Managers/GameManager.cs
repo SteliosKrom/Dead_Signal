@@ -121,17 +121,17 @@ public class GameManager : MonoBehaviour
         if (OnSettingsTab())
         {
             for (int i = 0; i < uiManager.SettingsTabMenus.Length; i++)
-                uiManager.SettingsTabMenus[i].SetActive(false);
+                uiManager.HideObject(uiManager.SettingsTabMenus[i]);
 
-            uiManager.SettingsMenu.SetActive(true);
+            uiManager.ShowObject(uiManager.SettingsMenu);
             uiManager.CurrentSettingsTab = SettingsTab.None;
 
             return;
         }
         else if (uiManager.CurrentUIState == UIState.PauseMenuSettings)
         {
-            uiManager.SettingsMenu.SetActive(false);
-            uiManager.PauseMenu.SetActive(true);
+            uiManager.HideObject(uiManager.SettingsMenu);
+            uiManager.ShowObject(uiManager.PauseMenu);
             uiManager.CurrentUIState = UIState.PauseMenu;
 
             return;
@@ -148,8 +148,8 @@ public class GameManager : MonoBehaviour
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
 
-                    uiManager.PauseMenu.SetActive(true);
-                    uiManager.HUDMenu.SetActive(false);
+                    uiManager.HideObject(uiManager.HUDMenu);
+                    uiManager.ShowObject(uiManager.PauseMenu);
 
                     Time.timeScale = 0f;
                     break;
@@ -160,8 +160,8 @@ public class GameManager : MonoBehaviour
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
 
-                    uiManager.PauseMenu.SetActive(false);
-                    uiManager.HUDMenu.SetActive(true);
+                    uiManager.HideObject(uiManager.PauseMenu);
+                    uiManager.ShowObject(uiManager.HUDMenu);
 
                     Time.timeScale = 1f;
                     break;
@@ -185,8 +185,12 @@ public class GameManager : MonoBehaviour
         mainCamera.enabled = true;
 
         player.SetActive(true);
-        uiManager.TitleMenu.SetActive(false);
-        uiManager.HUDMenu.SetActive(true);
+
+        uiManager.ShowObject(uiManager.AmmoContent);
+        uiManager.ShowObject(uiManager.SanityContent);
+
+        uiManager.HideObject(uiManager.TitleMenu);
+        uiManager.ShowObject(uiManager.HUDMenu);
 
         audioManager.PlaySoundTrack(SoundType.MainGame);
         audioManager.StopSound(SoundType.MainMenu);
@@ -215,8 +219,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         audioManager.UnPauseSound(SoundType.MainGame);
 
-        uiManager.PauseMenu.SetActive(false);
-        uiManager.HUDMenu.SetActive(true);
+        uiManager.HideObject(uiManager.PauseMenu);
+        uiManager.ShowObject(uiManager.HUDMenu);
     }
 
     public void ReturnToMainMenu()

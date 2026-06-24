@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class PlayerController : MonoBehaviour
     #region SERVICES
     private GameManager gameManager;
     private UIManager uiManager;
-    private GhostHearing ghostHearing;
+    private GhostPerception ghostPerception;
     #endregion
 
     #region SCRIPT REFERENCES
@@ -42,6 +41,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public Light GunLight { get => gunLight; set => gunLight = value; }
     public Vector2 MoveInput => moveInput;
     #endregion
     private void Awake()
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         gameManager = ServiceManager.GetService<GameManager>();
         uiManager = ServiceManager.GetService<UIManager>();
-        ghostHearing = ServiceManager.GetService<GhostHearing>();
+        ghostPerception = ServiceManager.GetService<GhostPerception>();
 
         canInteract = true;
     }
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (isSprinting)
-            ghostHearing.HearNoise(this.transform.position, sprintNoiseStrength);
+            ghostPerception.HearNoise(this.transform.position, sprintNoiseStrength);
 
         float currentSpeed = isSprinting ? sprintSpeed : moveSpeed;
         ApplyMovement(currentSpeed);
