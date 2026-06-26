@@ -28,8 +28,6 @@ public class UIManager : MonoBehaviour
    private float duration = 1;
 
     #region SERVICES
-    private UIManager uiManager;
-    private SettingsManager settingsManager;
     private GameManager gameManager;
     private PlayerSanity playerSanity;
     #endregion
@@ -130,7 +128,6 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        settingsManager = ServiceManager.GetService<SettingsManager>();
         gameManager = ServiceManager.GetService<GameManager>();
         playerSanity = ServiceManager.GetService<PlayerSanity>();
 

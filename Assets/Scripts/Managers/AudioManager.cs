@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SoundType { MainMenu, MainGame, Hover, Click, PressAnyKey }
+public enum SoundType { MainMenu, MainGame, Hover, Click, PressAnyKey, GhostSound}
 
 public class AudioManager : MonoBehaviour
 {

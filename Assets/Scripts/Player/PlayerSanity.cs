@@ -6,13 +6,14 @@ public class PlayerSanity : MonoBehaviour
     private float sanity = 100f;
 
     #region SERVICES
-    private GhostPerception ghostPerception;
     private UIManager uiManager;
     private GameManager gameManager;
     #endregion
 
     #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private GhostPerception ghostPerception;
     #endregion
 
     #region PROPERTIES
@@ -30,7 +31,6 @@ public class PlayerSanity : MonoBehaviour
 
     private void Start()
     {
-        ghostPerception = ServiceManager.GetService<GhostPerception>();
         uiManager = ServiceManager.GetService<UIManager>();
         gameManager = ServiceManager.GetService<GameManager>();
     }

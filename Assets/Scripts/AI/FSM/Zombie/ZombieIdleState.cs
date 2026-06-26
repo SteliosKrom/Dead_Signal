@@ -14,7 +14,7 @@ public sealed class ZombieIdleState : ZombieState
 
     public override void Update()
     {
-        stateController.Timer += Time.deltaTime;
+        stateController.ZombieTimer += Time.deltaTime;
         Vector3 directionToPlayer = (stateController.Player.position - stateController.transform.position).normalized;
         Vector3 forward = stateController.transform.forward;
         float viewDistance = Vector3.Distance(stateController.transform.position, stateController.Player.position);
@@ -27,12 +27,12 @@ public sealed class ZombieIdleState : ZombieState
 
     public override void Exit()
     {
-        stateController.Timer = 0f;
+        stateController.ZombieTimer = 0f;
     }
 
     public void ChangePatrolPoint()
     {
-        stateController.RandomWaitTime = Random.Range(stateController.XSEC, stateController.YSEC);
+        stateController.ZombieRandomWaitTime = Random.Range(stateController.IdleXSec, stateController.IdleYSec);
         int randomIndex;
 
         do
@@ -46,7 +46,7 @@ public sealed class ZombieIdleState : ZombieState
 
     public void MoveToPatrolState()
     {
-        if (stateController.Timer >= stateController.RandomWaitTime)
+        if (stateController.ZombieTimer >= stateController.ZombieRandomWaitTime)
         {
             stateController.ChangeState(new ZombiePatrolState(stateController));
             return;

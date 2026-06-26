@@ -144,6 +144,7 @@ public class GameManager : MonoBehaviour
                 case GameState.Playing:
                     currentGameState = GameState.Paused;
                     audioManager.PauseSound(SoundType.MainGame);
+                    audioManager.PauseSound(SoundType.GhostSound);
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
@@ -156,6 +157,7 @@ public class GameManager : MonoBehaviour
                 case GameState.Paused:
                     currentGameState = GameState.Playing;
                     audioManager.UnPauseSound(SoundType.MainGame);
+                    audioManager.UnPauseSound(SoundType.GhostSound);
 
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
@@ -217,7 +219,9 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
 
         Time.timeScale = 1f;
+
         audioManager.UnPauseSound(SoundType.MainGame);
+        audioManager.UnPauseSound(SoundType.GhostSound);
 
         uiManager.HideObject(uiManager.PauseMenu);
         uiManager.ShowObject(uiManager.HUDMenu);

@@ -10,12 +10,12 @@ public class PlayerController : MonoBehaviour
     #region SERVICES
     private GameManager gameManager;
     private UIManager uiManager;
-    private GhostPerception ghostPerception;
     #endregion
 
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
     [SerializeField] private Shoot shoot;
+    [SerializeField] private GhostPerception ghostPerception;
     #endregion
 
     #region INPUT

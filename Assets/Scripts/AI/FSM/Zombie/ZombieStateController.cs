@@ -5,10 +5,12 @@ public class ZombieStateController : MonoBehaviour
 {
     [SerializeField] private Transform player;
 
-    [SerializeField] private int randomWaitTime;
-    [SerializeField] private int XSec;
-    [SerializeField] private int YSec;
-    [SerializeField] private int NSec;
+    [SerializeField] private int idleXSec;
+    [SerializeField] private int idleYSec;
+    [SerializeField] private int chaseNSec;
+    [SerializeField] private float zombieTimer;
+    [SerializeField] private int zombieRandomWaitTime;
+
     [SerializeField] private int currentNodeIndex;
 
     [SerializeField] private float moveSpeed;
@@ -18,13 +20,13 @@ public class ZombieStateController : MonoBehaviour
     [SerializeField] private float dotThreshold;
     [SerializeField] private float viewDistance;
     [SerializeField] private float senseDistance;
-    [SerializeField] private float timer;
 
     [SerializeField] private bool canSeePlayer;
     [SerializeField] private bool canSensePlayer;
     [SerializeField] private bool isAttackingDoor;
 
     #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
     [SerializeField] private ZombieInteractor zombieInteractor;
     #endregion
 
@@ -54,7 +56,6 @@ public class ZombieStateController : MonoBehaviour
     public ZombieInteractor ZombieInteractor => zombieInteractor;
     public DoorDetectable CurrentDoor { get; set; }
 
-    public float Timer { get => timer; set => timer = value; }
     public float SpeedMultiplier => speedMultiplier;
     public float MoveSpeed => moveSpeed;
     public float NodeReachThreshold => nodeReachThreshold;
@@ -63,11 +64,13 @@ public class ZombieStateController : MonoBehaviour
     public float SenseDistance => senseDistance;
     public float AttackRange => attackRange;
 
-    public int XSEC => XSec;
-    public int YSEC => YSec;
-    public int NSEC => NSec;
+    public int IdleXSec => idleXSec;
+    public int IdleYSec => idleYSec;
+    public int ChaseNSec => chaseNSec;
+    public float ZombieTimer { get => zombieTimer; set => zombieTimer = value; }
+    public int ZombieRandomWaitTime { get => zombieRandomWaitTime; set => zombieRandomWaitTime = value; }
+
     public int CurrentNodeIndex { get => currentNodeIndex; set => currentNodeIndex = value; }
-    public int RandomWaitTime { get => randomWaitTime; set => randomWaitTime = value; }
 
     public bool CanSeePlayer { get => canSeePlayer; set => canSeePlayer = value; }
     public bool CanSensePlayer { get => canSensePlayer; set => canSensePlayer = value; }

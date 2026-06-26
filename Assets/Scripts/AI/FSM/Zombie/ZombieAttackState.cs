@@ -7,7 +7,7 @@ public sealed class ZombieAttackState : ZombieState
     public override void Enter()
     {
         stateController.CurrentNodeIndex = 0;
-        stateController.Timer = 0f;
+        stateController.ZombieTimer = 0f;
         stateController.ZombieAnimator.SetInteger("MovementState", 3);
     }
 
