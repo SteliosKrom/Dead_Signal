@@ -6,6 +6,18 @@ public class GoapAgent : MonoBehaviour
 {
     private bool isWaiting;
 
+    [SerializeField] private float ghostVisibleTimer;
+    [SerializeField] private float ghostVisibleTimeInterval;
+
+    [SerializeField] private float flickerTimer;
+    [SerializeField] private float flickerTimeInterval;
+
+    [SerializeField] private float ghostSoundTimer;
+    [SerializeField] private float ghostSoundTimeInterval;
+
+    [SerializeField] private float teleportTimer;
+    [SerializeField] private float teleportTimeInterval;
+
     #region GOAP
     private GoapPlanner planner;
     private GoapGoal patrolGoal;
@@ -14,7 +26,10 @@ public class GoapAgent : MonoBehaviour
     #endregion
 
     #region AGENT
+    [SerializeField] private GhostPerception ghostPerception;
     [SerializeField] private CharacterController ghostCharacterController;
+    [SerializeField] private SkinnedMeshRenderer ghostBody;
+    [SerializeField] private MeshRenderer ghostHat;
     private float moveSpeed = 5f;
     private float rotationSpeed = 10f;
     #endregion
@@ -29,6 +44,13 @@ public class GoapAgent : MonoBehaviour
 
     #region SERVICES
     private GameManager gameManager;
+    private AudioManager audioManager;
+    private PlayerSanity playerSanity;
+    #endregion
+
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private PlayerController playerController;
     #endregion
 
     #region TARGETS
@@ -74,6 +96,8 @@ public class GoapAgent : MonoBehaviour
     private void Start()
     {
         gameManager = ServiceManager.GetService<GameManager>();
+        audioManager = ServiceManager.GetService<AudioManager>();
+        playerSanity = ServiceManager.GetService<PlayerSanity>();
 
         List<GoapAction> plan = planner.CreatePlan(currentGoal, actions);
 
@@ -85,7 +109,86 @@ public class GoapAgent : MonoBehaviour
 
     private void Update()
     {
-        GoToTarget();
+        UpdateGhostBehaviourFromSanity();
+    }
+
+    public void UpdateGhostBehaviourFromSanity()
+    {
+        if (gameManager.CurrentGameState != GameState.Playing)
+            return;
+
+        float sanity = playerSanity.Sanity;
+
+        if (sanity > 80f)
+        {
+            ghostBody.enabled = false;
+            ghostHat.enabled = false;
+        }
+        else if (sanity > 60f)
+        {
+            GoToTarget();
+
+            float distanceToDoor = Vector3.Distance(this.transform.position, currentDoorTarget.position);
+
+            if (distanceToDoor <= stopThreshold && !isWaiting)
+            {
+                StartCoroutine(GhostWaitTimeCoroutine());
+            }
+        }
+        else if (sanity > 40f)
+        {
+            TeleportToRandomTargetPoint();
+            GoToTarget();
+            GenerateAudioVisualCues();
+        }
+        else if (sanity > 20f)
+        {
+            // 
+        }
+    }
+
+    public void GenerateAudioVisualCues()
+    {
+        ghostVisibleTimer += Time.deltaTime;
+        ghostSoundTimer += Time.deltaTime;
+        flickerTimer += Time.deltaTime;
+
+        if (ghostSoundTimer >= ghostSoundTimeInterval)
+        {
+            audioManager.PlaySFX(SoundType.GhostSound);
+            ghostBody.enabled = true;
+            ghostSoundTimer = 0f;
+        }
+
+        if (ghostVisibleTimer >= ghostVisibleTimeInterval)
+        {
+            StartCoroutine(ShowGhost());
+            ghostVisibleTimer = 0f;
+        }
+
+        if (flickerTimer >= flickerTimeInterval)
+        {
+            playerController.GunLight.enabled = !playerController.GunLight.enabled;
+            flickerTimer = 0f;
+        }
+    }
+
+    public void TeleportToRandomTargetPoint()
+    {
+        if (ghostPerception.IsOutOfHearingRange())
+        {
+            teleportTimer += Time.deltaTime;
+
+            if (teleportTimer >= teleportTimeInterval)
+            {
+                TeleportToRandomTargetPoint();
+                teleportTimer = 0f;
+            }
+        }
+        else
+        {
+            teleportTimer = 0f;
+        }
     }
 
     public void GoToTarget()
@@ -103,11 +206,7 @@ public class GoapAgent : MonoBehaviour
 
         float distanceToDoor = Vector3.Distance(this.transform.position, currentDoorTarget.position);
 
-        if (distanceToDoor <= stopThreshold && !isWaiting)
-        {
-            StartCoroutine(GhostWaitTimeCoroutine());
-        }
-        else
+        if (distanceToDoor > stopThreshold)
         {
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             ghostCharacterController.Move(directionToTarget * moveSpeed * Time.deltaTime);
@@ -130,6 +229,17 @@ public class GoapAgent : MonoBehaviour
     public void InitializeGhost()
     {
         SelectNewTargetPoint();
+    }
+
+    public IEnumerator ShowGhost()
+    {
+        ghostBody.enabled = true;
+        ghostHat.enabled = true;
+
+        yield return new WaitForSeconds(ghostVisibleTimeInterval);
+
+        ghostBody.enabled = false;
+        ghostHat.enabled = false;
     }
 
     public IEnumerator GhostWaitTimeCoroutine()

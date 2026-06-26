@@ -8,7 +8,7 @@ public sealed class ZombieChaseState : ZombieState
     public override void Enter()
     {
         stateController.CurrentNodeIndex = 0;
-        stateController.Timer = 0f;
+        stateController.ZombieTimer = 0;
 
         stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position,
             stateController.Player.position);
@@ -79,9 +79,9 @@ public sealed class ZombieChaseState : ZombieState
 
     public void ExtendChase(Vector3 directionToPlayer, Quaternion targetRotation)
     {
-        stateController.Timer += Time.deltaTime;
+        stateController.ZombieTimer += Time.deltaTime;
 
-        if (stateController.Timer >= stateController.NSEC)
+        if (stateController.ZombieTimer >= stateController.ChaseNSec)
         {
             MoveToIdleState();
             return;

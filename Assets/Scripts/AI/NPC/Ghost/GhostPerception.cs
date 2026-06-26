@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class GhostPerception : MonoBehaviour
 {
+    #region PLAYER
+    [Header("PLAYER")]
+    [SerializeField] private Transform player;
+    #endregion
+
     #region GHOST
     [Header("GHOST")]
     [SerializeField] private float viewRange;
@@ -17,9 +22,9 @@ public class GhostPerception : MonoBehaviour
     public Vector3 LastNoisePosition { get; private set; }
     #endregion
 
-    private void Awake()
+    private void Update()
     {
-        ServiceManager.RegisterService<GhostPerception>(this);
+        IsOutOfHearingRange();
     }
 
     public bool CanSeePlayer(Vector3 playerPosition)
@@ -49,7 +54,13 @@ public class GhostPerception : MonoBehaviour
         {
             HeardNoise = true;
             LastNoisePosition = noisePosition;
-            Debug.Log("Ghost heard noise");
+            Debug.Log("Ghost have heard noise");
         }
+    }
+
+    public bool IsOutOfHearingRange()
+    {
+        float hearDistance = Vector3.Distance(this.transform.position, player.position);
+        return hearDistance > hearingRange;
     }
 }

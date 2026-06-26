@@ -13,7 +13,11 @@ public class Shoot : MonoBehaviour
     private UIManager uiManager;
     private GameManager gameManager;
     private ObjectPoolManager poolManager;
-    private GhostPerception ghostPerception;
+    #endregion
+
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private GhostPerception ghostPerception;
     #endregion
 
     #region INPUT
@@ -62,7 +66,6 @@ public class Shoot : MonoBehaviour
         uiManager = ServiceManager.GetService<UIManager>();
         gameManager = ServiceManager.GetService<GameManager>();
         poolManager = ServiceManager.GetService<ObjectPoolManager>();
-        ghostPerception = ServiceManager.GetService<GhostPerception>();
 
         CurrentAmmo = 24;
         currentReserveAmmo = 120;

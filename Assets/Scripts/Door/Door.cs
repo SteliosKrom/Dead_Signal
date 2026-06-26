@@ -7,8 +7,9 @@ public class Door : MonoBehaviour, IInteractable
 
     private float doorNoiseStrength = 10f;
 
-    #region SERVICES
-    private GhostPerception ghostPerception;
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private GhostPerception ghostPerception;
     #endregion
 
     #region COLLIDERS
@@ -32,8 +33,6 @@ public class Door : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        ghostPerception = ServiceManager.GetService<GhostPerception>();
-
         isOpen = false;
     }
 
