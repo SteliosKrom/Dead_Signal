@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerSanity : MonoBehaviour
 {
+    [SerializeField] private bool playerWasHit;
+
     [SerializeField, Range(0f, 100f)]
     private float sanity = 100f;
 
@@ -17,6 +19,7 @@ public class PlayerSanity : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public bool PlayerWasHit => playerWasHit;
     public float Sanity
     {
         get => sanity;
@@ -43,6 +46,7 @@ public class PlayerSanity : MonoBehaviour
         DecreaseSanityWithinHearingRange();
         DecreaseSanityWithinViewRange();
         DecreaseSanityInDarkness();
+        DecreaseSanityOnPlayerHit();
     }
 
     private void OnTriggerStay(Collider other)
@@ -53,6 +57,31 @@ public class PlayerSanity : MonoBehaviour
             return;
 
         Sanity += 10 * Time.deltaTime;
+        uiManager.UpdateSanityCounterUI();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ghost"))
+        {
+            playerWasHit = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ghost"))
+        {
+            playerWasHit = false;
+        }
+    }
+
+    public void DecreaseSanityOnPlayerHit()
+    {
+        if (!playerWasHit)
+            return;
+
+        Sanity -= 10;
         uiManager.UpdateSanityCounterUI();
     }
 

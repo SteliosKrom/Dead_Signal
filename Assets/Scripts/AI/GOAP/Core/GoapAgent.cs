@@ -18,18 +18,28 @@ public class GoapAgent : MonoBehaviour
     [SerializeField] private float teleportTimer;
     [SerializeField] private float teleportTimeInterval;
 
+    [SerializeField] private float extendChaseTimer;
+    [SerializeField] private float extendChaseTimeInterval;
+
     #region GOAP
+    private WorldState world;
     private GoapPlanner planner;
+
     private GoapGoal patrolGoal;
+    private GoapGoal chaseGoal;
     private GoapGoal currentGoal;
+
     private List<GoapAction> actions;
+    private List<GoapAction> currentPlan;
+
+    private int currentActionIndex;
     #endregion
 
     #region AGENT
     [SerializeField] private GhostPerception ghostPerception;
-    [SerializeField] private CharacterController ghostCharacterController;
     [SerializeField] private SkinnedMeshRenderer ghostBody;
     [SerializeField] private MeshRenderer ghostHat;
+    [SerializeField] private BoxCollider ghostCollider;
     private float moveSpeed = 5f;
     private float rotationSpeed = 10f;
     #endregion
@@ -54,33 +64,38 @@ public class GoapAgent : MonoBehaviour
     #endregion
 
     #region TARGETS
-    private float stopThreshold = 0.1f;
+    [SerializeField] private float stopThreshold = 0.1f;
     private int randomTargetIndex;
     private Transform currentDoorTarget;
+    [SerializeField] private Transform player;
     [SerializeField] private Transform[] doorTargets;
     #endregion
 
+    #region PROPERTIES
+    public WorldState World { get => world; set => world = value; }
+    #endregion
     private void Awake()
     {
         // Setup
+        world = new WorldState();
         planner = new GoapPlanner();
         actions = new List<GoapAction>();
 
         //Actions
-        GoapAction Patrol = new GoapAction();
-        Patrol.Name = "Patrol";
-        Patrol.Effects.Add(GoapKeys.REACHED_PATROL_POINT, true);
-        actions.Add(Patrol);
+        GoapAction patrol = new GoapAction();
+        patrol.ActionType = GoapActionType.Patrol;
+        patrol.Effects.Add(GoapKeys.REACHED_PATROL_POINT, true);
+        actions.Add(patrol);
 
-        GoapAction Chase = new GoapAction();
-        Chase.Name = "Chase";
-        Chase.Preconditions.Add(GoapKeys.PLAYER_DETECTED, true);
-        Chase.Effects.Add(GoapKeys.NEAR_PLAYER, true);
-        actions.Add(Chase);
+        GoapAction chase = new GoapAction();
+        chase.ActionType = GoapActionType.Chase;
+        chase.Preconditions.Add(GoapKeys.PLAYER_DETECTED, true);
+        chase.Effects.Add(GoapKeys.PLAYER_REACHED, true);
+        actions.Add(chase);
 
         // Goals
         patrolGoal = new GoapGoal(GoapKeys.REACHED_PATROL_POINT, true);
-        currentGoal = patrolGoal;
+        chaseGoal = new GoapGoal(GoapKeys.PLAYER_REACHED, true);
     }
 
     private void OnEnable()
@@ -98,53 +113,151 @@ public class GoapAgent : MonoBehaviour
         gameManager = ServiceManager.GetService<GameManager>();
         audioManager = ServiceManager.GetService<AudioManager>();
         playerSanity = ServiceManager.GetService<PlayerSanity>();
-
-        List<GoapAction> plan = planner.CreatePlan(currentGoal, actions);
-
-        foreach (GoapAction action in plan)
-        {
-            Debug.Log(action.Name);
-        }
     }
 
     private void Update()
     {
-        UpdateGhostBehaviourFromSanity();
-    }
-
-    public void UpdateGhostBehaviourFromSanity()
-    {
         if (gameManager.CurrentGameState != GameState.Playing)
             return;
 
+        UpdateWorldState();
+        UpdateGhostBehaviourFromSanity();
+
+        if (playerSanity.Sanity > 80f)
+            return;
+
+        UpdateGoal();
+        ExecuteCurrentPlan();
+    }
+
+    // GOAP Agent Implementation...
+    public void UpdateWorldState()
+    {
+        world.SetState(GoapKeys.PLAYER_DETECTED, ghostPerception.CanSeePlayer(player.position));
+        world.SetState(GoapKeys.REACHED_PATROL_POINT, DistanceToTarget() <= stopThreshold);
+    }
+
+    private void ChangeGoal(GoapGoal newGoal)
+    {
+        if (currentGoal == newGoal)
+            return;
+
+        currentGoal = newGoal;
+        CreateNewPlan();
+    }
+
+    private void UpdateGoal()
+    {
+        if (playerSanity.Sanity <= 40f && world.GetState(GoapKeys.PLAYER_DETECTED))
+        {
+            ChangeGoal(chaseGoal);
+        }
+        else
+        {
+            ChangeGoal(patrolGoal);
+        }
+    }
+
+    private void CreateNewPlan()
+    {
+        currentActionIndex = 0;
+        currentPlan = planner.CreatePlan(currentGoal, actions);
+    }
+
+    private void ExecuteCurrentPlan()
+    {
+        if (currentPlan.Count == 0)
+            return;
+
+        if (currentActionIndex >= currentPlan.Count)
+        {
+            CreateNewPlan();
+            return;
+        }
+
+        GoapAction currentAction = currentPlan[currentActionIndex];
+
+        if (!currentAction.CanExecute(world))
+            return;
+
+        switch (currentAction.ActionType)
+        {
+            case GoapActionType.Patrol:
+                GoToTarget();
+                currentAction.ApplyEffects(world);
+                currentActionIndex++;
+                break;
+            case GoapActionType.Chase:
+                ChasePlayer();
+                currentAction.ApplyEffects(world);
+                currentActionIndex++;
+                break;
+        }
+    }
+
+    // Rest Implementation...
+    public void UpdateGhostBehaviourFromSanity()
+    {
         float sanity = playerSanity.Sanity;
 
-        if (sanity > 80f)
+        switch (sanity)
         {
-            ghostBody.enabled = false;
-            ghostHat.enabled = false;
-        }
-        else if (sanity > 60f)
-        {
-            GoToTarget();
+            case > 80f:
+                DisableGhost();
+                break;
+            case > 60f:
+                ResetGhostTimers();
+                ghostCollider.enabled = false;
 
-            float distanceToDoor = Vector3.Distance(this.transform.position, currentDoorTarget.position);
+                if (DistanceToTarget() <= stopThreshold && !isWaiting)
+                {
+                    // Add door knock sound effect...
+                    StartCoroutine(GhostWaitTimeCoroutine());
+                }
+                break;
+            case > 40f:
+                ghostCollider.enabled = false;
+                TeleportToRandomTargetPoint();
 
-            if (distanceToDoor <= stopThreshold && !isWaiting)
-            {
-                StartCoroutine(GhostWaitTimeCoroutine());
-            }
+                if (DistanceToTarget() <= stopThreshold && !isWaiting)
+                    StartCoroutine(GhostWaitTimeCoroutine());
+
+                GenerateAudioVisualCues();
+                break;
+            case > 20f:
+                ghostCollider.enabled = true;
+                TeleportToRandomTargetPoint();
+
+                if (DistanceToTarget() <= stopThreshold && !isWaiting)
+                    StartCoroutine(GhostWaitTimeCoroutine());
+
+                GenerateAudioVisualCues();
+                break;
+            case >= 0:
+                EnableGhost();
+                ghostCollider.enabled = true;
+                TeleportToRandomTargetPoint();
+
+                if (DistanceToTarget() <= stopThreshold && !isWaiting)
+                    StartCoroutine(GhostWaitTimeCoroutine());
+
+                GenerateAudioVisualCues();
+                break;
         }
-        else if (sanity > 40f)
-        {
-            TeleportToRandomTargetPoint();
-            GoToTarget();
-            GenerateAudioVisualCues();
-        }
-        else if (sanity > 20f)
-        {
-            // 
-        }
+    }
+
+    public void EnableGhost()
+    {
+        ghostHat.enabled = true;
+        ghostBody.enabled = true;
+    }
+
+    public void DisableGhost()
+    {
+        ghostCollider.enabled = false;
+        ghostBody.enabled = false;
+        ghostHat.enabled = false;
+        ResetGhostTimers();
     }
 
     public void GenerateAudioVisualCues()
@@ -156,7 +269,6 @@ public class GoapAgent : MonoBehaviour
         if (ghostSoundTimer >= ghostSoundTimeInterval)
         {
             audioManager.PlaySFX(SoundType.GhostSound);
-            ghostBody.enabled = true;
             ghostSoundTimer = 0f;
         }
 
@@ -173,6 +285,38 @@ public class GoapAgent : MonoBehaviour
         }
     }
 
+    public void ApplyGhostChaseMovementAndRotation()
+    {
+        Vector3 directionToPlayer = (player.position - this.transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        this.transform.position += directionToPlayer * moveSpeed * Time.deltaTime;
+    }
+
+    public void ChasePlayer()
+    {
+        ApplyGhostChaseMovementAndRotation();
+
+        bool canSeePlayer = ghostPerception.CanSeePlayer(player.position);
+
+        if (!canSeePlayer)
+        {
+            extendChaseTimer += Time.deltaTime;
+
+            if (extendChaseTimer >= extendChaseTimeInterval)
+            {
+                ChangeGoal(patrolGoal);
+                extendChaseTimer = 0f;
+                return;
+            }
+        }
+        else
+        {
+            extendChaseTimer = 0f;
+        }
+    }
+
     public void TeleportToRandomTargetPoint()
     {
         if (ghostPerception.IsOutOfHearingRange())
@@ -181,7 +325,8 @@ public class GoapAgent : MonoBehaviour
 
             if (teleportTimer >= teleportTimeInterval)
             {
-                TeleportToRandomTargetPoint();
+                SelectNewTargetPoint();
+                this.transform.position = currentDoorTarget.position;
                 teleportTimer = 0f;
             }
         }
@@ -193,23 +338,18 @@ public class GoapAgent : MonoBehaviour
 
     public void GoToTarget()
     {
-        if (gameManager.CurrentGameState != GameState.Playing)
-            return;
-
         if (isWaiting)
             return;
 
-        Vector3 directionToTarget = (currentDoorTarget.position - this.transform.position).normalized;
         Vector3 directionToDoor = currentDoorTarget.position - this.transform.position;
+        Vector3 directionToTarget = (currentDoorTarget.position - this.transform.position).normalized;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToDoor);
 
-        float distanceToDoor = Vector3.Distance(this.transform.position, currentDoorTarget.position);
-
-        if (distanceToDoor > stopThreshold)
+        if (DistanceToTarget() > stopThreshold)
         {
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            ghostCharacterController.Move(directionToTarget * moveSpeed * Time.deltaTime);
+            this.transform.position += directionToTarget * moveSpeed * Time.deltaTime;
         }
     }
 
@@ -224,6 +364,19 @@ public class GoapAgent : MonoBehaviour
 
         randomTargetIndex = newIndex;
         currentDoorTarget = doorTargets[randomTargetIndex];
+    }
+
+    private void ResetGhostTimers()
+    {
+        teleportTimer = 0f;
+        ghostSoundTimer = 0f;
+        ghostVisibleTimer = 0f;
+        flickerTimer = 0f;
+    }
+
+    public float DistanceToTarget()
+    {
+        return Vector3.Distance(this.transform.position, currentDoorTarget.position);
     }
 
     public void InitializeGhost()
@@ -244,11 +397,13 @@ public class GoapAgent : MonoBehaviour
 
     public IEnumerator GhostWaitTimeCoroutine()
     {
-        Debug.Log("Knock knock!");
         isWaiting = true;
         ghostWaitTime = Random.Range(2f, 5f);
+
         yield return new WaitForSeconds(ghostWaitTime);
+
         SelectNewTargetPoint();
+
         isWaiting = false;
     }
 }

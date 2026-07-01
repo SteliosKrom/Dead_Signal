@@ -2,13 +2,11 @@ using System.Collections.Generic;
 
 public class GoapAction
 {
-    private string name;
-
     private Dictionary<string, bool> preconditions = new Dictionary<string, bool>();
     private Dictionary<string, bool> effects = new Dictionary<string, bool>();
 
     #region PROPERTIES
-    public string Name { get; set; }
+    public GoapActionType ActionType { get; set; }
     public Dictionary<string, bool> Preconditions => preconditions;
     public Dictionary<string, bool> Effects => effects;
     #endregion

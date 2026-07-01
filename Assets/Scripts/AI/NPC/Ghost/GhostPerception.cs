@@ -30,7 +30,7 @@ public class GhostPerception : MonoBehaviour
     public bool CanSeePlayer(Vector3 playerPosition)
     {
         Vector3 forward = transform.forward;
-        Vector3 directionToPlayer = playerPosition - this.transform.position;
+        Vector3 directionToPlayer = (playerPosition - this.transform.position).normalized;
         float viewDistance = Vector3.Distance(playerPosition, this.transform.position);
         float dot = Vector3.Dot(forward, directionToPlayer);
 
@@ -61,6 +61,6 @@ public class GhostPerception : MonoBehaviour
     public bool IsOutOfHearingRange()
     {
         float hearDistance = Vector3.Distance(this.transform.position, player.position);
-        return hearDistance > hearingRange;
+        return hearDistance >= hearingRange;
     }
 }

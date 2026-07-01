@@ -81,7 +81,6 @@ public class PlayerController : MonoBehaviour
     {
         gameManager = ServiceManager.GetService<GameManager>();
         uiManager = ServiceManager.GetService<UIManager>();
-        ghostPerception = ServiceManager.GetService<GhostPerception>();
 
         canInteract = true;
     }
