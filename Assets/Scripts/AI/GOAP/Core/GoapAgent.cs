@@ -18,9 +18,6 @@ public class GoapAgent : MonoBehaviour
     [SerializeField] private float teleportTimer;
     [SerializeField] private float teleportTimeInterval;
 
-    [SerializeField] private float extendChaseTimer;
-    [SerializeField] private float extendChaseTimeInterval;
-
     #region GOAP
     private WorldState world;
     private GoapPlanner planner;
@@ -40,8 +37,8 @@ public class GoapAgent : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer ghostBody;
     [SerializeField] private MeshRenderer ghostHat;
     [SerializeField] private BoxCollider ghostCollider;
-    private float moveSpeed = 5f;
-    private float rotationSpeed = 10f;
+    [SerializeField] private float moveSpeed = 2.5f;
+    [SerializeField] private float rotationSpeed = 10f;
     #endregion
 
     #region COROUTINES
@@ -206,8 +203,8 @@ public class GoapAgent : MonoBehaviour
                 DisableGhost();
                 break;
             case > 60f:
-                ResetGhostTimers();
                 ghostCollider.enabled = false;
+                ResetGhostTimers();
 
                 if (DistanceToTarget() <= stopThreshold && !isWaiting)
                 {
@@ -218,29 +215,20 @@ public class GoapAgent : MonoBehaviour
             case > 40f:
                 ghostCollider.enabled = false;
                 TeleportToRandomTargetPoint();
-
-                if (DistanceToTarget() <= stopThreshold && !isWaiting)
-                    StartCoroutine(GhostWaitTimeCoroutine());
-
+                PatrolBehaviour();
                 GenerateAudioVisualCues();
                 break;
             case > 20f:
                 ghostCollider.enabled = true;
                 TeleportToRandomTargetPoint();
-
-                if (DistanceToTarget() <= stopThreshold && !isWaiting)
-                    StartCoroutine(GhostWaitTimeCoroutine());
-
+                PatrolBehaviour();
                 GenerateAudioVisualCues();
                 break;
             case >= 0:
-                EnableGhost();
                 ghostCollider.enabled = true;
+                EnableGhost();
                 TeleportToRandomTargetPoint();
-
-                if (DistanceToTarget() <= stopThreshold && !isWaiting)
-                    StartCoroutine(GhostWaitTimeCoroutine());
-
+                PatrolBehaviour();
                 GenerateAudioVisualCues();
                 break;
         }
@@ -258,6 +246,12 @@ public class GoapAgent : MonoBehaviour
         ghostBody.enabled = false;
         ghostHat.enabled = false;
         ResetGhostTimers();
+    }
+
+    public void PatrolBehaviour()
+    { 
+        if (DistanceToTarget() <= stopThreshold && !isWaiting)
+            StartCoroutine(GhostWaitTimeCoroutine());
     }
 
     public void GenerateAudioVisualCues()
@@ -297,24 +291,6 @@ public class GoapAgent : MonoBehaviour
     public void ChasePlayer()
     {
         ApplyGhostChaseMovementAndRotation();
-
-        bool canSeePlayer = ghostPerception.CanSeePlayer(player.position);
-
-        if (!canSeePlayer)
-        {
-            extendChaseTimer += Time.deltaTime;
-
-            if (extendChaseTimer >= extendChaseTimeInterval)
-            {
-                ChangeGoal(patrolGoal);
-                extendChaseTimer = 0f;
-                return;
-            }
-        }
-        else
-        {
-            extendChaseTimer = 0f;
-        }
     }
 
     public void TeleportToRandomTargetPoint()

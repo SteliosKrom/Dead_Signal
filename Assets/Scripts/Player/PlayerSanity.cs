@@ -51,12 +51,10 @@ public class PlayerSanity : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        other = GameObject.Find("CandleRoomCollider").GetComponent<BoxCollider>();
-
-        if (!other.gameObject.CompareTag("CandleRoom"))
+        if (!other.CompareTag("CandleRoom"))
             return;
 
-        Sanity += 10 * Time.deltaTime;
+        Sanity += 10f * Time.deltaTime;
         uiManager.UpdateSanityCounterUI();
     }
 
@@ -81,7 +79,7 @@ public class PlayerSanity : MonoBehaviour
         if (!playerWasHit)
             return;
 
-        Sanity -= 10;
+        Sanity -= 10 * Time.deltaTime;
         uiManager.UpdateSanityCounterUI();
     }
 

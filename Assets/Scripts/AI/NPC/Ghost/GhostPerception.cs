@@ -27,19 +27,6 @@ public class GhostPerception : MonoBehaviour
         IsOutOfHearingRange();
     }
 
-    public bool CanSeePlayer(Vector3 playerPosition)
-    {
-        Vector3 forward = transform.forward;
-        Vector3 directionToPlayer = (playerPosition - this.transform.position).normalized;
-        float viewDistance = Vector3.Distance(playerPosition, this.transform.position);
-        float dot = Vector3.Dot(forward, directionToPlayer);
-
-        if (viewDistance <= viewRange && dot > dotThreshold)
-            return true;
-
-        return false;
-    }
-
     public void HearNoise(Vector3 noisePosition, float noiseStrength)
     {
         float distanceFromNoise = Vector3.Distance(this.transform.position, noisePosition);
@@ -56,6 +43,12 @@ public class GhostPerception : MonoBehaviour
             LastNoisePosition = noisePosition;
             Debug.Log("Ghost have heard noise");
         }
+    }
+
+    public bool CanSeePlayer(Vector3 playerPosition)
+    {
+        float viewDistance = Vector3.Distance(playerPosition, this.transform.position);
+        return viewDistance <= viewRange;
     }
 
     public bool IsOutOfHearingRange()

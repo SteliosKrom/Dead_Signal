@@ -74689,6 +74689,8 @@ MonoBehaviour:
   ghostBody: {fileID: 1806330074}
   ghostHat: {fileID: 80336378}
   ghostCollider: {fileID: 1950528819}
+  moveSpeed: 2.5
+  rotationSpeed: 10
   gameEvents: {fileID: 817840416}
   playerController: {fileID: 501812249}
   stopThreshold: 0.1
