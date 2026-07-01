@@ -5,6 +5,10 @@ using System.Collections;
 public class GoapAgent : MonoBehaviour
 {
     private bool isWaiting;
+    private bool insideCandleRoom;
+
+    [SerializeField] private LayerMask unreachableLayer;
+    [SerializeField] private float collisionCheckRadius = 0.3f;
 
     [SerializeField] private float ghostVisibleTimer;
     [SerializeField] private float ghostVisibleTimeInterval;
@@ -125,6 +129,22 @@ public class GoapAgent : MonoBehaviour
 
         UpdateGoal();
         ExecuteCurrentPlan();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("CandleRoom"))
+        {
+            insideCandleRoom = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("CandleRoom"))
+        {
+            insideCandleRoom = false;
+        }
     }
 
     // GOAP Agent Implementation...
@@ -290,6 +310,9 @@ public class GoapAgent : MonoBehaviour
 
     public void ChasePlayer()
     {
+        if (insideCandleRoom)
+            return;
+
         ApplyGhostChaseMovementAndRotation();
     }
 

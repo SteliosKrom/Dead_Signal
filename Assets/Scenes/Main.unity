@@ -39837,11 +39837,11 @@ Transform:
   m_GameObject: {fileID: 609060143}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.9690704, y: 1.44645, z: 6.41892}
+  m_LocalPosition: {x: 11.091, y: 2.07535, z: 0.71758986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 917846139}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &609402745
 MeshFilter:
@@ -50612,8 +50612,7 @@ Transform:
   m_LocalPosition: {x: 13.06007, y: 0.6289, z: -5.70133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 609060146}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &919333586
@@ -53228,7 +53227,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 3, z: 10}
+  m_Size: {x: 12, y: 3, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1015297362
 MeshRenderer:
@@ -74675,6 +74674,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537bc73c9c78f5f45b065ad6f87f8561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoapAgent
+  unreachableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  collisionCheckRadius: 0.3
   ghostVisibleTimer: 0
   ghostVisibleTimeInterval: 0.5
   flickerTimer: 0
@@ -74683,13 +74686,11 @@ MonoBehaviour:
   ghostSoundTimeInterval: 2
   teleportTimer: 0
   teleportTimeInterval: 5
-  extendChaseTimer: 0
-  extendChaseTimeInterval: 5
   ghostPerception: {fileID: 1950528815}
   ghostBody: {fileID: 1806330074}
   ghostHat: {fileID: 80336378}
   ghostCollider: {fileID: 1950528819}
-  moveSpeed: 2.5
+  moveSpeed: 5
   rotationSpeed: 10
   gameEvents: {fileID: 817840416}
   playerController: {fileID: 501812249}
@@ -80435,3 +80436,4 @@ SceneRoots:
   - {fileID: 60324548}
   - {fileID: 917846139}
   - {fileID: 1320948697}
+  - {fileID: 609060146}
