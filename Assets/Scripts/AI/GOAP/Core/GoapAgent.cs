@@ -7,9 +7,6 @@ public class GoapAgent : MonoBehaviour
     private bool isWaiting;
     private bool insideCandleRoom;
 
-    [SerializeField] private LayerMask unreachableLayer;
-    [SerializeField] private float collisionCheckRadius = 0.3f;
-
     [SerializeField] private float ghostVisibleTimer;
     [SerializeField] private float ghostVisibleTimeInterval;
 
@@ -228,7 +225,7 @@ public class GoapAgent : MonoBehaviour
 
                 if (DistanceToTarget() <= stopThreshold && !isWaiting)
                 {
-                    // Add door knock sound effect...
+                    audioManager.PlaySFX(SoundType.GhostKnock);
                     StartCoroutine(GhostWaitTimeCoroutine());
                 }
                 break;
