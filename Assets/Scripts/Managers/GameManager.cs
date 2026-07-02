@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 {
     private bool canPause;
     private bool hasPressedAnykey;
+    private bool isBotMenuPanelOpen;
 
     private float fps;
 
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public bool IsBotMenuPanelOpen { get => isBotMenuPanelOpen; set => isBotMenuPanelOpen = value; }
     public float FPS => fps;
     public GameState CurrentGameState { get => currentGameState; set => CurrentGameState = value; }
     #endregion
@@ -78,6 +80,7 @@ public class GameManager : MonoBehaviour
         controls.Enable();
         controls.UI.AnyKey.performed += OnAnyKeyPressed;
         controls.UI.Back.performed += OnEscapeButtonPressed;
+        controls.UI.OpenBotMenu.performed += OnOpenBotMenuButtonPressed;
     }
 
     private void OnDisable()
@@ -85,6 +88,7 @@ public class GameManager : MonoBehaviour
         // Input Events
         controls.UI.AnyKey.performed -= OnAnyKeyPressed;
         controls.UI.Back.performed -= OnEscapeButtonPressed;
+        controls.UI.OpenBotMenu.performed -= OnOpenBotMenuButtonPressed;
         controls.Disable();
     }
 
@@ -115,6 +119,8 @@ public class GameManager : MonoBehaviour
 
     public void OnEscapeButtonPressed(InputAction.CallbackContext cxt)
     {
+        if (isBotMenuPanelOpen) return;
+
         if (uiManager.CurrentUIState == UIState.CreditsMenu)
             StartCoroutine(CloseCreditsMenuCoroutine());
 
@@ -143,11 +149,11 @@ public class GameManager : MonoBehaviour
             {
                 case GameState.Playing:
                     currentGameState = GameState.Paused;
+
                     audioManager.PauseSound(SoundType.MainGame);
                     audioManager.PauseSound(SoundType.GhostSound);
 
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
+                    uiManager.ShowCursor();
 
                     uiManager.HideObject(uiManager.HUDMenu);
                     uiManager.ShowObject(uiManager.PauseMenu);
@@ -159,8 +165,7 @@ public class GameManager : MonoBehaviour
                     audioManager.UnPauseSound(SoundType.MainGame);
                     audioManager.UnPauseSound(SoundType.GhostSound);
 
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
+                    uiManager.HideCursor();
 
                     uiManager.HideObject(uiManager.PauseMenu);
                     uiManager.ShowObject(uiManager.HUDMenu);
@@ -172,6 +177,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OnOpenBotMenuButtonPressed(InputAction.CallbackContext cxt)
+    {
+        if (CurrentGameState != GameState.Playing)
+            return;
+
+        if (!cxt.performed)
+            return;
+
+        isBotMenuPanelOpen = !isBotMenuPanelOpen;
+        uiManager.BotMenu.SetActive(isBotMenuPanelOpen);
+
+        if (isBotMenuPanelOpen)
+        {
+            uiManager.ShowCursor();
+            uiManager.HideObject(uiManager.CrossHair);
+            uiManager.HideObject(uiManager.InteractIcon);
+        }
+        else
+        {
+            uiManager.HideCursor();
+        }
+    }
+
     public void SwitchCameras()
     {
         if (!LoadingManager.EnterGameplay)
@@ -180,8 +208,7 @@ public class GameManager : MonoBehaviour
         currentGameState = GameState.Playing;
         gameEvents.RaiseGameplayStarted();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        uiManager.HideCursor();
 
         menuCamera.enabled = false;
         mainCamera.enabled = true;
@@ -215,8 +242,7 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.Playing;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        uiManager.HideCursor();
 
         Time.timeScale = 1f;
 

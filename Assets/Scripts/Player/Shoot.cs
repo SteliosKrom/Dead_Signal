@@ -75,6 +75,7 @@ public class Shoot : MonoBehaviour
     {
         if (gameManager.CurrentGameState != GameState.Playing) return;
         if (CurrentAmmo <= 0) return;
+        if (gameManager.IsBotMenuPanelOpen) return;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {

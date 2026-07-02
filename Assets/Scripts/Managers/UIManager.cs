@@ -24,8 +24,8 @@ public enum SettingsTab
 
 public class UIManager : MonoBehaviour
 {
-   private float elapsedTime;
-   private float duration = 1;
+    private float elapsedTime;
+    private float duration = 1;
 
     #region SERVICES
     private GameManager gameManager;
@@ -79,6 +79,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject interactIcon;
     [SerializeField] private GameObject fpsMenu;
     [SerializeField] private GameObject crossHair;
+    [SerializeField] private GameObject botMenu;
     [SerializeField] private GameObject[] settingsTabMenus;
     #endregion
 
@@ -93,6 +94,7 @@ public class UIManager : MonoBehaviour
     public GameObject TitleMenu => titleMenu;
     public GameObject SettingsMenu => settingsMenu;
     public GameObject HUDMenu { get => HUDmenu; set => HUDmenu = value; }
+    public GameObject BotMenu { get => botMenu; set => botMenu = value; }
     public TextMeshProUGUI MasterVolumeText => masterVolumeText;
     public TextMeshProUGUI GameVolumeText => gameVolumeText;
     public TextMeshProUGUI MenuVolumeText => menuVolumeText;
@@ -153,15 +155,27 @@ public class UIManager : MonoBehaviour
     public void OpenSettingsMenu(GameObject targetMenu, UIState state)
     {
         currentUIState = state;
-        targetMenu.SetActive(false);
-        settingsMenu.SetActive(true);
+        HideObject(targetMenu);
+        ShowObject(settingsMenu);
     }
 
     public void OpenSettingsTab(GameObject targetMenu, SettingsTab tab)
     {
         currentSettingsTab = tab;
-        settingsMenu.SetActive(false);
-        targetMenu.SetActive(true);
+        HideObject(settingsMenu);
+        ShowObject(targetMenu);
+    }
+
+    public void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void HideCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void ShowObject(GameObject obj) => obj.SetActive(true);
@@ -186,8 +200,14 @@ public class UIManager : MonoBehaviour
     public void OpenMainMenu()
     {
         currentUIState = UIState.MainMenu;
-        titleMenu.SetActive(false);
-        mainMenu.SetActive(true);
+        HideObject(titleMenu);
+        ShowObject(mainMenu);
+    }
+
+    public void CloseBotMenu()
+    {
+        HideObject(botMenu);
+        gameManager.IsBotMenuPanelOpen = false;
     }
 
     public void OpenMainMenuSettings() => OpenSettingsMenu(mainMenu, UIState.MainMenuSettings);
@@ -201,8 +221,8 @@ public class UIManager : MonoBehaviour
 
     public void OpenCreditsMenu()
     {
-        mainMenu.SetActive(false);
-        creditsMenu.SetActive(true);
+        HideObject(mainMenu);
+        ShowObject(creditsMenu);
     }
 
     public void UpdateSliderValueUI(Slider slider, TextMeshProUGUI valueText)
@@ -215,20 +235,20 @@ public class UIManager : MonoBehaviour
         switch (currentSettingsTab)
         {
             case SettingsTab.Audio:
-                audioMenu.SetActive(false);
-                settingsMenu.SetActive(true);
+                HideObject(audioMenu);
+                ShowObject(settingsMenu);
                 break;
             case SettingsTab.Display:
-                displayMenu.SetActive(false);
-                settingsMenu.SetActive(true);
+                HideObject(displayMenu);
+                ShowObject(settingsMenu);
                 break;
             case SettingsTab.Graphics:
-                graphicsMenu.SetActive(false);
-                settingsMenu.SetActive(true);
+                HideObject(graphicsMenu);
+                ShowObject(settingsMenu);
                 break;
             case SettingsTab.Controls:
-                controlsMenu.SetActive(false);
-                settingsMenu.SetActive(true);
+                HideObject(controlsMenu);
+                ShowObject(settingsMenu);
                 break;
         }
     }
@@ -236,8 +256,8 @@ public class UIManager : MonoBehaviour
     public void ReturnFromCreditsMenu()
     {
         currentUIState = UIState.MainMenu;
-        mainMenu.SetActive(true);
-        creditsMenu.SetActive(false);
+        ShowObject(mainMenu);
+        HideObject(creditsMenu);
     }
 
     public void ExitSettings()
@@ -246,13 +266,13 @@ public class UIManager : MonoBehaviour
         {
             case UIState.MainMenuSettings:
                 currentUIState = UIState.MainMenu;
-                settingsMenu.SetActive(false);
-                mainMenu.SetActive(true);
+                HideObject(settingsMenu);
+                ShowObject(mainMenu);
                 break;
             case UIState.PauseMenuSettings:
                 currentUIState = UIState.PauseMenu;
-                settingsMenu.SetActive(false);
-                pauseMenu.SetActive(true);
+                HideObject(settingsMenu);
+                ShowObject(pauseMenu);
                 break;
         }
         PlayerPrefs.Save();
