@@ -8,6 +8,7 @@ public class Interactor : MonoBehaviour
 
     #region SERVICES
     private UIManager uiManager;
+    private GameManager gameManager;
     #endregion
 
     #region INPUT
@@ -47,17 +48,21 @@ public class Interactor : MonoBehaviour
     private void Start()
     {
         uiManager = ServiceManager.GetService<UIManager>();
+        gameManager = ServiceManager.GetService<GameManager>();
     }
 
     private void Update()
     {
+        if (gameManager.CurrentGameState != GameState.Playing) return;
+        if (gameManager.IsBotMenuPanelOpen) return;
+
         DetectInteractable();
     }
 
     public void OnInteract(InputAction.CallbackContext cxt)
     {
-        if (hit.collider == null)
-            return;
+        if (gameManager.IsBotMenuPanelOpen) return;
+        if (hit.collider == null) return;
 
         if (hit.collider.TryGetComponent(out currentInteractable))
         {

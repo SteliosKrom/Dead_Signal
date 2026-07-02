@@ -5,6 +5,10 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform cameraHolder;
 
+    #region SERVICES
+    private GameManager gameManager;
+    #endregion
+
     #region DATA
     [SerializeField] private float minCameraRotation;
     [SerializeField] private float maxCameraRotation;
@@ -45,6 +49,8 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        gameManager = ServiceManager.GetService<GameManager>();
+
         baseYRotation = transform.eulerAngles.y;
     }
 
@@ -55,6 +61,9 @@ public class CameraController : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext cxt)
     {
+        if (gameManager.CurrentGameState != GameState.Playing) return;
+        if (gameManager.IsBotMenuPanelOpen) return;
+
         lookInput = cxt.ReadValue<Vector2>();
     }
 

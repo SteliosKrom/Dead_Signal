@@ -197,6 +197,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenBotMenu",
+                    "type": "Button",
+                    "id": "ddb8538f-0867-4d24-aa2e-b3c79967376a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -241,6 +250,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bc65a6a-cc95-4732-b8dc-c6b13b7b8645",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenBotMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

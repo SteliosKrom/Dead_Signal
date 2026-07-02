@@ -96,13 +96,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext cxt)
     {
+        if (gameManager.IsBotMenuPanelOpen)
+            return;
+
         moveInput = cxt.ReadValue<Vector2>();
     }
 
     private void OnInteract(InputAction.CallbackContext cxt)
     {
-        if (gameManager.CurrentGameState != GameState.Playing)
-            return;
+        if (gameManager.CurrentGameState != GameState.Playing) return;
+        if (gameManager.IsBotMenuPanelOpen) return;
 
         if (canInteract)
         {
@@ -119,8 +122,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnReload(InputAction.CallbackContext cxt)
     {
-        if (gameManager.CurrentGameState != GameState.Playing)
-            return;
+        if (gameManager.CurrentGameState != GameState.Playing) return;
+        if (gameManager.IsBotMenuPanelOpen) return;
 
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
@@ -145,6 +148,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnSprint(InputAction.CallbackContext cxt)
     {
+        if (gameManager.CurrentGameState != GameState.Playing) return;
+        if (gameManager.IsBotMenuPanelOpen) return;
+
         isSprinting = cxt.ReadValueAsButton();
     }
 

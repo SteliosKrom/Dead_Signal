@@ -283,6 +283,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenBotMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""ddb8538f-0867-4d24-aa2e-b3c79967376a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -329,6 +338,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bc65a6a-cc95-4732-b8dc-c6b13b7b8645"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenBotMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -346,6 +366,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_AnyKey = m_UI.FindAction("AnyKey", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
+        m_UI_OpenBotMenu = m_UI.FindAction("OpenBotMenu", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -569,6 +590,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_AnyKey;
     private readonly InputAction m_UI_Back;
+    private readonly InputAction m_UI_OpenBotMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -588,6 +610,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/Back".
         /// </summary>
         public InputAction @Back => m_Wrapper.m_UI_Back;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/OpenBotMenu".
+        /// </summary>
+        public InputAction @OpenBotMenu => m_Wrapper.m_UI_OpenBotMenu;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -620,6 +646,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Back.started += instance.OnBack;
             @Back.performed += instance.OnBack;
             @Back.canceled += instance.OnBack;
+            @OpenBotMenu.started += instance.OnOpenBotMenu;
+            @OpenBotMenu.performed += instance.OnOpenBotMenu;
+            @OpenBotMenu.canceled += instance.OnOpenBotMenu;
         }
 
         /// <summary>
@@ -637,6 +666,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Back.started -= instance.OnBack;
             @Back.performed -= instance.OnBack;
             @Back.canceled -= instance.OnBack;
+            @OpenBotMenu.started -= instance.OnOpenBotMenu;
+            @OpenBotMenu.performed -= instance.OnOpenBotMenu;
+            @OpenBotMenu.canceled -= instance.OnOpenBotMenu;
         }
 
         /// <summary>
@@ -734,5 +766,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnBack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenBotMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenBotMenu(InputAction.CallbackContext context);
     }
 }
