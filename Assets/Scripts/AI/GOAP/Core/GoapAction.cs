@@ -6,7 +6,6 @@ public class GoapAction
     private Dictionary<string, bool> effects = new Dictionary<string, bool>();
 
     #region PROPERTIES
-    public GoapActionType ActionType { get; set; }
     public Dictionary<string, bool> Preconditions => preconditions;
     public Dictionary<string, bool> Effects => effects;
     #endregion
@@ -30,4 +29,6 @@ public class GoapAction
             world.SetState(effect.Key, effect.Value);
         }
     }
+
+    public virtual void Execute(GoapAgent agent, WorldState world) { }
 }
