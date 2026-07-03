@@ -50,20 +50,19 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         gameManager = ServiceManager.GetService<GameManager>();
-
         baseYRotation = transform.eulerAngles.y;
     }
 
     private void LateUpdate()
     {
+        if (gameManager.CurrentGameState != GameState.Playing) return;
+        if (gameManager.IsBotMenuPanelOpen) return;
+
         ApplyRotation();
     }
 
     public void OnLook(InputAction.CallbackContext cxt)
     {
-        if (gameManager.CurrentGameState != GameState.Playing) return;
-        if (gameManager.IsBotMenuPanelOpen) return;
-
         lookInput = cxt.ReadValue<Vector2>();
     }
 

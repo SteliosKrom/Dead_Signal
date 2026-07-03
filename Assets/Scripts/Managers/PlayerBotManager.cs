@@ -24,21 +24,25 @@ public class PlayerBotManager : MonoBehaviour
                 bot.CurrentRole = BotRole.Soldier;
                 uiManager.CloseBotMenu();
                 uiManager.HideCursor();
+                bot.gameObject.SetActive(true);
                 break;
             case 2:
                 bot.CurrentRole = BotRole.Explorer;
                 uiManager.CloseBotMenu();
                 uiManager.HideCursor();
+                bot.gameObject.SetActive(true);
                 break;
             case 3:
                 bot.CurrentRole = BotRole.Bodyguard;
                 uiManager.CloseBotMenu();
                 uiManager.HideCursor();
+                bot.gameObject.SetActive(true);
                 break;
             case 4:
                 bot.CurrentRole = BotRole.Guard;
                 uiManager.CloseBotMenu();
                 uiManager.HideCursor();
+                bot.gameObject.SetActive(true);
                 break;
         }
     }

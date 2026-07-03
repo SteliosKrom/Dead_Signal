@@ -74,26 +74,7 @@ public class GoapAgent : MonoBehaviour
     #endregion
     private void Awake()
     {
-        // Setup
-        world = new WorldState();
-        planner = new GoapPlanner();
-        actions = new List<GoapAction>();
-
-        //Actions
-        GoapAction patrol = new GoapAction();
-        patrol.ActionType = GoapActionType.Patrol;
-        patrol.Effects.Add(GoapKeys.REACHED_PATROL_POINT, true);
-        actions.Add(patrol);
-
-        GoapAction chase = new GoapAction();
-        chase.ActionType = GoapActionType.Chase;
-        chase.Preconditions.Add(GoapKeys.PLAYER_DETECTED, true);
-        chase.Effects.Add(GoapKeys.PLAYER_REACHED, true);
-        actions.Add(chase);
-
-        // Goals
-        patrolGoal = new GoapGoal(GoapKeys.REACHED_PATROL_POINT, true);
-        chaseGoal = new GoapGoal(GoapKeys.PLAYER_REACHED, true);
+        InitializeGOAP();
     }
 
     private void OnEnable()
@@ -145,6 +126,29 @@ public class GoapAgent : MonoBehaviour
     }
 
     // GOAP Agent Implementation...
+
+    public void InitializeGOAP()
+    {
+        // Setup
+        world = new WorldState();
+        planner = new GoapPlanner();
+        actions = new List<GoapAction>();
+
+        //Actions
+        PatrolAction patrol = new PatrolAction();
+        patrol.Effects.Add(GoapKeys.REACHED_PATROL_POINT, true);
+        actions.Add(patrol);
+
+        ChaseAction chase = new ChaseAction();
+        chase.Preconditions.Add(GoapKeys.PLAYER_DETECTED, true);
+        chase.Effects.Add(GoapKeys.PLAYER_REACHED, true);
+        actions.Add(chase);
+
+        // Goals
+        patrolGoal = new GoapGoal(GoapKeys.REACHED_PATROL_POINT, true);
+        chaseGoal = new GoapGoal(GoapKeys.PLAYER_REACHED, true);
+    }
+
     public void UpdateWorldState()
     {
         world.SetState(GoapKeys.PLAYER_DETECTED, ghostPerception.CanSeePlayer(player.position));
@@ -163,13 +167,9 @@ public class GoapAgent : MonoBehaviour
     private void UpdateGoal()
     {
         if (playerSanity.Sanity <= 40f && world.GetState(GoapKeys.PLAYER_DETECTED))
-        {
             ChangeGoal(chaseGoal);
-        }
         else
-        {
             ChangeGoal(patrolGoal);
-        }
     }
 
     private void CreateNewPlan()
@@ -194,19 +194,8 @@ public class GoapAgent : MonoBehaviour
         if (!currentAction.CanExecute(world))
             return;
 
-        switch (currentAction.ActionType)
-        {
-            case GoapActionType.Patrol:
-                GoToTarget();
-                currentAction.ApplyEffects(world);
-                currentActionIndex++;
-                break;
-            case GoapActionType.Chase:
-                ChasePlayer();
-                currentAction.ApplyEffects(world);
-                currentActionIndex++;
-                break;
-        }
+        currentAction.Execute(this, world);
+        currentActionIndex++;
     }
 
     // Rest Implementation...
