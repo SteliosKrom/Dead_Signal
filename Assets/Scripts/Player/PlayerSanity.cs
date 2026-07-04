@@ -12,6 +12,12 @@ public class PlayerSanity : MonoBehaviour
     private GameManager gameManager;
     #endregion
 
+    #region EVENTS
+    [Header("EVENTS")]
+    [SerializeField] private GameEvents gameEvents;
+    [SerializeField] private UIEvents uiEvents;
+    #endregion
+
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
     [SerializeField] private PlayerController playerController;
@@ -42,6 +48,12 @@ public class PlayerSanity : MonoBehaviour
     {
         if (gameManager.CurrentGameState != GameState.Playing)
             return;
+
+        if (Sanity == 0)
+        {
+            gameEvents.RaiseGameOver();
+            uiEvents.RaiseDisplayGameOverMenu();
+        }
 
         DecreaseSanityWithinHearingRange();
         DecreaseSanityWithinViewRange();

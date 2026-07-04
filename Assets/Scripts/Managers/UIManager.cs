@@ -80,6 +80,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject fpsMenu;
     [SerializeField] private GameObject crossHair;
     [SerializeField] private GameObject botMenu;
+    [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject[] settingsTabMenus;
     #endregion
 
@@ -95,10 +96,12 @@ public class UIManager : MonoBehaviour
     public GameObject SettingsMenu => settingsMenu;
     public GameObject HUDMenu { get => HUDmenu; set => HUDmenu = value; }
     public GameObject BotMenu { get => botMenu; set => botMenu = value; }
+
     public TextMeshProUGUI MasterVolumeText => masterVolumeText;
     public TextMeshProUGUI GameVolumeText => gameVolumeText;
     public TextMeshProUGUI MenuVolumeText => menuVolumeText;
     public TextMeshProUGUI SFXVolumeText => sfxVolumeText;
+
     public UIState CurrentUIState { get => currentUIState; set => currentUIState = value; }
     public SettingsTab CurrentSettingsTab { get => currentSettingsTab; set => currentSettingsTab = value; }
     #endregion
@@ -112,6 +115,7 @@ public class UIManager : MonoBehaviour
     {
         // UI
         uiEvents.OnUpdateSliderValue += UpdateSliderValueUI;
+        uiEvents.OnDisplayGameOverMenu += DisplayGameOverMenu;
 
         // Animations
         uiEvents.OnTitleMenuFadeInCompleted += TitleMenuFadeInCompleted;
@@ -122,6 +126,7 @@ public class UIManager : MonoBehaviour
     {
         // UI
         uiEvents.OnUpdateSliderValue -= UpdateSliderValueUI;
+        uiEvents.OnDisplayGameOverMenu -= DisplayGameOverMenu;
 
         // Animations
         uiEvents.OnTitleMenuFadeInCompleted -= TitleMenuFadeInCompleted;
@@ -202,6 +207,16 @@ public class UIManager : MonoBehaviour
         currentUIState = UIState.MainMenu;
         HideObject(titleMenu);
         ShowObject(mainMenu);
+    }
+
+    public void DisplayGameOverMenu()
+    {
+        ShowObject(gameOverMenu);
+        ShowCursor();
+
+        HideObject(crossHair);
+        HideObject(sanityContent);
+        HideObject(ammoContent);
     }
 
     public void CloseBotMenu()
