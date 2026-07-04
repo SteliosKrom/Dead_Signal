@@ -16,12 +16,20 @@ public class GameManager : MonoBehaviour
     private bool canPause;
     private bool hasPressedAnykey;
     private bool isBotMenuPanelOpen;
+    private bool sceneLoaded;
 
     private float fps;
 
     #region SERVICES
     private UIManager uiManager;
     private AudioManager audioManager;
+    #endregion
+
+    #region SCRIPT REFERENCES
+    [Header("SCRIPT REFERENCES")]
+    [SerializeField] private Shoot shoot;
+    [SerializeField] private PlayerSanity playerSanity;
+    [SerializeField] private PlayerController playerController;
     #endregion
 
     #region COROUTINES
@@ -37,6 +45,8 @@ public class GameManager : MonoBehaviour
     #region OBJECTS
     [Header("OBJECTS")]
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject zombie;
+    [SerializeField] private GameObject ghost;
     #endregion
 
     #region CAMERAS
@@ -65,7 +75,7 @@ public class GameManager : MonoBehaviour
     #region PROPERTIES
     public bool IsBotMenuPanelOpen { get => isBotMenuPanelOpen; set => isBotMenuPanelOpen = value; }
     public float FPS => fps;
-    public GameState CurrentGameState { get => currentGameState; set => CurrentGameState = value; }
+    public GameState CurrentGameState { get => currentGameState; set => currentGameState = value; }
     #endregion
 
     private void Awake()
@@ -76,6 +86,8 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        gameEvents.OnGameOver += GameOver;
+
         // Input Events
         controls.Enable();
         controls.UI.AnyKey.performed += OnAnyKeyPressed;
@@ -85,6 +97,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
+        gameEvents.OnGameOver -= GameOver;
+
         // Input Events
         controls.UI.AnyKey.performed -= OnAnyKeyPressed;
         controls.UI.Back.performed -= OnEscapeButtonPressed;
@@ -162,6 +176,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case GameState.Paused:
                     currentGameState = GameState.Playing;
+
                     audioManager.UnPauseSound(SoundType.MainGame);
                     audioManager.UnPauseSound(SoundType.GhostSound);
 
@@ -203,7 +218,7 @@ public class GameManager : MonoBehaviour
     public void SwitchCameras()
     {
         if (!LoadingManager.EnterGameplay)
-            return;
+            return;;
 
         currentGameState = GameState.Playing;
         gameEvents.RaiseGameplayStarted();
@@ -251,6 +266,12 @@ public class GameManager : MonoBehaviour
 
         uiManager.HideObject(uiManager.PauseMenu);
         uiManager.ShowObject(uiManager.HUDMenu);
+    }
+
+    public void GameOver()
+    {
+        currentGameState = GameState.GameOver;
+        Time.timeScale = 0f;
     }
 
     public void ReturnToMainMenu()
