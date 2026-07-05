@@ -38,40 +38,32 @@ public class PlayerBotManager : MonoBehaviour
         switch (roleIndex)
         {
             case 1:
-                soldierBot.CurrentRole = BotRole.Soldier;
-
                 uiManager.CloseBotMenu();
                 uiManager.HideCursor();
 
                 SpawnBot(soldierBot);
-
-                // Event OnSolderBotSpawned...
-                soldierBot.InitialRandomWaitTime = Random.Range(2f, 5f); // Replace with an event...
-                StartCoroutine(soldierBot.SelectNewPatrolPointCoroutine()); // Replace with an event...
+                soldierBot.InitializeBot();
                 break;
             case 2:
-                explorerBot.CurrentRole = BotRole.Explorer;
-
                 uiManager.CloseBotMenu();
                 uiManager.HideCursor();
 
                 SpawnBot(explorerBot);
+                explorerBot.InitializeBot();
                 break;
             case 3:
-                bodyguardBot.CurrentRole = BotRole.Bodyguard;
-
                 uiManager.CloseBotMenu();
                 uiManager.HideCursor();
 
                 SpawnBot(bodyguardBot);
+                bodyguardBot.InitializeBot();
                 break;
             case 4:
-                guardBot.CurrentRole = BotRole.Guard;
-
                 uiManager.CloseBotMenu();
                 uiManager.HideCursor();
 
                 SpawnBot(guardBot);
+                guardBot.InitializeBot();
                 break;
         }
     }

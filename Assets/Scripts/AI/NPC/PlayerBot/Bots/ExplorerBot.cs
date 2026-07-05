@@ -2,8 +2,9 @@ using UnityEngine;
 
 public sealed class ExplorerBot : PlayerBot
 {
-    protected override void Start()
+    public override void InitializeBot()
     {
-        base.Start();
+        base.InitializeBot();
+        currentRole = BotRole.Explorer;
     }
 }

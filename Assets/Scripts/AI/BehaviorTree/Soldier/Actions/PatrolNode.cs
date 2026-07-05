@@ -3,30 +3,38 @@ using UnityEngine;
 
 public class PatrolNode : Node
 {
-    public List<AStarNode> Path { get; set; }
-    public Transform CurrentPatrolPoint { get; set; }
     public SoldierBot Bot { get; set; }
     public float MoveSpeed { get; set; }
     public float RotationSpeed { get; set; }
-    public int CurrentNodeIndex { get; set; }
+    public float StopThreshold { get; set; }
 
-    public PatrolNode(Transform currentPatrolPoint, SoldierBot bot, float moveSpeed, float rotationSpeed)
+    public PatrolNode(SoldierBot bot, float moveSpeed, float rotationSpeed, float stopThreshold)
     {
-        this.CurrentPatrolPoint = currentPatrolPoint;
         this.Bot = bot;
         this.MoveSpeed = moveSpeed;
         this.RotationSpeed = rotationSpeed;
+        this.StopThreshold = stopThreshold;
     }
 
     public override NodeState Evaluate()
     {
-        // TODO: Connect A* pathfinding for the bot to find path...
-        Vector3 directionToTarget = (this.Bot.transform.position - CurrentPatrolPoint.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        AStarNode currentNode = Bot.Path[Bot.CurrentNodeIndex];
 
-        this.Bot.transform.position += directionToTarget * MoveSpeed * Time.deltaTime;
-        this.Bot.transform.rotation = Quaternion.Slerp(this.Bot.transform.rotation, targetRotation, RotationSpeed * Time.deltaTime);
+        Vector3 directionToNode = (currentNode.WorldPosition - Bot.transform.position).normalized;
+        float distanceToNode = Vector3.Distance(Bot.transform.position, currentNode.WorldPosition);
 
+        this.Bot.transform.position += directionToNode * MoveSpeed * Time.deltaTime;
+
+        if (distanceToNode <= StopThreshold)
+        {
+            Bot.CurrentNodeIndex++;
+
+            if (Bot.CurrentNodeIndex >= Bot.Path.Count)
+            {
+                Bot.BeginPatrolWait();
+                return NodeState.Success;
+            }
+        }
         return NodeState.Running;
     }
 }

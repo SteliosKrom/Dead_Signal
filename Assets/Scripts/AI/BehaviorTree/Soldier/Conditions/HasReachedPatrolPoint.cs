@@ -2,27 +2,22 @@ using UnityEngine;
 
 public class HasReachedPatrolPoint : Node
 {
-    private Transform CurrentPatrolPoint { get; set; }
-    private SoldierBot Bot { get; set; }
-    private float StopThreshold { get; set; }
+    public SoldierBot Bot { get; set; }
+    public float StopThreshold { get; set; }
 
-    public HasReachedPatrolPoint(Transform currentPatrolPoint, SoldierBot bot, float stopThreshold)
+    public HasReachedPatrolPoint(SoldierBot bot, float stopThreshold)
     {
-        this.CurrentPatrolPoint = currentPatrolPoint;
         this.Bot = bot;
         this.StopThreshold = stopThreshold;
     }
 
     public override NodeState Evaluate()
     {
-        float stopDistance = Vector3.Distance(CurrentPatrolPoint.position, Bot.transform.position);
+        float distanceToPoint = Vector3.Distance(Bot.transform.position, Bot.CurrentPatrolPoint.position);
 
-        if (stopDistance <= StopThreshold)
-        {
-            Bot.SelectNewPatrolPointCoroutine();
+        if (distanceToPoint <= StopThreshold)
             return NodeState.Success;
-        }
 
-        return NodeState.Running;
+        return NodeState.Failure;
     }
 }

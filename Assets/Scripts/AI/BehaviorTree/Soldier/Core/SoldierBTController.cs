@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class SoldierBTController : MonoBehaviour
 {
-    private Transform currentPatrolPoint;
     [SerializeField] private SoldierBot soldierBot;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotationSpeed;
@@ -23,8 +22,8 @@ public class SoldierBTController : MonoBehaviour
 
     public void SetupTree()
     {
-        Node hasReachedPatrolPoint = new HasReachedPatrolPoint(currentPatrolPoint, soldierBot, stopThreshold);
-        Node patrol = new PatrolNode(currentPatrolPoint, soldierBot, moveSpeed, rotationSpeed);
+        Node hasReachedPatrolPoint = new HasReachedPatrolPoint(soldierBot, stopThreshold);
+        Node patrol = new PatrolNode(soldierBot, moveSpeed, rotationSpeed, stopThreshold);
 
         Sequence patrolSequence = new Sequence(new List<Node> { hasReachedPatrolPoint, patrol });
         rootNode = new Selector(new List<Node> { patrolSequence, patrol });
