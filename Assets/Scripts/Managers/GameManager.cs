@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     private bool canPause;
     private bool hasPressedAnykey;
     private bool isBotMenuPanelOpen;
-    private bool sceneLoaded;
 
     private float fps;
 
@@ -29,7 +28,7 @@ public class GameManager : MonoBehaviour
     [Header("SCRIPT REFERENCES")]
     [SerializeField] private Shoot shoot;
     [SerializeField] private PlayerSanity playerSanity;
-    [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerBotManager playerBotManager;
     #endregion
 
     #region COROUTINES
@@ -195,6 +194,9 @@ public class GameManager : MonoBehaviour
     public void OnOpenBotMenuButtonPressed(InputAction.CallbackContext cxt)
     {
         if (CurrentGameState != GameState.Playing)
+            return;
+
+        if (playerBotManager.BotSpawned)
             return;
 
         if (!cxt.performed)
