@@ -19,8 +19,9 @@ public sealed class SoldierBot : PlayerBot
     public Transform CurrentPatrolPoint { get; set; }
     #endregion
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         SelectNewPatrolPoint();
     }
 
@@ -28,11 +29,22 @@ public sealed class SoldierBot : PlayerBot
     {
         base.InitializeBot();
         currentRole = BotRole.Soldier;
+        PlayIdleAnimation();
     }
 
     public void BeginPatrolWait()
     {
         StartCoroutine(SelectNewPatrolPointCoroutine());
+    }
+
+    public void PlayIdleAnimation()
+    {
+        botAnimator.SetBool("IsWalking", false);
+    }
+
+    public void PlayWalkAnimation()
+    {
+        botAnimator.SetBool("IsWalking", true);
     }
 
     public void SelectNewPatrolPoint()
@@ -52,6 +64,7 @@ public sealed class SoldierBot : PlayerBot
 
     public IEnumerator SelectNewPatrolPointCoroutine()
     {
+        PlayIdleAnimation();
         yield return new WaitForSeconds(idleRandomWaitTime);
         SelectNewPatrolPoint();
     }

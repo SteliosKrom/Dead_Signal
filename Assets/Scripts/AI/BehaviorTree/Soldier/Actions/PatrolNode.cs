@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PatrolNode : Node
@@ -18,12 +17,20 @@ public class PatrolNode : Node
 
     public override NodeState Evaluate()
     {
+        if (Bot.Path == null || Bot.Path.Count == 0) return NodeState.Running;
+        if (Bot.CurrentNodeIndex >= Bot.Path.Count) return NodeState.Success;
+
+        Bot.PlayWalkAnimation();
+
         AStarNode currentNode = Bot.Path[Bot.CurrentNodeIndex];
 
         Vector3 directionToNode = (currentNode.WorldPosition - Bot.transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(directionToNode);
+
         float distanceToNode = Vector3.Distance(Bot.transform.position, currentNode.WorldPosition);
 
         this.Bot.transform.position += directionToNode * MoveSpeed * Time.deltaTime;
+        this.Bot.transform.rotation = Quaternion.Slerp(Bot.transform.rotation, targetRotation, RotationSpeed * Time.deltaTime);
 
         if (distanceToNode <= StopThreshold)
         {
