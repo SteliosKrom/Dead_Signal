@@ -26985,6 +26985,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: f90ab019b25d83945845c2ea8255db21, type: 2}
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
@@ -31917,6 +31921,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GuardBot
   currentRole: 0
+  botAnimator: {fileID: 198831693}
+--- !u!95 &198831693 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+  m_PrefabInstance: {fileID: 198831681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &206291949
 GameObject:
   m_ObjectHideFlags: 0
@@ -58635,6 +58645,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: f90ab019b25d83945845c2ea8255db21, type: 2}
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
@@ -63567,6 +63581,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplorerBot
   currentRole: 0
+  botAnimator: {fileID: 834895364}
+--- !u!95 &834895364 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+  m_PrefabInstance: {fileID: 834895352}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &835785849
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -81568,6 +81588,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: f90ab019b25d83945845c2ea8255db21, type: 2}
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
@@ -86500,6 +86524,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyguardBot
   currentRole: 0
+  botAnimator: {fileID: 1559685380}
+--- !u!95 &1559685380 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+  m_PrefabInstance: {fileID: 1559685368}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1560900324
 GameObject:
   m_ObjectHideFlags: 0
@@ -89990,7 +90020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198750, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_Layer
@@ -90002,7 +90032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 427246, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.19205448
+      value: -0.293
       objectReference: {fileID: 0}
     - target: {fileID: 427246, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_LocalPosition.z
@@ -90039,7 +90069,11 @@ PrefabInstance:
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: f90ab019b25d83945845c2ea8255db21, type: 2}
+      objectReference: {fileID: 9100000, guid: 92e5091fe72c627468c1af8d095d4a7a, type: 2}
+    - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -90105,6 +90139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoldierBot
   currentRole: 0
+  botAnimator: {fileID: 1695090792}
   idleRandomWaitTime: 3
   currentNodeIndex: 0
   pathfinding: {fileID: 677132901}
@@ -90129,6 +90164,11 @@ MonoBehaviour:
   moveSpeed: 3
   rotationSpeed: 5
   stopThreshold: 0.15
+--- !u!95 &1695090792 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+  m_PrefabInstance: {fileID: 1695090781}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1696881088
 GameObject:
   m_ObjectHideFlags: 0
