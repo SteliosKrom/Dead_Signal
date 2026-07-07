@@ -37,10 +37,7 @@ public class PatrolNode : Node
             Bot.CurrentNodeIndex++;
 
             if (Bot.CurrentNodeIndex >= Bot.Path.Count)
-            {
-                Bot.BeginPatrolWait();
                 return NodeState.Success;
-            }
         }
         return NodeState.Running;
     }
