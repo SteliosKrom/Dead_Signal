@@ -25,10 +25,11 @@ public sealed class ZombiePatrolState : ZombieState
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
         float distanceToNode = Vector3.Distance(stateController.transform.position, currentNode.WorldPosition);
         float viewDistance = Vector3.Distance(stateController.transform.position, stateController.Player.position);
+        float senseDistance = Vector3.Distance(stateController.transform.position, stateController.Player.position);
         float dot = Vector3.Dot(forward, directionToPlayer);
 
         ApplyWalkMovement(directionToTarget, targetRotation);
-        MoveToChaseState(dot, viewDistance);
+        MoveToChaseState(dot, viewDistance, senseDistance);
         MoveToIdleState(distanceToNode);
     }
 
@@ -62,11 +63,18 @@ public sealed class ZombiePatrolState : ZombieState
         }
     }
 
-    public void MoveToChaseState(float dot, float viewDistance)
+    public void MoveToChaseState(float dot, float viewDistance, float senseDistance)
     {
         if (viewDistance <= stateController.ViewDistance && dot > stateController.DotThreshold)
         {
             stateController.CanSeePlayer = true;
+            stateController.ChangeState(new ZombieChaseState(stateController));
+            return;
+        }
+
+        if (senseDistance <= stateController.SenseDistance && dot < stateController.DotThreshold)
+        {
+            stateController.CanSensePlayer = true;
             stateController.ChangeState(new ZombieChaseState(stateController));
             return;
         }
