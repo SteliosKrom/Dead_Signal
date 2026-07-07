@@ -13,9 +13,7 @@ public class HasReachedPatrolPoint : Node
 
     public override NodeState Evaluate()
     {
-        float distanceToPoint = Vector3.Distance(Bot.transform.position, Bot.CurrentPatrolPoint.position);
-
-        if (distanceToPoint <= StopThreshold)
+        if (Bot.CurrentNodeIndex >= Bot.Path.Count)
             return NodeState.Success;
 
         return NodeState.Failure;
