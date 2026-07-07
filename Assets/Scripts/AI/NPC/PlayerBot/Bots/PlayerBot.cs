@@ -22,6 +22,6 @@ public class PlayerBot : MonoBehaviour
 
     public virtual void InitializeBot()
     {
-        // Shared logic for bot initialization, when the player choses a bot from the bot menu...
+        // Shared logic for bot initialization, when the player chooses a bot from the bot menu...
     }
 }
