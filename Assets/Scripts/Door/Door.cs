@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractable
 {
+    [SerializeField] private bool isLocked;
     [SerializeField] private bool isOpen;
 
     private float doorNoiseStrength = 10f;
@@ -38,18 +39,25 @@ public class Door : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (IsOpen())
+        if (IsLocked())
         {
-            doorAnimator.SetTrigger("Open");
-            isOpen = true;
+            Debug.Log("Door is Locked!");
         }
         else
         {
-            doorAnimator.SetTrigger("Close");
-            isOpen = false;
+            if (IsOpen())
+            {
+                doorAnimator.SetTrigger("Open");
+                isOpen = true;
+            }
+            else
+            {
+                doorAnimator.SetTrigger("Close");
+                isOpen = false;
+            }
+            ghostPerception.HearNoise(this.transform.position, doorNoiseStrength);
+            StartCoroutine(CanInteractCoroutine());
         }
-        ghostPerception.HearNoise(this.transform.position, doorNoiseStrength);
-        StartCoroutine(CanInteractCoroutine());
     }
 
     public IEnumerator CanInteractCoroutine()
@@ -61,6 +69,11 @@ public class Door : MonoBehaviour, IInteractable
 
         doorHandleCollider.enabled = true;
         doorCollider.enabled = true;
+    }
+
+    public bool IsLocked()
+    {
+        return isLocked ? true : false;
     }
 
     public bool IsOpen()
