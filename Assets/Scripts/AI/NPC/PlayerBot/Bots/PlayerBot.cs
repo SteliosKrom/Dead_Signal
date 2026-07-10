@@ -24,4 +24,13 @@ public class PlayerBot : MonoBehaviour
     {
         // Shared logic for bot initialization, when the player chooses a bot from the bot menu...
     }
+
+    public void ApplyMovementAndRotation(Vector3 direction, float moveSpeed, float rotationSpeed, Quaternion rotation)
+    {
+        this.transform.position += direction * moveSpeed * Time.deltaTime;
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+    }
+
+    public void PlayIdleAnimation() => botAnimator.SetBool("IsWalking", false);
+    public void PlayWalkAnimation() => botAnimator.SetBool("IsWalking", true);
 }

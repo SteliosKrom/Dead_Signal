@@ -90,15 +90,21 @@ public class PlayerController : MonoBehaviour
         if (isSprinting)
             ghostPerception.HearNoise(this.transform.position, sprintNoiseStrength);
 
+        if (gameManager.CurrentGameState != GameState.Playing)
+            return;
+
+        if (gameManager.IsBotMenuPanelOpen)
+        {
+            moveInput = Vector3.zero;
+            return;
+        }
+
         float currentSpeed = isSprinting ? sprintSpeed : moveSpeed;
         ApplyMovement(currentSpeed);
     }
 
     private void OnMove(InputAction.CallbackContext cxt)
     {
-        if (gameManager.IsBotMenuPanelOpen)
-            return;
-
         moveInput = cxt.ReadValue<Vector2>();
     }
 
@@ -148,9 +154,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnSprint(InputAction.CallbackContext cxt)
     {
-        if (gameManager.CurrentGameState != GameState.Playing) return;
-        if (gameManager.IsBotMenuPanelOpen) return;
-
         isSprinting = cxt.ReadValueAsButton();
     }
 
