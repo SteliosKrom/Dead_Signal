@@ -24,6 +24,9 @@ public class IsZombieInRange : Node
         float viewRange = Vector3.Distance(Bot.transform.position, Zombie.transform.position);
         float dot = Vector3.Dot(forward, directionToTarget);
 
-        return viewRange <= ViewDistance && dot > DotThreshold ? NodeState.Success : NodeState.Failure;
+        bool canSee = viewRange <= ViewDistance && dot > DotThreshold;
+        bool canSense = viewRange <= ViewDistance;
+
+        return (canSee || canSense) ? NodeState.Success : NodeState.Failure;
     }
 }
