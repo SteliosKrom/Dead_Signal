@@ -90145,6 +90145,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoldierBot
   currentRole: 0
   botAnimator: {fileID: 1695090792}
+  isGoingToAmmoBox: 0
+  currentAmmo: 10
+  maxAmmo: 10
   bulletSpeed: 25
   shootingPoint: {fileID: 718832391}
   idleRandomWaitTime: 3
@@ -90172,13 +90175,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf5153a14c1204a40a4f5a4f38a21a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoldierBTController
+  ammoBox: {fileID: 4657921711196269}
   soldierBot: {fileID: 1695090789}
   zombie: {fileID: 2015516117}
   moveSpeed: 3
   rotationSpeed: 5
-  stopThreshold: 0.15
-  viewDistance: 10
+  ammoBoxStopThreshold: 1.5
+  nodeThreshold: 0.15
   dotThreshold: 0.5
+  viewDistance: 10
 --- !u!95 &1695090792 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
@@ -102444,7 +102449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4657921711196269}
   - component: {fileID: 4657921711196270}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Ammunition
   m_TagString: Untagged
   m_Icon: {fileID: 0}

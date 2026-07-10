@@ -9,7 +9,13 @@ public sealed class SoldierBot : PlayerBot
 
     #region BOT
     [Header("BOT")]
+    [SerializeField] private bool isGoingToAmmoBox;
+
+    [SerializeField] private int currentAmmo;
+    [SerializeField] private int maxAmmo;
+
     [SerializeField] private float bulletSpeed;
+
     [SerializeField] private Transform shootingPoint;
     #endregion
 
@@ -46,9 +52,14 @@ public sealed class SoldierBot : PlayerBot
     public float AttackTimeInterval { get => attackTimeInterval; }
     public float IdleRandomWaitTime { get => idleRandomWaitTime; set => idleRandomWaitTime = value; }
 
+    public int CurrentAmmo { get => currentAmmo; set => currentAmmo = Mathf.Clamp(value, 0, 10); }
+    public int MaxAmmo { get => maxAmmo; }
     public int CurrentNodeIndex { get => currentNodeIndex; set => currentNodeIndex = value; }
 
+    public bool IsGoingToAmmoBox { get => isGoingToAmmoBox; set => isGoingToAmmoBox = value; }
+
     public List<AStarNode> Path { get; set; }
+    public Pathfinding Pathfinding { get => pathfinding; }
     public Transform CurrentPatrolPoint { get; set; }
     public Transform ShootingPoint { get => shootingPoint; set => shootingPoint = value; }
     #endregion
@@ -57,7 +68,6 @@ public sealed class SoldierBot : PlayerBot
     {
         base.Start();
         objectPoolManager = ServiceManager.GetService<ObjectPoolManager>();
-
         SelectNewPatrolPoint();
     }
 
@@ -66,21 +76,6 @@ public sealed class SoldierBot : PlayerBot
         base.InitializeBot();
         currentRole = BotRole.Soldier;
         PlayIdleAnimation();
-    }
-
-    public void PlayIdleAnimation()
-    {
-        botAnimator.SetBool("IsWalking", false);
-    }
-
-    public void PlayWalkAnimation()
-    {
-        botAnimator.SetBool("IsWalking", true);
-    }
-
-    public void PlayAttackAnimation()
-    {
-        botAnimator.SetTrigger("Shoot");
     }
 
     public void SelectNewPatrolPoint()
@@ -107,5 +102,7 @@ public sealed class SoldierBot : PlayerBot
 
         bullet.GetComponent<Bullet>().SetDirection(directionToTarget);
         gunFX.Play();
+
+        CurrentAmmo--;
     }
 }

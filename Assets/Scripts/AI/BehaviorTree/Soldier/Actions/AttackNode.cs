@@ -15,6 +15,9 @@ public class AttackNode : Node
 
     public override NodeState Evaluate()
     {
+
+        Bot.PlayIdleAnimation();
+
         Vector3 directionToTarget = (Zombie.transform.position - Bot.transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
