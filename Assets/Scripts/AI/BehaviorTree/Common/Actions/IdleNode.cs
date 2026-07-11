@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class IdleNode : Node
 {
-    public SoldierBot Bot { get; set; }
+    public PlayerBot Bot { get; set; }
 
-    public IdleNode(SoldierBot bot)
+    public IdleNode(PlayerBot bot)
     {
         this.Bot = bot;
     }
@@ -17,7 +17,7 @@ public class IdleNode : Node
         if (Bot.IdleTimer >= Bot.IdleTimeInterval)
         {
             Bot.IdleTimer = 0f;
-            Bot.SelectNewPatrolPoint();
+            Bot.OnIdleFinished();
             return NodeState.Success;
         }
         return NodeState.Running;

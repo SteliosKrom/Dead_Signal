@@ -2,26 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum UIState
-{
-    None,
-    TitleMenu,
-    MainMenu,
-    PauseMenu,
-    CreditsMenu,
-    MainMenuSettings,
-    PauseMenuSettings,
-}
-
-public enum SettingsTab
-{
-    None,
-    Audio,
-    Display,
-    Graphics,
-    Controls
-}
-
 public class UIManager : MonoBehaviour
 {
     private float elapsedTime;

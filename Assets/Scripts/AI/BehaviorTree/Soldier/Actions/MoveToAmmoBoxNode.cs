@@ -24,16 +24,16 @@ public class MoveToAmmoBoxNode : Node
         if (!Bot.IsGoingToAmmoBox)
         {
             Bot.IsGoingToAmmoBox = true;
-            Bot.Path = Bot.Pathfinding.FindPath(Bot.transform.position, AmmoBox.position);
+            Bot.PatrolComponent.Path = Bot.PatrolComponent.Pathfinding.FindPath(Bot.transform.position, AmmoBox.position);
             Bot.IdleTimer = 0f;
-            Bot.CurrentNodeIndex = 0;
+            Bot.PatrolComponent.CurrentNodeIndex = 0;
         }
 
-        if (Bot.Path == null || Bot.Path.Count == 0) return NodeState.Running;
+        if (Bot.PatrolComponent.Path == null || Bot.PatrolComponent.Path.Count == 0) return NodeState.Running;
 
-        Bot.PlayWalkAnimation();
+        Bot.PatrolComponent.PlayWalkAnimation();
 
-        AStarNode currentNode = Bot.Path[Bot.CurrentNodeIndex];
+        AStarNode currentNode = Bot.PatrolComponent.Path[Bot.PatrolComponent.CurrentNodeIndex];
         float distanceToNode = Vector3.Distance(Bot.transform.position, currentNode.WorldPosition);
         float distanceToAmmoBox = Vector3.Distance(Bot.transform.position, AmmoBox.position);
 
@@ -42,7 +42,7 @@ public class MoveToAmmoBoxNode : Node
 
         if (distanceToNode <= NodeThreshold)
         {
-            Bot.CurrentNodeIndex++;
+            Bot.PatrolComponent.CurrentNodeIndex++;
             return NodeState.Running;
         }
 

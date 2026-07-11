@@ -17,19 +17,19 @@ public class PatrolNode : Node
 
     public override NodeState Evaluate()
     {
-        if (Bot.Path == null || Bot.Path.Count == 0) return NodeState.Running;
-        if (Bot.CurrentNodeIndex >= Bot.Path.Count) return NodeState.Success;
+        if (Bot.PatrolComponent.Path == null || Bot.PatrolComponent.Path.Count == 0) return NodeState.Running;
+        if (Bot.PatrolComponent.CurrentNodeIndex >= Bot.PatrolComponent.Path.Count) return NodeState.Success;
 
-        Bot.PlayWalkAnimation();
+        Bot.PatrolComponent.PlayWalkAnimation();
 
-        AStarNode currentNode = Bot.Path[Bot.CurrentNodeIndex];
+        AStarNode currentNode = Bot.PatrolComponent.Path[Bot.PatrolComponent.CurrentNodeIndex];
         float distanceToNode = Vector3.Distance(Bot.transform.position, currentNode.WorldPosition);
 
         if (distanceToNode <= NodeThreshold)
         {
-            Bot.CurrentNodeIndex++;
+            Bot.PatrolComponent.CurrentNodeIndex++;
 
-            if (Bot.CurrentNodeIndex >= Bot.Path.Count)
+            if (Bot.PatrolComponent.CurrentNodeIndex >= Bot.PatrolComponent.Path.Count)
                 return NodeState.Success;
 
             return NodeState.Running;
