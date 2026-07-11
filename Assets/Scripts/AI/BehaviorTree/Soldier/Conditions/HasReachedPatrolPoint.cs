@@ -11,6 +11,7 @@ public class HasReachedPatrolPoint : Node
 
     public override NodeState Evaluate()
     {
-        return Bot.CurrentNodeIndex >= Bot.Path.Count ? NodeState.Success : NodeState.Failure;
+        return Bot.PatrolComponent.CurrentNodeIndex >= Bot.PatrolComponent.Path.Count 
+            ? NodeState.Success : NodeState.Failure;
     }
 }

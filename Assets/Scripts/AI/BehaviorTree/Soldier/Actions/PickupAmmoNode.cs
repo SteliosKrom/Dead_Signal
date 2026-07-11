@@ -13,7 +13,7 @@ public class PickupAmmoNode : Node
     {
         Bot.IsGoingToAmmoBox = false;
         Bot.CurrentAmmo = Bot.MaxAmmo;
-        Bot.CurrentNodeIndex = 0;
+        Bot.PatrolComponent.CurrentNodeIndex = 0;
         return NodeState.Success;
     }
 }

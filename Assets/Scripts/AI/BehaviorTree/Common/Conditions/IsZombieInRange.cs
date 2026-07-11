@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class IsZombieInRange : Node
 {
-    public SoldierBot Bot { get; set; }
+    public PlayerBot Bot { get; set; }
     public ZombieStateController Zombie { get; set; }
     public float ViewRange { get; set; }
     public float DotThreshold { get; set; }
     public float ViewDistance { get; set; }
 
-    public IsZombieInRange(SoldierBot bot, ZombieStateController zombie, float viewDistance, float dotThreshold)
+    public IsZombieInRange(PlayerBot bot, ZombieStateController zombie, float viewDistance, float dotThreshold)
     {
         this.Bot = bot;
         this.Zombie = zombie;

@@ -26983,7 +26983,7 @@ PrefabInstance:
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: f90ab019b25d83945845c2ea8255db21, type: 2}
+      objectReference: {fileID: 9100000, guid: c432b153ddca8b544ba240f32a172f26, type: 2}
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_CullingMode
       value: 0
@@ -27001,7 +27001,13 @@ PrefabInstance:
       addedObject: {fileID: 198831688}
     - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 198831695}
+    - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 198831692}
+    - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 198831694}
     - targetCorrespondingSourceObject: {fileID: 127044, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 198831686}
@@ -31885,6 +31891,11 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!4 &198831687 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 481140, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+  m_PrefabInstance: {fileID: 198831681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!136 &198831688
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -31920,13 +31931,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90c9be25e7c5c34e85799cbd943e204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GuardBot
+  idleTimer: 0
+  idleTimeInterval: 0
   currentRole: 0
   botAnimator: {fileID: 198831693}
+  attackTimer: 0
+  attackTimeInterval: 1
+  attackComponent: {fileID: 198831694}
+  currentAmmo: 0
+  maxAmmo: 10
 --- !u!95 &198831693 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
   m_PrefabInstance: {fileID: 198831681}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &198831694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198831684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7811b7a74fe2f1e479140666e60b0e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackComponent
+  shootingPoint: {fileID: 198831687}
+  gunFX: {fileID: 198831686}
+--- !u!114 &198831695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198831684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10fca63fc823874895ab6d1fdf40ce3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuardBTController
+  guardBot: {fileID: 198831692}
+  zombie: {fileID: 2015516117}
+  rotationSpeed: 5
+  dotThreshold: 0.5
+  viewDistance: 10
 --- !u!1 &206291949
 GameObject:
   m_ObjectHideFlags: 0
@@ -63587,6 +63636,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fbfc400a9fb5848a58178cbba754ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplorerBot
+  idleTimer: 0
+  idleTimeInterval: 0
   currentRole: 0
   botAnimator: {fileID: 834895364}
 --- !u!95 &834895364 stripped
@@ -86689,6 +86740,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4360ccdc494a7e543bdee60a90e92c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyguardBot
+  idleTimer: 0
+  idleTimeInterval: 0
   currentRole: 0
   botAnimator: {fileID: 1559685380}
 --- !u!95 &1559685380 stripped
@@ -90319,6 +90372,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1695090789}
+    - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1695090793}
+    - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1695090794}
     - targetCorrespondingSourceObject: {fileID: 127044, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 718832390}
@@ -90366,26 +90425,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9000660dda09357428bd8afd60a2d99b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoldierBot
+  idleTimer: 0
+  idleTimeInterval: 3
   currentRole: 0
   botAnimator: {fileID: 1695090792}
+  attackTimer: 0
+  attackTimeInterval: 1
+  attackComponent: {fileID: 1695090793}
+  patrolComponent: {fileID: 1695090794}
   isGoingToAmmoBox: 0
   currentAmmo: 10
   maxAmmo: 10
-  bulletSpeed: 25
-  shootingPoint: {fileID: 718832391}
-  idleRandomWaitTime: 3
-  idleTimer: 0
-  idleTimeInterval: 3
-  attackTimer: 0
-  attackTimeInterval: 1
-  gunFX: {fileID: 718832390}
-  currentNodeIndex: 0
-  pathfinding: {fileID: 677132901}
-  patrolPoints:
-  - {fileID: 1458519965}
-  - {fileID: 409702061}
-  - {fileID: 645046088}
-  - {fileID: 1284840860}
 --- !u!114 &1695090791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90412,6 +90462,40 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
   m_PrefabInstance: {fileID: 1695090781}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1695090793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536499436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7811b7a74fe2f1e479140666e60b0e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackComponent
+  shootingPoint: {fileID: 718832391}
+  gunFX: {fileID: 718832390}
+--- !u!114 &1695090794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536499436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf5cd037f5f201c4f8563214d7b309c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PatrolComponent
+  botAnimator: {fileID: 1695090792}
+  pathfinding: {fileID: 677132901}
+  patrolPoints:
+  - {fileID: 1458519965}
+  - {fileID: 409702061}
+  - {fileID: 645046088}
+  - {fileID: 1284840860}
+  currentNodeIndex: 0
 --- !u!1 &1696881088
 GameObject:
   m_ObjectHideFlags: 0
@@ -91918,7 +92002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ce465727e8a2e4890cabd5640ebf6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  isLocked: 1
+  isLocked: 0
   isOpen: 0
   ghostPerception: {fileID: 1950528815}
   doorCollider: {fileID: 1750574585}

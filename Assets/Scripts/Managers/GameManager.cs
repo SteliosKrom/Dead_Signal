@@ -3,14 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public enum GameState
-{
-    None,
-    Playing,
-    Paused,
-    GameOver
-}
-
 public class GameManager : MonoBehaviour
 {
     private bool canPause;

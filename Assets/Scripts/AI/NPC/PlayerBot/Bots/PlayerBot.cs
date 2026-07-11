@@ -1,7 +1,18 @@
+using System;
 using UnityEngine;
 
-public class PlayerBot : MonoBehaviour
+public class PlayerBot : MonoBehaviour, IIdle
 {
+    #region ACTIONS
+    protected Action onIdleFinished;
+    #endregion
+
+    #region TIMERS
+    [Header("IDLE TIMER")]
+    [SerializeField] protected float idleTimer;
+    [SerializeField] protected float idleTimeInterval;
+    #endregion
+
     #region BOT
     [Header("BOT")]
     [SerializeField] protected BotRole currentRole;
@@ -13,8 +24,11 @@ public class PlayerBot : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public float IdleTimer { get => idleTimer; set => idleTimer = value; }
+    public float IdleTimeInterval { get => idleTimeInterval; }
     public Animator BotAnimator { get => botAnimator; set => botAnimator = value; }
     #endregion
+
     protected virtual void Start()
     {
         // Shared logic for bot initialization, when the game starts...
@@ -31,6 +45,6 @@ public class PlayerBot : MonoBehaviour
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
 
+    public void OnIdleFinished() => onIdleFinished?.Invoke();
     public void PlayIdleAnimation() => botAnimator.SetBool("IsWalking", false);
-    public void PlayWalkAnimation() => botAnimator.SetBool("IsWalking", true);
 }

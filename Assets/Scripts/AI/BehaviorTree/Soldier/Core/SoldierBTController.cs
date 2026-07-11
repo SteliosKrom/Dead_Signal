@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class SoldierBTController : MonoBehaviour
 {
@@ -29,34 +28,18 @@ public class SoldierBTController : MonoBehaviour
     #endregion
     private void Start()
     {
-        SetupTree();
+        rootNode = new SoldierBTBuilder()
+            .SetBot(soldierBot, soldierBot)
+            .SetZombie(zombie)
+            .SetAmmoBox(ammoBox)
+            .SetMovement(moveSpeed, rotationSpeed)
+            .SetThresholds(nodeThreshold, ammoBoxStopThreshold)
+            .SetVision(viewDistance, dotThreshold)
+            .Build();
     }
 
     private void Update()
     {
         rootNode?.Evaluate();
-    }
-
-    public void SetupTree()
-    {
-        // Actions
-        Node idle = new IdleNode(soldierBot);
-        Node patrol = new PatrolNode(soldierBot, moveSpeed, rotationSpeed, nodeThreshold);
-        Node attack = new AttackNode(soldierBot, zombie, rotationSpeed);
-        Node moveToAmmoBox = new MoveToAmmoBoxNode(soldierBot, ammoBox, ammoBoxStopThreshold, nodeThreshold, moveSpeed, rotationSpeed);
-        Node pickupAmmo = new PickupAmmoNode(soldierBot);
-
-        // Conditions
-        Node hasReachedPatrolPoint = new HasReachedPatrolPoint(soldierBot);
-        Node isZombieInRange = new IsZombieInRange(soldierBot, zombie, viewDistance, dotThreshold);
-        Node isOutOfAmmo = new IsOutOfAmmo(soldierBot);
-
-        // Sequences
-        Sequence idleSequence = new Sequence(new List<Node> { hasReachedPatrolPoint, idle });
-        Sequence attackSequence = new Sequence(new List<Node> { isZombieInRange, attack });
-        Sequence moveToAmmoBoxSequence = new Sequence(new List<Node> { isOutOfAmmo, moveToAmmoBox, pickupAmmo });
-
-        // Root
-        rootNode = new Selector(new List<Node> { moveToAmmoBoxSequence, attackSequence, idleSequence, patrol });
     }
 }
