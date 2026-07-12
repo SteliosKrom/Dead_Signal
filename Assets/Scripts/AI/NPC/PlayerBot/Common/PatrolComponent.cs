@@ -1,14 +1,8 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class PatrolComponent : MonoBehaviour
 {
-    #region ANIMATIONS
-    [Header("ANIMATIONS")]
-    [SerializeField] private Animator botAnimator;
-    #endregion
-
     #region PATHFINDING
     [Header("PATHFINDING")]
     [SerializeField] private Pathfinding pathfinding;
@@ -42,6 +36,4 @@ public class PatrolComponent : MonoBehaviour
         Path = pathfinding.FindPath(this.transform.position, CurrentPatrolPoint.position);
         currentNodeIndex = 0;
     }
-
-    public void PlayWalkAnimation() => botAnimator.SetBool("IsWalking", true);
 }

@@ -4,7 +4,6 @@ public class IsZombieInRange : Node
 {
     public PlayerBot Bot { get; set; }
     public ZombieStateController Zombie { get; set; }
-    public float ViewRange { get; set; }
     public float DotThreshold { get; set; }
     public float ViewDistance { get; set; }
 

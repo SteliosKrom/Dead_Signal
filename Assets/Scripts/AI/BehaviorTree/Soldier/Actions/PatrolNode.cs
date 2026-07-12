@@ -20,7 +20,7 @@ public class PatrolNode : Node
         if (Bot.PatrolComponent.Path == null || Bot.PatrolComponent.Path.Count == 0) return NodeState.Running;
         if (Bot.PatrolComponent.CurrentNodeIndex >= Bot.PatrolComponent.Path.Count) return NodeState.Success;
 
-        Bot.PatrolComponent.PlayWalkAnimation();
+        Bot.PlayWalkAnimation();
 
         AStarNode currentNode = Bot.PatrolComponent.Path[Bot.PatrolComponent.CurrentNodeIndex];
         float distanceToNode = Vector3.Distance(Bot.transform.position, currentNode.WorldPosition);

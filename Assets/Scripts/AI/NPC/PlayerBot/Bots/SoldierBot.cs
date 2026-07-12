@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class SoldierBot : PlayerBot, IAttackBot, IPatrolBot
+public sealed class SoldierBot : PlayerBot, IAttackBot, IPatrolBot, IReloadBot
 {
     #region TIMERS
     [Header("ATTACK TIMER")]
@@ -14,8 +14,8 @@ public sealed class SoldierBot : PlayerBot, IAttackBot, IPatrolBot
     [SerializeField] private PatrolComponent patrolComponent;
     #endregion
 
-    #region BOT
-    [Header("BOT")]
+    #region AGENT
+    [Header("AGENT")]
     [SerializeField] private bool isGoingToAmmoBox;
 
     [SerializeField] private int currentAmmo;
@@ -53,7 +53,6 @@ public sealed class SoldierBot : PlayerBot, IAttackBot, IPatrolBot
     {
         base.InitializeBot();
         currentRole = BotRole.Soldier;
-        PlayIdleAnimation();
     }
 
     public void MoveToPatrolPoint()
@@ -66,4 +65,13 @@ public sealed class SoldierBot : PlayerBot, IAttackBot, IPatrolBot
         attackComponent.PerformAttack(direction);
         CurrentAmmo--;
     }
+
+    public void Reload()
+    {
+        PlayReloadAnimation();
+        CurrentAmmo = MaxAmmo;
+    }
+
+    public void PlayWalkAnimation() => botAnimator.SetBool("IsWalking", true);
+    public void PlayReloadAnimation() => botAnimator.SetTrigger("Reload");
 }

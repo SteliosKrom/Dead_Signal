@@ -61,6 +61,7 @@ public class SoldierBTBuilder
         Node idle = new IdleNode(SoldierBot);
         Node patrol = new PatrolNode(SoldierBot, MoveSpeed, RotationSpeed, NodeThreshold);
         Node attack = new AttackNode(SoldierBot, AttackBot, Zombie, RotationSpeed);
+        Node reload = new ReloadNode(SoldierBot);
         Node moveToAmmoBox = new MoveToAmmoBoxNode(SoldierBot, AmmoBox, AmmoBoxStopThreshold, 
             NodeThreshold, MoveSpeed, RotationSpeed);
         Node pickupAmmo = new PickupAmmoNode(SoldierBot);
@@ -73,7 +74,7 @@ public class SoldierBTBuilder
         // Sequences
         Sequence idleSequence = new Sequence(new List<Node> { hasReachedPatrolPoint, idle });
         Sequence attackSequence = new Sequence(new List<Node> { isZombieInRange, attack });
-        Sequence moveToAmmoBoxSequence = new Sequence(new List<Node> { isOutOfAmmo, moveToAmmoBox, pickupAmmo });
+        Sequence moveToAmmoBoxSequence = new Sequence(new List<Node> { isOutOfAmmo, moveToAmmoBox, pickupAmmo, reload });
 
         // Root
         return new Selector(new List<Node> { moveToAmmoBoxSequence, attackSequence, idleSequence, patrol });
