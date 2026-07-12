@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class GuardBot : PlayerBot, IAttackBot
+public sealed class GuardBot : PlayerBot, IAttackBot, IReloadBot
 {
     #region TIMERS
     [Header("ATTACK TIMER")]
@@ -13,7 +13,8 @@ public sealed class GuardBot : PlayerBot, IAttackBot
     [SerializeField] private AttackComponent attackComponent;
     #endregion
 
-    #region BOT
+    #region AGENT
+    [Header("AGENT")]
     [SerializeField] private int currentAmmo;
     [SerializeField] private int maxAmmo;
     #endregion
@@ -40,4 +41,12 @@ public sealed class GuardBot : PlayerBot, IAttackBot
         attackComponent.PerformAttack(direction);
         CurrentAmmo--;
     }
+
+    public void Reload()
+    {
+        PlayReloadAnimation();
+        CurrentAmmo = MaxAmmo;
+    }
+
+    public void PlayReloadAnimation() => botAnimator.SetTrigger("Reload");
 }

@@ -42,13 +42,16 @@ public class GuardBTBuilder
         // Actions...
         Node idle = new IdleNode(GuardBot);
         Node attack = new AttackNode(GuardBot, AttackBot, Zombie, RotationSpeed);
+        Node reload = new ReloadNode(GuardBot);
 
         // Conditions...
         Node isZombieInRange = new IsZombieInRange(GuardBot, Zombie, ViewDistance, DotThreshold);
+        Node isOutOfAmmo = new IsOutOfAmmo(GuardBot);
 
         // Sequences...
         Sequence attackSequence = new Sequence(new List<Node> { isZombieInRange, attack });
+        Sequence reloadSequence = new Sequence(new List<Node> { isOutOfAmmo, reload });
 
-        return new Selector(new List<Node> { attackSequence, idle});
+        return new Selector(new List<Node> { reloadSequence, attackSequence, idle});
     }
 }

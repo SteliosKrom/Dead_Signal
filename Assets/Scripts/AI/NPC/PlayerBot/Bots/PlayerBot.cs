@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerBot : MonoBehaviour, IIdle
+public class PlayerBot : MonoBehaviour
 {
     #region ACTIONS
     protected Action onIdleFinished;
@@ -36,7 +36,7 @@ public class PlayerBot : MonoBehaviour, IIdle
 
     public virtual void InitializeBot()
     {
-        // Shared logic for bot initialization, when the player chooses a bot from the bot menu...
+        PlayIdleAnimation();
     }
 
     public void ApplyMovementAndRotation(Vector3 direction, float moveSpeed, float rotationSpeed, Quaternion rotation)
