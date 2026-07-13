@@ -17,22 +17,19 @@ public class PatrolNode : Node
 
     public override NodeState Evaluate()
     {
-        if (Bot.PatrolComponent.Path == null || Bot.PatrolComponent.Path.Count == 0) return NodeState.Running;
-        if (Bot.PatrolComponent.CurrentNodeIndex >= Bot.PatrolComponent.Path.Count) return NodeState.Success;
+        if (Bot.PathComponent.Path == null || Bot.PathComponent.Path.Count == 0) return NodeState.Running;
+        if (Bot.PathComponent.CurrentNodeIndex >= Bot.PathComponent.Path.Count) return NodeState.Success;
 
         Bot.PlayWalkAnimation();
 
-        AStarNode currentNode = Bot.PatrolComponent.Path[Bot.PatrolComponent.CurrentNodeIndex];
+        AStarNode currentNode = Bot.PathComponent.Path[Bot.PathComponent.CurrentNodeIndex];
         float distanceToNode = Vector3.Distance(Bot.transform.position, currentNode.WorldPosition);
 
         if (distanceToNode <= NodeThreshold)
         {
-            Bot.PatrolComponent.CurrentNodeIndex++;
-
-            if (Bot.PatrolComponent.CurrentNodeIndex >= Bot.PatrolComponent.Path.Count)
-                return NodeState.Success;
-
-            return NodeState.Running;
+            Bot.PathComponent.CurrentNodeIndex++;
+            return Bot.PathComponent.CurrentNodeIndex >= Bot.PathComponent.Path.Count 
+                ? NodeState.Success : NodeState.Running;
         }
 
         Vector3 directionToNode = (currentNode.WorldPosition - Bot.transform.position).normalized;

@@ -39,19 +39,20 @@ public class GuardBTBuilder
 
     public Node Build()
     {
-        // Actions...
+        // Actions
         Node idle = new IdleNode(GuardBot);
         Node attack = new AttackNode(GuardBot, AttackBot, Zombie, RotationSpeed);
         Node reload = new ReloadNode(GuardBot);
 
-        // Conditions...
+        // Conditions
         Node isZombieInRange = new IsZombieInRange(GuardBot, Zombie, ViewDistance, DotThreshold);
         Node isOutOfAmmo = new IsOutOfAmmo(GuardBot);
 
-        // Sequences...
+        // Sequences
         Sequence attackSequence = new Sequence(new List<Node> { isZombieInRange, attack });
         Sequence reloadSequence = new Sequence(new List<Node> { isOutOfAmmo, reload });
 
+        // Root
         return new Selector(new List<Node> { reloadSequence, attackSequence, idle});
     }
 }

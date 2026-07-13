@@ -3,18 +3,15 @@ using UnityEngine;
 
 public class PatrolComponent : MonoBehaviour
 {
+    [SerializeField] private PathComponent pathComponent;
+
     #region PATHFINDING
     [Header("PATHFINDING")]
-    [SerializeField] private Pathfinding pathfinding;
     [SerializeField] private Transform[] patrolPoints;
-    [SerializeField] private int currentNodeIndex;
     #endregion
 
     #region PROPERTIES
-    public int CurrentNodeIndex { get => currentNodeIndex; set => currentNodeIndex = value; }
     public Transform CurrentPatrolPoint { get; set; }
-    public Pathfinding Pathfinding { get => pathfinding; }
-    public List<AStarNode> Path { get; set; }
     #endregion
 
     private void Start()
@@ -33,7 +30,6 @@ public class PatrolComponent : MonoBehaviour
         while (CurrentPatrolPoint == patrolPoints[randomIndex]);
 
         CurrentPatrolPoint = patrolPoints[randomIndex];
-        Path = pathfinding.FindPath(this.transform.position, CurrentPatrolPoint.position);
-        currentNodeIndex = 0;
+        pathComponent.PerformPath(this.transform.position, CurrentPatrolPoint.position);
     }
 }
