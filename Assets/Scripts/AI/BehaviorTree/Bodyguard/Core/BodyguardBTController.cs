@@ -1,36 +1,36 @@
 using UnityEngine;
 
-public class SoldierBTController : MonoBehaviour
+public class BodyguardBTController : MonoBehaviour
 {
     private Node rootNode;
 
-    [SerializeField] private Transform ammoBox;
-
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
-    [SerializeField] private SoldierBot soldierBot;
+    [SerializeField] private BodyguardBot bodyguardBot;
     [SerializeField] private ZombieStateController zombie;
+    [SerializeField] private PlayerController player;
     #endregion
 
     #region AGENT
     [Header("AGENT")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float ammoBoxStopThreshold;
     [SerializeField] private float nodeThreshold;
-    [SerializeField] private float dotThreshold;
+    [SerializeField] private float playerStopThreshold;
+    [SerializeField] private float zombieStopThreshold;
     [SerializeField] private float viewDistance;
+    [SerializeField] private float dotThreshold;
     #endregion
 
     private void Start()
     {
-        rootNode = new SoldierBTBuilder()
-            .SetBot(soldierBot, soldierBot)
+        rootNode = new BodyguardBTBuilder()
+            .SetBot(bodyguardBot, bodyguardBot)
+            .SetPlayer(player)
             .SetZombie(zombie)
-            .SetAmmoBox(ammoBox)
             .SetMovement(moveSpeed)
             .SetRotation(rotationSpeed)
-            .SetThresholds(nodeThreshold, ammoBoxStopThreshold)
+            .SetThresholds(nodeThreshold, playerStopThreshold, zombieStopThreshold)
             .SetVision(viewDistance, dotThreshold)
             .Build();
     }

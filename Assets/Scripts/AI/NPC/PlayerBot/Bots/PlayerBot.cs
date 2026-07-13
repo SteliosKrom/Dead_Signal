@@ -39,12 +39,16 @@ public class PlayerBot : MonoBehaviour
         PlayIdleAnimation();
     }
 
-    public void ApplyMovementAndRotation(Vector3 direction, float moveSpeed, float rotationSpeed, Quaternion rotation)
+    public void ApplyMovementAndRotation(Vector3 direction, float moveSpeed, 
+        float rotationSpeed, Quaternion rotation)
     {
         this.transform.position += direction * moveSpeed * Time.deltaTime;
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation,
+            rotationSpeed * Time.deltaTime);
     }
 
     public void OnIdleFinished() => onIdleFinished?.Invoke();
+
     public void PlayIdleAnimation() => botAnimator.SetBool("IsWalking", false);
+    public void PlayWalkAnimation() => botAnimator.SetBool("IsWalking", true);
 }
