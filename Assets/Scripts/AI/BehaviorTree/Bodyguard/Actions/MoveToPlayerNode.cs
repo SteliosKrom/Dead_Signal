@@ -1,32 +1,32 @@
 using UnityEngine;
 
-public class MoveToAmmoBoxNode : Node
+public class MoveToPlayerNode : Node
 {
-    public SoldierBot Bot { get; set; }
-    public Transform AmmoBox { get; set; }
+    public BodyguardBot Bot { get; set; }
+    public PlayerController Player { get; set; }
+
     public float MoveSpeed { get; set; }
     public float RotationSpeed { get; set; }
     public float NodeThreshold { get; set; }
-    public float AmmoBoxStopThreshold { get; set; }
+    public float PlayerStopThreshold { get; set; }
 
-    public MoveToAmmoBoxNode(SoldierBot bot, Transform ammoBox, float ammoBoxStopThreshold, 
-        float nodeThreshold, float moveSpeed, float rotationSpeed)
+    public MoveToPlayerNode(BodyguardBot bot, PlayerController player, float moveSpeed,
+        float rotationSpeed, float nodeThreshold, float playerStopThreshold)
     {
         this.Bot = bot;
+        this.Player = player;
         this.MoveSpeed = moveSpeed;
         this.RotationSpeed = rotationSpeed;
         this.NodeThreshold = nodeThreshold;
-        this.AmmoBoxStopThreshold = ammoBoxStopThreshold;
-        this.AmmoBox = ammoBox;
+        this.PlayerStopThreshold = playerStopThreshold;
     }
 
     public override NodeState Evaluate()
     {
-        if (!Bot.IsGoingToAmmoBox)
+        if (Bot.PathComponent.CurrentNodeIndex >= Bot.PathComponent.Path.Count)
         {
-            Bot.IsGoingToAmmoBox = true;
-            Bot.PathComponent.PerformPath(Bot.transform.position, AmmoBox.position);
-            Bot.IdleTimer = 0f;
+            Bot.PathComponent.PerformPath(Bot.transform.position, Player.transform.position);
+            return NodeState.Success;
         }
 
         if (Bot.PathComponent.Path == null || Bot.PathComponent.Path.Count == 0) return NodeState.Running;
@@ -35,10 +35,7 @@ public class MoveToAmmoBoxNode : Node
 
         AStarNode currentNode = Bot.PathComponent.Path[Bot.PathComponent.CurrentNodeIndex];
         float distanceToNode = Vector3.Distance(Bot.transform.position, currentNode.WorldPosition);
-        float distanceToAmmoBox = Vector3.Distance(Bot.transform.position, AmmoBox.position);
-
-        if (distanceToAmmoBox <= AmmoBoxStopThreshold)
-            return NodeState.Success;
+        float distanceToPlayer = Vector3.Distance(Bot.transform.position, Player.transform.position);
 
         if (distanceToNode <= NodeThreshold)
         {
@@ -48,6 +45,7 @@ public class MoveToAmmoBoxNode : Node
 
         Vector3 directionToNode = (currentNode.WorldPosition - Bot.transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(directionToNode);
+
         Bot.ApplyMovementAndRotation(directionToNode, MoveSpeed, RotationSpeed, targetRotation);
 
         return NodeState.Running;

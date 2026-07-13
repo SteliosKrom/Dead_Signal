@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BodyguardBotOverrideAnimator
+  m_Controller: {fileID: 9100000, guid: 92e5091fe72c627468c1af8d095d4a7a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 9a1cfe114435d7a448210c950821c20f, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 9a1cfe114435d7a448210c950821c20f, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 4e071168e650c5d47a56efe85c09844a, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 4e071168e650c5d47a56efe85c09844a, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 9a252a22f2418b543ac5ceb6a5023d7c, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 9a252a22f2418b543ac5ceb6a5023d7c, type: 3}

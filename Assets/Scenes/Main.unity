@@ -55218,6 +55218,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &722264450 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 481140, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+  m_PrefabInstance: {fileID: 1559685368}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &722291670
 Transform:
   m_ObjectHideFlags: 0
@@ -77149,7 +77154,7 @@ PrefabInstance:
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: f90ab019b25d83945845c2ea8255db21, type: 2}
+      objectReference: {fileID: 22100000, guid: 79dd9b5ade0e3c6478259b09f09a9156, type: 2}
     - target: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       propertyPath: m_CullingMode
       value: 0
@@ -77167,7 +77172,16 @@ PrefabInstance:
       addedObject: {fileID: 1559685375}
     - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1559685381}
+    - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1559685379}
+    - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1559685382}
+    - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1559685383}
     - targetCorrespondingSourceObject: {fileID: 127044, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1559685373}
@@ -82090,11 +82104,69 @@ MonoBehaviour:
   idleTimeInterval: 0
   currentRole: 0
   botAnimator: {fileID: 1559685380}
+  isGoingToPlayer: 0
+  player: {fileID: 502208255}
+  attackTimer: 0
+  attackTimeInterval: 1
+  attackComponent: {fileID: 1559685382}
+  pathComponent: {fileID: 1559685383}
+  currentAmmo: 10
+  maxAmmo: 10
 --- !u!95 &1559685380 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9530324, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
   m_PrefabInstance: {fileID: 1559685368}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1559685381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559685371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0215f173de7314e46a06353bcfbb699d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BodyguardBTController
+  bodyguardBot: {fileID: 1559685379}
+  zombie: {fileID: 2015516117}
+  player: {fileID: 501812249}
+  moveSpeed: 3
+  rotationSpeed: 5
+  nodeThreshold: 0.15
+  playerStopThreshold: 2
+  zombieStopThreshold: 6
+  viewDistance: 10
+  dotThreshold: 0.5
+--- !u!114 &1559685382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559685371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7811b7a74fe2f1e479140666e60b0e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackComponent
+  shootingPoint: {fileID: 722264450}
+  gunFX: {fileID: 1559685373}
+--- !u!114 &1559685383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559685371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b025accfac36b42aa8fc5588727d9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathComponent
+  pathfinding: {fileID: 677132901}
+  currentNodeIndex: 0
 --- !u!1 &1560900324
 GameObject:
   m_ObjectHideFlags: 0
@@ -85767,6 +85839,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1695090794}
+    - targetCorrespondingSourceObject: {fileID: 193908, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1695090795}
     - targetCorrespondingSourceObject: {fileID: 127044, guid: 7aa6f6434be94e44583bd055d3a42eee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 718832390}
@@ -85822,6 +85897,7 @@ MonoBehaviour:
   attackTimeInterval: 1
   attackComponent: {fileID: 1695090793}
   patrolComponent: {fileID: 1695090794}
+  pathComponent: {fileID: 1695090795}
   isGoingToAmmoBox: 0
   currentAmmo: 10
   maxAmmo: 10
@@ -85877,12 +85953,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5cd037f5f201c4f8563214d7b309c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PatrolComponent
-  pathfinding: {fileID: 677132901}
+  pathComponent: {fileID: 1695090795}
   patrolPoints:
   - {fileID: 1458519965}
   - {fileID: 409702061}
   - {fileID: 645046088}
   - {fileID: 1284840860}
+--- !u!114 &1695090795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536499436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b025accfac36b42aa8fc5588727d9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathComponent
+  pathfinding: {fileID: 677132901}
   currentNodeIndex: 0
 --- !u!1 &1696881088
 GameObject:

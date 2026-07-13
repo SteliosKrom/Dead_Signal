@@ -1,18 +1,16 @@
 using UnityEngine;
 
-public class PickupAmmoNode : Node
+public class PlayerReachedNode : Node
 {
-    public SoldierBot Bot { get; set; }
+    public BodyguardBot Bot { get; set; }
 
-    public PickupAmmoNode(SoldierBot bot)
+    public PlayerReachedNode(BodyguardBot bot)
     {
         this.Bot = bot;
     }
 
     public override NodeState Evaluate()
     {
-        Bot.IsGoingToAmmoBox = false;
-        Bot.CurrentAmmo = Bot.MaxAmmo;
         Bot.PathComponent.CurrentNodeIndex = 0;
         return NodeState.Success;
     }

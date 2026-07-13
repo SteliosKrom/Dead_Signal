@@ -34,9 +34,14 @@ public class SoldierBTBuilder
         return this;
     }
 
-    public SoldierBTBuilder SetMovement(float moveSpeed, float rotationSpeed)
+    public SoldierBTBuilder SetMovement(float moveSpeed)
     {
         this.MoveSpeed = moveSpeed;
+        return this;
+    }
+
+    public SoldierBTBuilder SetRotation(float rotationSpeed)
+    {
         this.RotationSpeed = rotationSpeed;
         return this;
     }
