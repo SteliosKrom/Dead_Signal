@@ -51,6 +51,7 @@ public sealed class BodyguardBot : PlayerBot, IAttackBot, IReloadBot
     public void AttackZombie(Vector3 direction)
     {
         attackComponent.PerformAttack(direction);
+        CurrentAmmo--;
     }
 
     public void FollowPath()
@@ -64,5 +65,5 @@ public sealed class BodyguardBot : PlayerBot, IAttackBot, IReloadBot
         CurrentAmmo = MaxAmmo;
     }
 
-    public void PlayReloadAnimation() => botAnimator.SetTrigger("Shoot");
+    public void PlayReloadAnimation() => botAnimator.SetTrigger("Reload");
 }

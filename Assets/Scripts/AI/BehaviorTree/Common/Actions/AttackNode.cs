@@ -30,7 +30,9 @@ public class AttackNode : Node
             AttackBot.AttackZombie(directionToTarget);
         }
 
-        BaseBot.transform.rotation = Quaternion.Slerp(BaseBot.transform.rotation, targetRotation, RotationSpeed * Time.deltaTime);
+        BaseBot.transform.rotation = Quaternion.Slerp(BaseBot.transform.rotation, 
+            targetRotation, RotationSpeed * Time.deltaTime);
+
         return NodeState.Success;
     }
 }

@@ -86,6 +86,6 @@ public class BodyguardBTBuilder
             moveToPlayer, playerReached });
 
         // Root
-        return new Selector(new List<Node> { attackSequence, moveToPlayerSequence, reloadSequence, idle });
+        return new Selector(new List<Node> { reloadSequence, attackSequence, moveToPlayerSequence, idle });
     }
 }
