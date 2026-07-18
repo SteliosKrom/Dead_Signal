@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class HasReachedPatrolPoint : Node
 {
-    public SoldierBot Bot { get; set; }
+    public PlayerBot BaseBot { get; set; }
+    public IFollowBot FollowBot { get; set; }
 
-    public HasReachedPatrolPoint(SoldierBot bot)
+    public HasReachedPatrolPoint(PlayerBot bot, IFollowBot followBot)
     {
-        this.Bot = bot;
+        this.BaseBot = bot;
+        this.FollowBot = followBot;
     }
 
     public override NodeState Evaluate()
     {
-        return Bot.PathComponent.CurrentNodeIndex >= Bot.PathComponent.Path.Count 
+        return FollowBot.PathComponent.CurrentNodeIndex >= FollowBot.PathComponent.Path.Count 
             ? NodeState.Success : NodeState.Failure;
     }
 }

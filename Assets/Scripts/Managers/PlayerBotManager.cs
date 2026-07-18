@@ -20,6 +20,11 @@ public class PlayerBotManager : MonoBehaviour
     #region PROPERTIES
     public bool BotSpawned { get => botSpawned; set => botSpawned = value; }
     #endregion
+    private void Awake()
+    {
+        ServiceManager.RegisterService<PlayerBotManager>(this);
+    }
+
     private void Start()
     {
         uiManager = ServiceManager.GetService<UIManager>();
