@@ -5,6 +5,7 @@ public class SoldierBTBuilder
 {
     public SoldierBot SoldierBot { get; set; }
     public IAttackBot AttackBot { get; set; }
+    public IFollowBot FollowBot { get; set; }
     public ZombieStateController Zombie { get; set; }
     public Transform AmmoBox { get; set; }
 
@@ -15,10 +16,11 @@ public class SoldierBTBuilder
     public float ViewDistance { get; set; }
     public float DotThreshold { get; set; }
 
-    public SoldierBTBuilder SetBot(SoldierBot baseBot, IAttackBot attackBot)
+    public SoldierBTBuilder SetBot(SoldierBot baseBot, IAttackBot attackBot, IFollowBot followBot)
     {
         this.SoldierBot = baseBot;
         this.AttackBot = attackBot;
+        this.FollowBot = followBot;
         return this;
     }
 
@@ -64,7 +66,7 @@ public class SoldierBTBuilder
     {
         // Actions
         Node idle = new IdleNode(SoldierBot);
-        Node patrol = new PatrolNode(SoldierBot, MoveSpeed, RotationSpeed, NodeThreshold);
+        Node patrol = new PatrolNode(SoldierBot, FollowBot, MoveSpeed, RotationSpeed, NodeThreshold);
         Node attack = new AttackNode(SoldierBot, AttackBot, Zombie, RotationSpeed);
         Node reload = new ReloadNode(SoldierBot);
         Node moveToAmmoBox = new MoveToAmmoBoxNode(SoldierBot, AmmoBox, AmmoBoxStopThreshold, 
@@ -72,14 +74,15 @@ public class SoldierBTBuilder
         Node pickupAmmo = new PickupAmmoNode(SoldierBot);
 
         // Conditions
-        Node hasReachedPatrolPoint = new HasReachedPatrolPoint(SoldierBot);
+        Node hasReachedPatrolPoint = new HasReachedPatrolPoint(SoldierBot, FollowBot);
         Node isZombieInRange = new IsZombieInRange(SoldierBot, Zombie, ViewDistance, DotThreshold);
         Node isOutOfAmmo = new IsOutOfAmmo(SoldierBot);
 
         // Sequences
         Sequence idleSequence = new Sequence(new List<Node> { hasReachedPatrolPoint, idle });
         Sequence attackSequence = new Sequence(new List<Node> { isZombieInRange, attack });
-        Sequence moveToAmmoBoxSequence = new Sequence(new List<Node> { isOutOfAmmo, moveToAmmoBox, pickupAmmo, reload });
+        Sequence moveToAmmoBoxSequence = new Sequence(new List<Node> { isOutOfAmmo, moveToAmmoBox, 
+            pickupAmmo, reload });
 
         // Root
         return new Selector(new List<Node> { moveToAmmoBoxSequence, attackSequence, idleSequence, patrol });

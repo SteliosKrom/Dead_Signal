@@ -1,8 +1,12 @@
 using System;
 using UnityEngine;
 
-public class PlayerBot : MonoBehaviour
+public abstract class PlayerBot : MonoBehaviour
 {
+    #region SERVICES
+    protected PlayerBotManager playerBotManager;
+    #endregion
+
     #region ACTIONS
     protected Action onIdleFinished;
     #endregion
@@ -24,14 +28,15 @@ public class PlayerBot : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public Animator BotAnimator { get => botAnimator; set => botAnimator = value; }
+
     public float IdleTimer { get => idleTimer; set => idleTimer = value; }
     public float IdleTimeInterval { get => idleTimeInterval; }
-    public Animator BotAnimator { get => botAnimator; set => botAnimator = value; }
     #endregion
 
     protected virtual void Start()
     {
-        // Shared logic for bot initialization, when the game starts...
+        playerBotManager = ServiceManager.GetService<PlayerBotManager>();
     }
 
     public virtual void InitializeBot()

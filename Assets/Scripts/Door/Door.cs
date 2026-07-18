@@ -27,6 +27,9 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] private Animator doorAnimator;
     #endregion
 
+    #region PROPERTIES
+    public bool Open { get => isOpen; set => isOpen = value; }
+    #endregion
     private void Awake()
     {
         doorHandleCollider = GetComponent<Collider>();
@@ -58,6 +61,13 @@ public class Door : MonoBehaviour, IInteractable
             ghostPerception.HearNoise(this.transform.position, doorNoiseStrength);
             StartCoroutine(CanInteractCoroutine());
         }
+    }
+
+    public void Unlock()
+    {
+        isLocked = false;
+        isOpen = true;
+        doorAnimator.SetTrigger("Open");
     }
 
     public IEnumerator CanInteractCoroutine()

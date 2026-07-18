@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-public sealed class SoldierBot : PlayerBot, IAttackBot, IPatrolBot, IReloadBot
+public sealed class SoldierBot : PlayerBot, IFollowBot, IAttackBot, IPatrolBot, IReloadBot
 {
     #region TIMERS
     [Header("ATTACK TIMER")]
@@ -67,6 +67,11 @@ public sealed class SoldierBot : PlayerBot, IAttackBot, IPatrolBot, IReloadBot
     {
         attackComponent.PerformAttack(direction);
         CurrentAmmo--;
+    }
+
+    public void FollowPath()
+    {
+        // Future implementation...
     }
 
     public void Reload()

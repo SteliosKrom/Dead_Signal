@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class BodyguardBot : PlayerBot, IAttackBot, IReloadBot
+public sealed class BodyguardBot : PlayerBot, IFollowBot, IAttackBot, IReloadBot
 {
     [SerializeField] private bool isGoingToPlayer;
 

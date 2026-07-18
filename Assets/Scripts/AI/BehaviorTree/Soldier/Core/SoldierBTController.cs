@@ -25,7 +25,7 @@ public class SoldierBTController : MonoBehaviour
     private void Start()
     {
         rootNode = new SoldierBTBuilder()
-            .SetBot(soldierBot, soldierBot)
+            .SetBot(soldierBot, soldierBot, soldierBot)
             .SetZombie(zombie)
             .SetAmmoBox(ammoBox)
             .SetMovement(moveSpeed)
