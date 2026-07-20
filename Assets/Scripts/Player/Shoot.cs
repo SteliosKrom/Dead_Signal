@@ -13,6 +13,7 @@ public class Shoot : MonoBehaviour
     private UIManager uiManager;
     private GameManager gameManager;
     private ObjectPoolManager poolManager;
+    private FreeRoamController freeRoamController;
     #endregion
 
     #region SCRIPT REFERENCES
@@ -66,6 +67,7 @@ public class Shoot : MonoBehaviour
         uiManager = ServiceManager.GetService<UIManager>();
         gameManager = ServiceManager.GetService<GameManager>();
         poolManager = ServiceManager.GetService<ObjectPoolManager>();
+        freeRoamController = ServiceManager.GetService<FreeRoamController>();
 
         CurrentAmmo = 24;
         currentReserveAmmo = 120;
@@ -76,6 +78,7 @@ public class Shoot : MonoBehaviour
         if (gameManager.CurrentGameState != GameState.Playing) return;
         if (CurrentAmmo <= 0) return;
         if (gameManager.IsBotMenuPanelOpen) return;
+        if (freeRoamController.IsFreeRoam) return;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {

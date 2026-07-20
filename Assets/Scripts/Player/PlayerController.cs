@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     #region SERVICES
     private GameManager gameManager;
     private UIManager uiManager;
+    private FreeRoamController freeRoamController;
     #endregion
 
     #region SCRIPT REFERENCES
@@ -42,7 +43,10 @@ public class PlayerController : MonoBehaviour
 
     #region PROPERTIES
     public Light GunLight { get => gunLight; set => gunLight = value; }
-    public Vector2 MoveInput => moveInput;
+    public Vector2 MoveInput { get => moveInput; set => moveInput = value; }
+
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+    public float SprintSpeed { get => sprintSpeed; set => sprintSpeed = value; }
     #endregion
     private void Awake()
     {
@@ -81,6 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         gameManager = ServiceManager.GetService<GameManager>();
         uiManager = ServiceManager.GetService<UIManager>();
+        freeRoamController = ServiceManager.GetService<FreeRoamController>();
 
         canInteract = true;
     }
@@ -96,6 +101,12 @@ public class PlayerController : MonoBehaviour
         if (gameManager.IsBotMenuPanelOpen)
         {
             moveInput = Vector3.zero;
+            return;
+        }
+
+        if (freeRoamController.IsFreeRoam)
+        {
+            moveInput = Vector2.zero;
             return;
         }
 
