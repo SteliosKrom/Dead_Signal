@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 
 public sealed class ZombieChaseState : ZombieState

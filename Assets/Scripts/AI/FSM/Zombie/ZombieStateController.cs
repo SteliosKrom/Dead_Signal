@@ -28,6 +28,7 @@ public class ZombieStateController : MonoBehaviour
     #region SCRIPT REFERENCES
     [Header("SCRIPT REFERENCES")]
     [SerializeField] private ZombieInteractor zombieInteractor;
+    [SerializeField] private FreeRoamController freeRoamController;
     #endregion
 
     #region SERVICES
@@ -54,6 +55,7 @@ public class ZombieStateController : MonoBehaviour
     public Animator ZombieAnimator => zombieAnimator;
     public ZombieState CurrentState { get; set; }
     public ZombieInteractor ZombieInteractor => zombieInteractor;
+    public FreeRoamController FreeRoamController => freeRoamController;
     public DoorDetectable CurrentDoor { get; set; }
 
     public float SpeedMultiplier => speedMultiplier;

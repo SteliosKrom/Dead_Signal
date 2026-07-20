@@ -7,15 +7,6 @@
             "id": "4f6f4a5b-b8c4-4c2a-962c-915f674d0039",
             "actions": [
                 {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "46bea3d2-e6ac-41b0-874e-6e392eea40b1",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Look",
                     "type": "Value",
                     "id": "113dc605-86f5-4ed2-b8a1-c9205e24a2d1",
@@ -50,6 +41,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "46bea3d2-e6ac-41b0-874e-6e392eea40b1",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Free Roam",
+                    "type": "Value",
+                    "id": "15124e9b-6756-4169-b388-f5a600e180cb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -171,6 +180,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea49bdc1-8ae7-4aa4-a532-e06439e267df",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Free Roam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

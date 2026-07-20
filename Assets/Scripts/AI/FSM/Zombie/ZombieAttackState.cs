@@ -13,7 +13,8 @@ public sealed class ZombieAttackState : ZombieState
 
     public override void Update()
     {
-        float distanceToPlayer = Vector3.Distance(stateController.transform.position, stateController.Player.position);
+        float distanceToPlayer = Vector3.Distance(stateController.transform.position, 
+            stateController.Player.position);
 
         if (stateController.IsAttackingDoor)
         {
@@ -28,7 +29,9 @@ public sealed class ZombieAttackState : ZombieState
         }
         else
         {
-            Vector3 directionToPlayer = (stateController.Player.position - stateController.transform.position);
+            Vector3 directionToPlayer = (stateController.Player.position - 
+                stateController.transform.position);
+
             directionToPlayer.y = 0;
             directionToPlayer.Normalize();
             Quaternion playerTargetRotation = Quaternion.LookRotation(directionToPlayer);
