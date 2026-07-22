@@ -31,7 +31,7 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                Vector3 worldPosition = new Vector3(x * nodeSize - offsetX, 0.1f, y * nodeSize - offsetY);
+                Vector3 worldPosition = new Vector3(x * nodeSize - offsetX, 0.1f, y * nodeSize - offsetY); 
                 bool isWalkable = !Physics.CheckSphere(worldPosition, nodeSize * 0.5f, obstacleLayer);
                 grid[x, y] = new AStarNode(isWalkable, worldPosition, x, y);
             }
