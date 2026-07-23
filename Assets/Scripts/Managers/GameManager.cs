@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Shoot shoot;
     [SerializeField] private PlayerSanity playerSanity;
     [SerializeField] private PlayerBotManager playerBotManager;
+    [SerializeField] private RandomKeySpawner randomKeySpawner;
     #endregion
 
     #region COROUTINES
@@ -157,6 +158,8 @@ public class GameManager : MonoBehaviour
 
                     audioManager.PauseSound(SoundType.MainGame);
                     audioManager.PauseSound(SoundType.GhostSound);
+                    audioManager.PauseSound(SoundType.Chase);
+                    audioManager.PauseSound(SoundType.Reload);
 
                     uiManager.ShowCursor();
 
@@ -170,6 +173,8 @@ public class GameManager : MonoBehaviour
 
                     audioManager.UnPauseSound(SoundType.MainGame);
                     audioManager.UnPauseSound(SoundType.GhostSound);
+                    audioManager.UnPauseSound(SoundType.Chase);
+                    audioManager.UnPauseSound(SoundType.Reload);
 
                     uiManager.HideCursor();
 
@@ -223,6 +228,7 @@ public class GameManager : MonoBehaviour
         mainCamera.enabled = true;
 
         player.SetActive(true);
+        randomKeySpawner.EnableKeys();
 
         uiManager.ShowObject(uiManager.AmmoContent);
         uiManager.ShowObject(uiManager.SanityContent);
@@ -265,6 +271,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         currentGameState = GameState.GameOver;
+        audioManager.StopSound(SoundType.MainGame);
         Time.timeScale = 0f;
     }
 

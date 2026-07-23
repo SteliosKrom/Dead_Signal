@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     #region SERVICES
     private GameManager gameManager;
+    private AudioManager audioManager;
     private UIManager uiManager;
     private FreeRoamController freeRoamController;
     #endregion
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        audioManager = ServiceManager.GetService<AudioManager>();
         gameManager = ServiceManager.GetService<GameManager>();
         uiManager = ServiceManager.GetService<UIManager>();
         freeRoamController = ServiceManager.GetService<FreeRoamController>();
@@ -132,6 +134,8 @@ public class PlayerController : MonoBehaviour
                     gunLight.enabled = false;
                 else
                     gunLight.enabled = true;
+
+                audioManager.PlaySFX(SoundType.ToggleFlashlight);
             }
             StartCoroutine(CanInteractDelay());
         }
@@ -144,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
-            if (shoot.CurrentReserveAmmo <= 0)
+            if (shoot.CurrentReserveAmmo <= 0 || shoot.CurrentAmmo == 24)
                 return;
 
             float missingAmmo = 24 - shoot.CurrentAmmo;
@@ -153,13 +157,14 @@ public class PlayerController : MonoBehaviour
             {
                 shoot.CurrentReserveAmmo -= missingAmmo;
                 shoot.ResetCurrentAmmo();
+                audioManager.PlaySFX(SoundType.Reload);
             }
             else
             {
                 shoot.CurrentAmmo += shoot.CurrentReserveAmmo;
                 shoot.CurrentReserveAmmo = 0f;
             }
-                uiManager.UpdateFullAmmoCapacityUI();
+            uiManager.UpdateFullAmmoCapacityUI();
         }
     }
 

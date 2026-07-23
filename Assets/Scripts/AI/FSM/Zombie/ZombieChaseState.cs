@@ -6,6 +6,9 @@ public sealed class ZombieChaseState : ZombieState
 
     public override void Enter()
     {
+        if (!stateController.AudioManager.IsPlaying(SoundType.Chase))
+            stateController.AudioManager.PlaySoundTrack(SoundType.Chase);
+
         stateController.CurrentNodeIndex = 0;
         stateController.ZombieTimer = 0;
 
@@ -40,7 +43,7 @@ public sealed class ZombieChaseState : ZombieState
 
         if (distanceToPlayer >= stateController.ViewDistance)
             stateController.CanSeePlayer = false;
-        else 
+        else
             stateController.CanSeePlayer = true;
 
         if (stateController.ZombieInteractor.DoorDetectable != null)
@@ -65,7 +68,7 @@ public sealed class ZombieChaseState : ZombieState
 
     public override void Exit()
     {
-        Debug.Log("Exit Chase...");
+
     }
 
     public void ApplyChaseMovement(Vector3 directionToPlayer, Quaternion targetRotation)

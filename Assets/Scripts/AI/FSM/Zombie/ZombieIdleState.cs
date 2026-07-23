@@ -7,6 +7,7 @@ public sealed class ZombieIdleState : ZombieState
 
     public override void Enter()
     {
+        stateController.AudioManager.StopSound(SoundType.Chase);
         ChangePatrolPoint();
         stateController.CurrentNodeIndex = 0;
         stateController.ZombieAnimator.SetInteger("MovementState", 0);

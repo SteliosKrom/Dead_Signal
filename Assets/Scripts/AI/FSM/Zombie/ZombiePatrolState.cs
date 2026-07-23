@@ -7,6 +7,7 @@ public sealed class ZombiePatrolState : ZombieState
 
     public override void Enter()
     {
+        stateController.AudioManager.StopSound(SoundType.Chase);
         stateController.Path = stateController.Pathfinding.FindPath(stateController.transform.position,
             stateController.CurrentPatrolPoint.transform.position);
 

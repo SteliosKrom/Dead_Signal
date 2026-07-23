@@ -6,5 +6,10 @@ public enum SoundType
     Click,
     PressAnyKey,
     GhostSound,
-    GhostKnock
+    GhostKnock,
+    Shoot,
+    Chase,
+    Reload,
+    OutOfAmmo,
+    ToggleFlashlight
 }
