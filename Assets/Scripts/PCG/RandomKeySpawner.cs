@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class RandomKeySpawner : MonoBehaviour
 {
-    #region SERVICES
-    private GameManager gameManager;
-    #endregion
-
     #region SPAWN POINTS
     [Header("SPAWN POINTS")]
     [SerializeField] private GameObject[] redKeysSpawnPoints;
@@ -21,13 +17,13 @@ public class RandomKeySpawner : MonoBehaviour
     [SerializeField] private GameObject blueKey;
     #endregion
 
+    #region PROPERTIES
+    public GameObject RedKey => redKey;
+    public GameObject GreenKey => greenKey;
+    public GameObject BlueKey => blueKey;
+    #endregion
     private void Start()
     {
-        gameManager = ServiceManager.GetService<GameManager>();
-
-        if (gameManager.CurrentGameState != GameState.Playing)
-            return;
-
         SpawnRandomKeys(redKeysSpawnPoints, greenKeysSpawnPoints, blueKeysSpawnPoints);
     }
 
@@ -35,12 +31,19 @@ public class RandomKeySpawner : MonoBehaviour
         GameObject[] blueSpawnPoints)
     {
         int randomRedSpawnPointIndex = Random.Range(0, redSpawnPoints.Length);
-        redKey.transform.position = redKeysSpawnPoints[randomRedSpawnPointIndex].transform.position;
+        RedKey.transform.position = redKeysSpawnPoints[randomRedSpawnPointIndex].transform.position;
 
         int randomGreenSpawnPointIndex = Random.Range(0, greenSpawnPoints.Length);
-        greenKey.transform.position = greenKeysSpawnPoints[randomGreenSpawnPointIndex].transform.position;
+        GreenKey.transform.position = greenKeysSpawnPoints[randomGreenSpawnPointIndex].transform.position;
 
         int randomBlueSpawnPointIndex = Random.Range(0, blueSpawnPoints.Length);
-        blueKey.transform.position = blueKeysSpawnPoints[randomBlueSpawnPointIndex].transform.position;
+        BlueKey.transform.position = blueKeysSpawnPoints[randomBlueSpawnPointIndex].transform.position;
+    }
+
+    public void EnableKeys()
+    {
+        RedKey.SetActive(true);
+        GreenKey.SetActive(true);
+        BlueKey.SetActive(true);
     }
 }

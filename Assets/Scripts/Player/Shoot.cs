@@ -10,6 +10,7 @@ public class Shoot : MonoBehaviour
     private float shootNoiseStrength = 20f;
 
     #region SERVICES
+    private AudioManager audioManager;
     private UIManager uiManager;
     private GameManager gameManager;
     private ObjectPoolManager poolManager;
@@ -30,14 +31,14 @@ public class Shoot : MonoBehaviour
     [SerializeField] private ParticleSystem gunFX;
     #endregion
 
-    public float CurrentAmmo 
+    public float CurrentAmmo
     {
         get => currentAmmo;
         set
         {
             if (value <= 0)
                 currentAmmo = 0;
-            else 
+            else
                 currentAmmo = value;
         }
     }
@@ -51,6 +52,7 @@ public class Shoot : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
+
         playerControls.Player.Shoot.performed += OnShoot;
         playerControls.Player.Shoot.canceled += OnShoot;
     }
@@ -59,11 +61,13 @@ public class Shoot : MonoBehaviour
     {
         playerControls.Player.Shoot.performed -= OnShoot;
         playerControls.Player.Shoot.canceled -= OnShoot;
+
         playerControls.Disable();
     }
 
     private void Start()
     {
+        audioManager = ServiceManager.GetService<AudioManager>();
         uiManager = ServiceManager.GetService<UIManager>();
         gameManager = ServiceManager.GetService<GameManager>();
         poolManager = ServiceManager.GetService<ObjectPoolManager>();
@@ -76,12 +80,19 @@ public class Shoot : MonoBehaviour
     public void OnShoot(InputAction.CallbackContext cxt)
     {
         if (gameManager.CurrentGameState != GameState.Playing) return;
-        if (CurrentAmmo <= 0) return;
         if (gameManager.IsBotMenuPanelOpen) return;
         if (freeRoamController.IsFreeRoam) return;
+        if (CurrentAmmo <= 0)
+        {
+            if (!audioManager.IsPlaying(SoundType.OutOfAmmo))
+                audioManager.PlaySFX(SoundType.OutOfAmmo);
+            return;
+        }
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
+
+
             CurrentAmmo--;
             uiManager.UpdateCurrentAmmoUI();
             GameObject obj = poolManager.GetObject("Bullet");
@@ -89,6 +100,7 @@ public class Shoot : MonoBehaviour
             Bullet bullet = obj.GetComponent<Bullet>();
             bullet.SetDirection(shootPoint.forward);
             gunFX.Play();
+            audioManager.PlaySFX(SoundType.Shoot);
         }
         ghostPerception.HearNoise(this.transform.position, shootNoiseStrength);
     }

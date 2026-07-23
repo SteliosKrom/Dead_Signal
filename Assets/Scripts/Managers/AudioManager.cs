@@ -68,4 +68,9 @@ public class AudioManager : MonoBehaviour
             item.source.UnPause();
         }
     }
+
+    public bool IsPlaying(SoundType type)
+    {
+        return soundDict.TryGetValue(type, out AudioItem item) && item.source.isPlaying;
+    }
 }

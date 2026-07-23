@@ -33,6 +33,7 @@ public class ZombieStateController : MonoBehaviour
 
     #region SERVICES
     private GameManager gameManager;
+    private AudioManager audioManager;
     #endregion
 
     #region PATHFINDING
@@ -54,9 +55,12 @@ public class ZombieStateController : MonoBehaviour
     public Transform CurrentPatrolPoint { get; set; }
     public Animator ZombieAnimator => zombieAnimator;
     public ZombieState CurrentState { get; set; }
+
     public ZombieInteractor ZombieInteractor => zombieInteractor;
     public FreeRoamController FreeRoamController => freeRoamController;
     public DoorDetectable CurrentDoor { get; set; }
+    public AudioManager AudioManager => audioManager;
+
 
     public float SpeedMultiplier => speedMultiplier;
     public float MoveSpeed => moveSpeed;
@@ -82,6 +86,7 @@ public class ZombieStateController : MonoBehaviour
     private void Start()
     {
         gameManager = ServiceManager.GetService<GameManager>();
+        audioManager = ServiceManager.GetService<AudioManager>();
 
         if (gameManager.CurrentGameState != GameState.Playing)
             return;
