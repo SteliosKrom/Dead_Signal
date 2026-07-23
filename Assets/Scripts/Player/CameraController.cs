@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     #region DATA
     [SerializeField] private float minCameraRotation;
     [SerializeField] private float maxCameraRotation;
-    private float mouseSensitivity = 5f;
+    private float mouseSensitivity = 10f;
     private float xRotation;
     private float yRotation;
     private float baseYRotation;

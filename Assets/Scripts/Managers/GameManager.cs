@@ -263,6 +263,8 @@ public class GameManager : MonoBehaviour
 
         audioManager.UnPauseSound(SoundType.MainGame);
         audioManager.UnPauseSound(SoundType.GhostSound);
+        audioManager.UnPauseSound(SoundType.Chase);
+        audioManager.UnPauseSound(SoundType.Reload);
 
         uiManager.HideObject(uiManager.PauseMenu);
         uiManager.ShowObject(uiManager.HUDMenu);
