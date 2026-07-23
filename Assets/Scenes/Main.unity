@@ -96177,6 +96177,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 1193340829816115258, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -96336,6 +96340,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2015516120}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2015516121}
     - targetCorrespondingSourceObject: {fileID: -892318989683515651, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1043248138}
@@ -96450,6 +96457,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieAttackEvents
   zombieAttack: {fileID: 1043248140}
+--- !u!114 &2015516121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015516112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c69e1e152e9cc854c9be4b1a46067999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieHealth
+  zombieCurrentLives: 3
+  zombieStateController: {fileID: 2015516117}
 --- !u!4 &2015795189
 Transform:
   m_ObjectHideFlags: 0

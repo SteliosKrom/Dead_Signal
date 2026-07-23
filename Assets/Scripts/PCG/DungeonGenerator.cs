@@ -121,25 +121,21 @@ public class DungeonGenerator : MonoBehaviour
         {
             currentCell.EastWall.SetActive(false);
             nextCell.WestWall.SetActive(false);
-            SpawnDoor(currentCell, Direction.East);
         }
         else if (nextCell.GridX < currentCell.GridX)
         {
             currentCell.WestWall.SetActive(false);
             nextCell.EastWall.SetActive(false);
-            SpawnDoor(currentCell, Direction.West);
         }
         else if (nextCell.GridY > currentCell.GridY)
         {
             currentCell.NorthWall.SetActive(false);
             nextCell.SouthWall.SetActive(false);
-            SpawnDoor(currentCell, Direction.North);
         }
         else if (nextCell.GridY < currentCell.GridY)
         {
             currentCell.SouthWall.SetActive(false);
             nextCell.NorthWall.SetActive(false);
-            SpawnDoor(currentCell, Direction.South);
         }
     }
 
@@ -163,28 +159,5 @@ public class DungeonGenerator : MonoBehaviour
                 objectsRoomManager.SpawnObject(grid[x, y]);
             }
         }
-    }
-
-    public void SpawnDoor(RoomCell room, Direction direction)
-    {
-        Vector3 spawnPosition = Vector3.zero;
-        Quaternion targetRotation = Quaternion.identity;
-
-        switch (direction)
-        {
-            case Direction.North:
-                targetRotation = Quaternion.Euler(0f, 0f, 0f);
-                break;
-            case Direction.South:
-                targetRotation = Quaternion.Euler(0f, 180f, 0f);
-                break;
-            case Direction.East:
-                targetRotation = Quaternion.Euler(0f, 90f, 0f);
-                break;
-            case Direction.West:
-                targetRotation = Quaternion.Euler(0f, -90f, 0f);
-                break;
-        }
-        Instantiate(doorPrefab, spawnPosition, targetRotation);
     }
 }
