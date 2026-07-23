@@ -4,7 +4,6 @@ using UnityEngine;
 public class ObjectsRoomManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] objectPrefabs;
-    [SerializeField] private GameObject ghost;
 
     [SerializeField] private int minObjectsPerRoom = 1;
     [SerializeField] private int maxObjectsPerRoom = 3;

@@ -10,6 +10,7 @@ public class PlayerSanity : MonoBehaviour
     #region SERVICES
     private UIManager uiManager;
     private GameManager gameManager;
+    private FreeRoamController freeRoamController;
     #endregion
 
     #region EVENTS
@@ -42,11 +43,15 @@ public class PlayerSanity : MonoBehaviour
     {
         uiManager = ServiceManager.GetService<UIManager>();
         gameManager = ServiceManager.GetService<GameManager>();
+        freeRoamController = ServiceManager.GetService<FreeRoamController>();
     }
 
     private void Update()
     {
         if (gameManager.CurrentGameState != GameState.Playing)
+            return;
+
+        if (freeRoamController.IsFreeRoam)
             return;
 
         if (Sanity == 0)

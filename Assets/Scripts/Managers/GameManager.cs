@@ -279,6 +279,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
+    public void MoveToPCGDemo()
+    {
+        SceneManager.LoadScene("PCG Demo");
+    }
+
     public void EnterMainMenuSettings() => uiManager.OpenMainMenuSettings();
     public void EnterPauseMenuSettings() => uiManager.OpenPauseMenuSettings();
 
