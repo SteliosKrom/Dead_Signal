@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerBotManager : MonoBehaviour
 {
     private bool botSpawned;
+    private PlayerBot currentBot;
 
     #region SERVICES
     private UIManager uiManager;
@@ -74,7 +75,21 @@ public class PlayerBotManager : MonoBehaviour
 
     public void SpawnBot(PlayerBot bot)
     {
+        if (currentBot)
+        {
+            bot.transform.position = currentBot.transform.position;
+            bot.transform.rotation = currentBot.transform.rotation;
+            DespawnBot(currentBot);
+        }
+
         bot.gameObject.SetActive(true);
+        currentBot = bot;
         botSpawned = true;
+    }
+
+    public void DespawnBot(PlayerBot bot)
+    {
+        bot.gameObject.SetActive(false);
+        botSpawned = false;
     }
 }

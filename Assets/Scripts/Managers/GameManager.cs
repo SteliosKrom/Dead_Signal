@@ -193,9 +193,6 @@ public class GameManager : MonoBehaviour
         if (CurrentGameState != GameState.Playing)
             return;
 
-        if (playerBotManager.BotSpawned)
-            return;
-
         if (!cxt.performed)
             return;
 

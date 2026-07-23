@@ -173,19 +173,15 @@ public class DungeonGenerator : MonoBehaviour
         switch (direction)
         {
             case Direction.North:
-                spawnPosition = room.NorthWall.transform.position;
                 targetRotation = Quaternion.Euler(0f, 0f, 0f);
                 break;
             case Direction.South:
-                spawnPosition = room.SouthWall.transform.position;
                 targetRotation = Quaternion.Euler(0f, 180f, 0f);
                 break;
             case Direction.East:
-                spawnPosition = room.EastWall.transform.position;
                 targetRotation = Quaternion.Euler(0f, 90f, 0f);
                 break;
             case Direction.West:
-                spawnPosition = room.WestWall.transform.position;
                 targetRotation = Quaternion.Euler(0f, -90f, 0f);
                 break;
         }
